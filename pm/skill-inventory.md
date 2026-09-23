@@ -1,6 +1,6 @@
 # pdt-group 技能台账
 
-集团 6 个角色所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
+集团 5 个角色所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
 
 **上游仓库**：[`mattpocock/skills`](https://github.com/mattpocock/skills)（GitHub，`main` 分支）。下表每个技能名都链到它在 `main` 上的 `SKILL.md` raw 地址（raw 根 `https://raw.githubusercontent.com/mattpocock/skills/main/`），点开即读到上游原文。
 

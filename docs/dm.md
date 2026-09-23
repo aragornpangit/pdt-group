@@ -17,7 +17,7 @@
 ## Common questions
 
 **Ticket 从哪来？**
-把设计决策落成 `docs/dev/plan/{seq}.md`，再拆成 tracer-bullet 纵向切片（每片贯穿各层、可独立验证、单上下文可完成），按依赖序编号，**默认一张表**。切片流程内化自 mattpocock `to-tickets`（见 `skills/pdt-group/dm/templates.md` 的「切片细则」）。
+把设计决策落成 `docs/dev/plan/{seq}.md`，再拆成 tracer-bullet 纵向切片（每片贯穿各层、可独立验证、单上下文可完成），按依赖序编号，**默认一张表**。切片流程内化自 mattpocock `to-tickets`（见 [`dm/templates.md`](../dm/templates.md) 的「切片细则」）。
 
 **`de` 派生几个？**
 n = 当前可并行 ticket 数（依赖图的宽度），按实际情况决定，可为 1。**同一文件被多个 ticket 触碰时降为串行。**不要为了「用满 n」而把任务拆碎。

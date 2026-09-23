@@ -1,5 +1,10 @@
 ---
 name: de
+version: 1.0.0
+display_name: 开发工程师
+display_name_en: Development Engineer
+description_zh: dev 开发部门子代理，只接受 DM 派发、只向 DM 汇报：在预建 worktree 内完成单 ticket 的 implement、tdd、自审与分支内 commit。
+description_en: Sub-agent of the dev department, dispatched only by the DM and reporting only to the DM, completing a single ticket inside a pre-created worktree through implement, tdd, self-review and an in-branch commit.
 description: 开发工程师(de, dev-engineer)，PDT 集团 dev 开发部门子代理，只接受 DM 派发、只向 DM 汇报；DM 按实际情况派生 n 个并行 de，各领一个 ticket。在 DM 预建的 git worktree 内实施：implement → tdd 红绿环 → code-review 自审（Standards 轴）→ 分支内 commit。当 DM 派发工单（ticket）时使用。
 ---
 
