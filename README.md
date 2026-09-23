@@ -8,6 +8,17 @@ PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门
 
 > 本项目的方法论骨架建立在 [Matt Pocock](https://github.com/mattpocock) 的开源技能集之上，明确引用了他的多个技能，并从中收获很多。逐条清单与收获见 **[ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md)**。
 
+## 发布镜像说明
+
+**本仓是发布镜像（release mirror），不是唯一的写作现场。**
+
+- **规范来源**：作者的技能容器仓 `Skills` 里的 `pdt-group` 桶（内网私有仓 `p00292/Skills`，非公开）。角色定义、集团口径与台账在那里维护。
+- **同步方向**：单向，容器仓 → 本仓。改动先在容器仓落地，再同步到这里发布。
+- **本仓用途**：对外分发与阅读。你可以自由 fork 与自改（MIT），但本仓**不接受**直接改动的回流，改了会在下次同步时被覆盖。
+- **两者不一致时**：以容器仓为准；若你只读得到本仓，就以本仓当次快照为准。
+
+同步时保留的角色目录结构是「一角色一目录、直接放仓根」，与容器仓内 `skills/pdt-group/<角色>/` 的拍平结果一致。
+
 ## 组织架构
 
 ```
@@ -109,3 +120,9 @@ done
 | herdr | 首选通信通道（终端多路复用器，agent 之间定向发消息） | 否，独立工具 |
 
 `mattpocock/skills` 是本项目的上游方法论来源，请直接访问其仓库并按 MIT 许可使用；本仓不拷贝其文件。
+
+## 许可
+
+本仓采用 **MIT License**，见 [LICENSE](LICENSE)。
+
+上游 [`mattpocock/skills`](https://github.com/mattpocock/skills) 同为 MIT；本仓没有拷贝其任何文件，引用方式见 [ACKNOWLEDGMENTS.md](ACKNOWLEDGMENTS.md)。

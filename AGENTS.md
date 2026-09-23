@@ -44,3 +44,14 @@ done
 ## 上游归属
 
 本项目的方法论骨架来自 [mattpocock/skills](https://github.com/mattpocock/skills)（MIT）。改动涉及上游技能的接线方式时，同步更新 [`ACKNOWLEDGMENTS.md`](ACKNOWLEDGMENTS.md) 与 [`pdt-leader/skill-inventory.md`](pdt-leader/skill-inventory.md)。**不要**把上游文件拷进本仓，用链接引用。
+
+## 发布与同步
+
+本仓是**发布镜像**：规范来源是作者的技能容器仓 `Skills` 的 `pdt-group` 桶（内网私有仓 `p00292/Skills`）。同步是单向的，容器仓 → 本仓。
+
+因此在本仓里直接改角色定义、集团口径或台账，都会在下次同步时被覆盖。发现需要改的地方，按下面处理：
+
+- **你在本仓有写权限**：改容器仓那一侧，再重新同步；
+- **你是外部读者**：开 issue 或提 PR 说明意图，改动会在容器仓落地后随同步出现在本仓。
+
+同步动作本身只需覆盖这 10 个角色目录与 `docs/`，`README.md`、`AGENTS.md`、`ACKNOWLEDGMENTS.md`、`LICENSE` 属于本仓自有文件，不参与覆盖。
