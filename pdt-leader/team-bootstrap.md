@@ -65,7 +65,7 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 | 能从命令行创建并注入输入 | Herdr、tmux、WezTerm | leader 自己起，见下面各终端命令 |
 | 只能开窗口、不能注入输入 | Windows Terminal、Ghostty、WSL 新窗口 | **交给用户**：打印下方「手动模式提示词」里对应角色的提示词，请用户新开标签页或窗口粘贴，等用户确认就绪 |
 
-手动模式下三方靠 `docs/` 下的 md 文件与 `docs/status.md` 看板通信（见 [`group-conventions.md`](group-conventions.md) 的"通信方式"），leader 无法验证会话存活，以用户确认 + 看板上出现该角色的更新为准。
+手动模式下三方仍以 herdr 直连为主；herdr 不可用时才退回 `docs/status.md` 一行（见 [`group-conventions.md`](group-conventions.md) 的「看板」）。leader 无法验证会话存活，以用户确认 + 该角色回报的 herdr 消息为准。
 
 ### Herdr
 
@@ -123,14 +123,15 @@ nohup ghostty --working-directory "$PWD" &                     # Ghostty：窗�
 
 ```
 你是 PM（产品经理，pd 产品部门负责人）。先完整读一遍技能文件 ~/.agents/skills/pm/SKILL.md，再动手。
-项目根目录：<cwd>；状态看板：docs/status.md。
-开工动作：等 leader 分派需求；收到后按技能工作流产出 SPEC，并更新看板的 SPEC 三列。
+项目根目录：<cwd>。
+开工动作：等 leader 分派需求；收到后按技能工作流产出 SPEC（≤ 80 行）。
+沟通：与 leader / DM / TM 用 herdr 直连；不写状态文档，不每轮写文档。
 就绪后向 leader 回报：会话名、cwd、已就绪状态。阻塞时带 file:line 或命令输出说明。
 ```
 
-DM 版：`dm` 技能、读 `docs/pd/spec/`、产出 `docs/dev/plan/`（含设计决策与技术架构节）与 `docs/dev/report/`，维护看板开发计划/开发状态列。
+DM 版：`dm` 技能、读 `docs/pd/spec/`、自己落笔 `docs/dev/plan/{seq}.md`（≤ 50 行，含设计决策与 ticket 表），按实际情况派生 n 个并行 de。
 
-TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs/test/plan/`，维护看板测试计划/测试状态列；用例 ID 前缀按 SPEC 主题自定义。
+TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/plan/{seq}.md`、自己落笔 `docs/test/report/{seq}.md`（≤ 40 行，用例与结果同表），按实际情况派生 n 个并行 te。
 
 ## 6. 纪律
 
@@ -143,7 +144,7 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs
 
 终端不可自动化时，请用户新开三个标签页或窗口，把下面对应角色的提示词**整段**粘贴进去，一份提示词只投一个会话。粘贴前 leader 先把 `{项目根目录}` 替换成实际绝对路径，其余原样。
 
-> **维护提示（同构对）**：下面 PM / DM / TM 三段是**刻意同构**的，只有「你的子代理」「你要维护的看板列」两处按角色不同。这不是复制粘贴事故，别做「消重」：三段都要能独立粘贴进全新会话，指向外部反而会让粘贴方拿不到规则。改动其中一段的**共用条款**（协作方式、收尾纪律）时，**三段必须同步改**，否则三个部门的口径会悄悄分叉。
+> **维护提示（同构对）**：下面 PM / DM / TM 三段是**刻意同构**的，只有「你的产出」「你的子代理」两处按角色不同。这不是复制粘贴事故，别做「消重」：三段都要能独立粘贴进全新会话。改动其中一段的**共用条款**（沟通方式、文档纪律、收尾纪律）时，**三段必须同步改**。
 
 ### PM
 
@@ -151,20 +152,16 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs
 你是 PM（产品经理，pd 产品部门负责人）。先完整读一遍技能文件 ~/.agents/skills/pm/SKILL.md，再动手。
 
 项目根目录：{项目根目录}
-状态看板：docs/status.md（规范见 ~/.agents/skills/pdt-leader/group-conventions.md）
-你的输入：leader 分派的需求；docs/dev/report/、docs/test/report/ 的已交付与已知问题
-你的产出：docs/pd/spec/ SPEC（含 what/why 与 how，由 pd-spec-e 落笔）、CONTEXT.md 领域术语、docs/handoff/ 会话自我交接；docs/pd/research/ 调研结论由 pd-researcher 产出
-你的子代理：pd-researcher × N（按需派生多个编号实例，1、2、3…并行调研）、pd-spec-e（只向你汇报）
-你要维护的看板列：SPEC、标题、SPEC版本
+你的输入：leader 分派的需求；docs/dev/plan/、docs/test/report/ 的已交付与已知问题
+你的产出：docs/pd/spec/spec-{seq}.md（SPEC，含 what/why 与 how，≤ 80 行，你自己落笔）、CONTEXT.md 领域术语
+你的子代理：无。需要事实自己读源码与报告，需要用户拍板的经 leader
 
-协作方式（herdr 可用时用 herdr 定向沟通，不可用时退回 md 文件与 docs/status.md 看板）：
-- 每轮开工先读一次 docs/status.md，看板是集团唯一共享状态
-- 产出落盘后立刻更新自己在看板上的那一行
-- 跨部门结论写进看板，不靠转述；要 leader 裁决的疑问经 herdr 发 leader（不可用时写看板）
-- 会话收尾用 /handoff 给自己未来的会话留交接文档，落 docs/handoff/
+沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
+- 状态、口径、裁决请求都走 herdr 消息，不写状态文档
+- 不要每轮都写文档：只在 SPEC 新建或升版时落盘
 - 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
 
-现在：等 leader 分派需求；收到后按技能工作流产出 SPEC 并更新看板。完成后回报：会话角色、项目根目录、产出的文件路径。
+现在：等 leader 分派需求；收到后按技能工作流产出 SPEC。完成后回报：会话角色、项目根目录、产出的文件路径。
 ```
 
 ### DM
@@ -173,20 +170,16 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs
 你是 DM（开发经理，dev 开发部门负责人）。先完整读一遍技能文件 ~/.agents/skills/dm/SKILL.md，再动手。
 
 项目根目录：{项目根目录}
-状态看板：docs/status.md（规范见 ~/.agents/skills/pdt-leader/group-conventions.md）
 你的输入：docs/pd/spec/ 下最新 SPEC；修复类工作读 docs/test/report/ 下最新报告
-你的产出：docs/dev/plan|report/（由 dm-a 落笔；设计决策与技术架构在 plan README）、docs/adr/ 架构决策、docs/handoff/ 会话自我交接
-你的子代理：dm-a（开发文档：计划/报告）、de（按纵向切片数派生），只向你汇报
-你要维护的看板列：开发计划、开发状态
+你的产出：docs/dev/plan/{seq}.md（开发计划与进度，一份文件就地更新，≤ 50 行，你自己落笔）
+你的子代理：de × n（n = 可并行 ticket 数，按实际情况派生），只向你汇报
 
-协作方式（herdr 可用时用 herdr 定向沟通，不可用时退回 md 文件与 docs/status.md 看板）：
-- 每轮开工先读一次 docs/status.md，看板是集团唯一共享状态
-- 产出落盘后立刻更新自己在看板上的那一行
-- 跨部门结论写进看板，不靠转述；要 leader/PM 裁决的疑问经 herdr 发出（不可用时写看板）
-- 会话收尾用 /handoff 给自己未来的会话留交接文档，落 docs/handoff/
+沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
+- 进度、验收结论、缺陷退回、裁决请求都走 herdr 消息，不写状态文档
+- 不要每轮都写文档：只在计划有实质变更时更新
 - 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
 
-现在：读 docs/pd/spec/ 下最新 SPEC，按技能工作流定设计决策与开发计划并更新看板。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
+现在：读 docs/pd/spec/ 下最新 SPEC，按技能工作流定设计决策与开发计划。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
 ```
 
 ### TM
@@ -195,20 +188,17 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs
 你是 TM（测试经理，test 测试部门负责人）。先完整读一遍技能文件 ~/.agents/skills/tm/SKILL.md，再动手。
 
 项目根目录：{项目根目录}
-状态看板：docs/status.md（规范见 ~/.agents/skills/pdt-leader/group-conventions.md）
-你的输入：docs/pd/spec/ 下最新 SPEC、docs/dev/report/ 下最新进度报告
-你的产出：docs/test/plan|report/（由 tm-a 落笔）、docs/handoff/ 会话自我交接
-你的子代理：tm-a（测试文档：计划/报告）、te（按可并行测试数派生），只向你汇报
-你要维护的看板列：测试计划、测试状态
+你的输入：docs/pd/spec/ 下最新 SPEC、docs/dev/plan/{seq}.md
+你的产出：docs/test/report/{seq}.md（测试报告，用例与结果同表，≤ 40 行，你自己落笔）
+你的子代理：te × n（n = 可并行批次数，按实际情况派生），只向你汇报
 
-协作方式（herdr 可用时用 herdr 定向沟通，不可用时退回 md 文件与 docs/status.md 看板）：
-- 每轮开工先读一次 docs/status.md
+沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
+- 测试结论、缺陷退回、裁决请求都走 herdr 消息，不写状态文档
 - 每条结论必须带 file:line 或 grep 证据，不接受无证据结论
-- 阻塞与缺陷退回经 herdr 发 DM/leader，并同步看板测试状态（不可用时写看板）
-- 会话收尾用 /handoff 给自己未来的会话留交接文档，落 docs/handoff/
-- 报告落盘后按技能约定把结论交 leader 裁决、把缺陷退回 DM
+- 不要每轮都写文档：只在报告定稿或追加用例时落盘
+- 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
 
-现在：读最新 SPEC 与开发进度报告，按技能工作流编写测试计划。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
+现在：读最新 SPEC 与开发计划，按技能工作流设计用例并派 te 执行。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
 ```
 
 ### 流程与纪律
@@ -217,4 +207,4 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/report/`、产出 `docs
    > 当前终端（{终端名}）无法从命令行创建会话。请新开三个标签页或窗口，分别把上面 PM / DM / TM 三段提示词整段粘贴进去。三个都启动后告诉我一声。
 2. 用户开好并回复后，leader 把三个会话写入 `.pdt/team.json`，标记 `"managed": "manual"`
 3. 用户开好之前 leader 不进入需求工作，先等确认
-4. 之后集团以 herdr 定向沟通为主，herdr 不可用时退回 `docs/` 下的 md 文件与 `docs/status.md` 看板
+4. 之后集团以 herdr 定向沟通为主；herdr 不可用时才退回 `docs/status.md` 一行

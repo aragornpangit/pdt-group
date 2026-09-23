@@ -8,7 +8,7 @@
     ├── README.md            # 项目主页
     ├── ACKNOWLEDGMENTS.md   # 对 mattpocock/skills 的致谢与引用清单
     ├── AGENTS.md            # 本文件
-    ├── <角色名>/            # 10 个角色，一角色一目录
+    ├── <角色名>/            # 6 个角色，一角色一目录
     │   ├── SKILL.md         # 必需，含 YAML frontmatter
     │   └── *.md             # 可选附属文档（templates / spec-format / group-conventions 等）
     └── docs/<角色名>.md     # 面向人的四段式说明，与角色目录一一对应
@@ -35,7 +35,7 @@ grep -rn $'\u2014' --include='*.md' . | grep -v '^\./\.git' || echo "em-dash: 0"
 grep -rniE 'glpat-[A-Za-z0-9_-]{10,}|AppSecret|api[_-]?token' --include='*.md' . || echo "凭证: 0"
 
 # 3) 角色目录与 name 字段一致 + docs 一一对应
-for d in pdt-leader pm dm tm pd-researcher pd-spec-e de te dm-a tm-a; do
+for d in pdt-leader pm dm tm de te; do
   grep -q "^name: $d$" "$d/SKILL.md" || echo "FAIL: $d 的 name 不匹配"
   [ -f "docs/$d.md" ] || echo "FAIL: 缺 docs/$d.md"
 done
@@ -54,4 +54,4 @@ done
 - **你在本仓有写权限**：改容器仓那一侧，再重新同步；
 - **你是外部读者**：开 issue 或提 PR 说明意图，改动会在容器仓落地后随同步出现在本仓。
 
-同步动作本身只需覆盖这 10 个角色目录与 `docs/`，`README.md`、`AGENTS.md`、`ACKNOWLEDGMENTS.md`、`LICENSE` 属于本仓自有文件，不参与覆盖。
+同步动作本身只需覆盖这 6 个角色目录与 `docs/`，`README.md`、`AGENTS.md`、`ACKNOWLEDGMENTS.md`、`LICENSE` 属于本仓自有文件，不参与覆盖。

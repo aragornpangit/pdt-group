@@ -1,6 +1,6 @@
 # pdt-group 技能台账
 
-集团 10 个角色所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
+集团 6 个角色所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
 
 **上游仓库**：[`mattpocock/skills`](https://github.com/mattpocock/skills)（GitHub，`main` 分支）。下表每个技能名都链到它在 `main` 上的 `SKILL.md` raw 地址（raw 根 `https://raw.githubusercontent.com/mattpocock/skills/main/`），点开即读到上游原文。
 
@@ -14,16 +14,16 @@
 |---|---|---|---|
 | [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md) | MODEL | 拷问原语，是 `grill-me` / `grill-with-docs` / `triage` / `wayfinder` / `improve-codebase-architecture` 的共同底座 | PM |
 | [`grill-me`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grill-me/SKILL.md) | USER | 非代码场景的拷问 | 用户敲 |
-| [`grill-with-docs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/SKILL.md) | USER | 拷问 + 同步建 `CONTEXT.md` 与 ADR | 用户敲，PM 接 |
-| [`domain-modeling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/domain-modeling/SKILL.md) | MODEL | 主动建/磨领域模型：挑战术语、边界场景压测、更新 `CONTEXT.md` 与 ADR | PM |
-| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | 对高可信一手来源调研，产出带引用的 md（后台 agent） | `pd-researcher` |
-| [`prototype`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/prototype/SKILL.md) | MODEL | 一次性原型回答设计问题（状态/逻辑类或 UI 变体） | `pd-researcher`（PM 决定是否做） |
-| [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md) | USER | 对话 → SPEC，发布到 tracker（**已内化为 [`spec-format.md`](../pd-spec-e/spec-format.md)**） | `pd-spec-e` |
-| [`writing-for-agents`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/writing-for-agents/SKILL.md) | MODEL | 写「给 agent 读」的文档（SPEC 正是此类） | `pd-spec-e` |
+| [`grill-with-docs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/SKILL.md) | USER | 拷问 + 同步更新 `CONTEXT.md` | 用户敲，PM 接 |
+| [`domain-modeling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/domain-modeling/SKILL.md) | MODEL | 主动建/磨领域模型：挑战术语、边界场景压测、更新 `CONTEXT.md` | PM |
+| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | 对高可信一手来源调研，产出带引用的结论（后台 agent） | PM（按需） |
+| [`prototype`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/prototype/SKILL.md) | MODEL | 一次性原型回答设计问题（状态/逻辑类或 UI 变体） | PM（决定是否做） |
+| [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md) | USER | 对话 → SPEC，发布到 tracker（**已内化为 [`spec-format.md`](../pm/spec-format.md)**） | PM |
+| [`writing-for-agents`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/writing-for-agents/SKILL.md) | MODEL | 写「给 agent 读」的文档（SPEC 正是此类） | PM |
 | [`to-questionnaire`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/to-questionnaire/SKILL.md) | USER | 自己答不了的决策 → 交给能答的人填的问卷 | 用户敲，PM 接 |
 | [`triage`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/triage/SKILL.md) | USER | issue 走 triage 角色状态机（需标签配置） | 用户敲，PM 接 |
 | [`wait-what`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/wait-what/SKILL.md) | USER | 消息没落地时让 agent 用 `CONTEXT.md` 词汇重讲 | 用户敲 |
-| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接 | PM |
+| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接（仅用户明确要求时） | PM |
 
 ## dev 开发部门（DM）：设计 → 实现 → 合并
 
@@ -41,7 +41,7 @@
 | [`setup-pre-commit`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/misc/setup-pre-commit/SKILL.md) | MODEL | Husky + lint-staged + 类型检查 + 测试（**条件**） | DM |
 | [`git-guardrails-claude-code`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/misc/git-guardrails-claude-code/SKILL.md) | MODEL | 拦危险 git 命令（**条件**） | DM |
 | [`migrate-to-shoehorn`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/misc/migrate-to-shoehorn/SKILL.md) | MODEL | 测试文件的 `as` 断言迁移（**条件**：TS 项目） | DM |
-| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接 | DM |
+| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接（仅用户明确要求时） | DM |
 
 ## test 测试部门（TM）：独立复核 → 缺陷定位
 
@@ -49,7 +49,7 @@
 |---|---|---|---|
 | [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Spec + Standards 双轴**独立复核（并行子代理，互不污染），对应 `XX-CODE` 用例 | `te` |
 | [`diagnosing-bugs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md) | MODEL | 疑难缺陷 / 性能回退的诊断环（红 → 最小化 → 假设 → 插桩 → 修 → 回归） | `te` |
-| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接 | TM |
+| [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接（仅用户明确要求时） | TM |
 
 > `de` 与 `te` 共用 `code-review` 但轴不同：`de` 做 Standards 自审，`te` 做 Spec + Standards 独立复核，互为独立证据。
 
