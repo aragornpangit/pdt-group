@@ -74,11 +74,11 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ```bash
 for d in pm dm tm de te; do
-  cp -r "$d" ~/.codex/skills/
+  cp -r "$d" ~/.agents/skills/
 done
 ```
 
-`pdt-group` 是一个完整团队，要**全部装上**才有意义（角色之间有派发依赖）。`~/.codex/skills` 换成你所用 harness 的技能目录即可。
+`pdt-group` 是一个完整团队，要**全部装上**才有意义（角色之间有派发依赖）。`~/.agents/skills` 换成你所用 harness 的技能目录即可。
 
 ## 目录结构
 

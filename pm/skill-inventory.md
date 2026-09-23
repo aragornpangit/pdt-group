@@ -16,7 +16,6 @@
 | [`grill-me`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grill-me/SKILL.md) | USER | 非代码场景的拷问 | 用户敲 |
 | [`grill-with-docs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/SKILL.md) | USER | 拷问 + 同步更新 `CONTEXT.md` | 用户敲，PM 接 |
 | [`domain-modeling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/domain-modeling/SKILL.md) | MODEL | 主动建/磨领域模型：挑战术语、边界场景压测、更新 `CONTEXT.md` | PM |
-| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | 对高可信一手来源调研，产出带引用的结论（后台 agent） | PM（按需） |
 | [`prototype`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/prototype/SKILL.md) | MODEL | 一次性原型回答设计问题（状态/逻辑类或 UI 变体） | PM（决定是否做） |
 | [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md) | USER | 对话 → SPEC，发布到 tracker（**已内化为 [`spec-format.md`](../pm/spec-format.md)**） | PM |
 | [`writing-for-agents`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/writing-for-agents/SKILL.md) | MODEL | 写「给 agent 读」的文档（SPEC 正是此类） | PM |
@@ -58,6 +57,7 @@
 | 技能 | 类型 | 归属 | 说明 |
 |---|---|---|---|
 | [`ask-matt`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/ask-matt/SKILL.md) | USER | pm | 路由器：问「该用哪个技能 / 流程」 |
+| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | pm | 2026-09-23 起未接线：PM 需要事实自行读源码与报告，不派调研子代理 |
 | [`setup-matt-pocock-skills`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/setup-matt-pocock-skills/SKILL.md) | USER | 一次性 | 配 issue tracker / triage 标签 / 文档目录，每仓跑一次 |
 
 **未纳入**（与 PDT 流程无关或属个人工具链）：`teach`、`scaffold-exercises`、`writing-beats` / `writing-fragments` / `writing-shape`（写作类），以及 `in-progress/` 桶的 `claude-handoff`、`implement-spec`、`loop-me`、`retro`、`setup-ts-deep-modules`（上游尚未定稿）。

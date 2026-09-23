@@ -31,7 +31,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 ## 工作流
 
 1. **组建集团** 探终端（`HERDR_ENV` → `TMUX` → `WEZTERM_PANE` → `WT_SESSION` → Ghostty → `WSL_DISTRO_NAME`，取首个命中，写 `.pdt/team.json`）→ 点名 `dm`/`tm` → 补齐缺失的：能注入输入的（Herdr/tmux/WezTerm）自己起并注入指派消息；不能注入的（Windows Terminal/Ghostty/WSL）把 [`team-bootstrap.md`](team-bootstrap.md) 第 7 节的手动模式提示词交用户粘贴
-2. **接收诉求** 确认边界、判断归属、必要时派 subagent 查环境补事实（只把决策留给用户）
+2. **接收诉求** 确认边界、判断归属、必要时自己查环境补事实（只把决策留给用户）
 3. **分派** 新功能/变更 → 自己立 SPEC；实现/修复 → DM 立设计与开发计划；验证/回归 → TM 设计用例与报告。消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
 4. **收敛口径** 决策未收敛用 [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md)；需要事实自己查（源码 / 报告 / 配置）
 5. **写 SPEC** 按 [`spec-format.md`](spec-format.md) 自己落笔 `docs/pd/spec/spec-{seq}.md`（≤ 80 行），生成 `{seq}` 并用 herdr 通知 DM 与 TM
@@ -43,4 +43,4 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 指针
 
-[`group-conventions.md`](group-conventions.md)（集团口径唯一来源）、[`spec-format.md`](spec-format.md)（SPEC 格式）、[`team-bootstrap.md`](team-bootstrap.md)（终端探测、会话创建、手动模式提示词）、[`skill-inventory.md`](skill-inventory.md)（技能台账）。会话自我交接只在用户明确要求时用 [`/handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md)；herdr 语法见 `skills/agent-tooling/herdr/`。
+[`group-conventions.md`](group-conventions.md)（集团口径唯一来源）、[`spec-format.md`](spec-format.md)（SPEC 格式）、[`team-bootstrap.md`](team-bootstrap.md)（终端探测、会话创建、手动模式提示词）、[`skill-inventory.md`](skill-inventory.md)（技能台账）。会话自我交接只在用户明确要求时用 [`/handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md)；herdr 语法见 `herdr` 技能本身。
