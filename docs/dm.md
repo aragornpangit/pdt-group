@@ -29,8 +29,8 @@ n = 当前可并行 ticket 数（依赖图的宽度），按实际情况决定�
 不能。DM 不写业务代码、不改 SPEC、不写测试报告。
 
 **汇报拓扑是怎样的？**
-DM 是开发部门唯一中心。`de` **只向 DM 汇报、只接受 DM 的安排**，不得直接联系 leader/TM/PM，也不得写跨部门文档。
+DM 是开发部门唯一中心。`de` **只向 DM 汇报、只接受 DM 的安排**，不得直接联系 pm/tm 或其他角色，也不得写跨部门文档。
 
 ## It's working if
 
-`docs/dev/plan/{seq}.md` 存在且 ≤ 50 行，含设计决策（每条有 Why 与 How）与 ticket 表；每个 `de` 在独立 worktree 分支内提交，DM 复核后合并；进度与验收结论已用 herdr 送达 PM 与 TM。
+`docs/dev/plan/{seq}.md` 存在且 ≤ 50 行，含设计决策（每条有 Why 与 How）与 ticket 表；每个 `de` 在独立 worktree 分支内提交，DM 复核后合并；进度与验收结论已用 herdr 送达 pm 与 tm。

@@ -25,7 +25,7 @@
 | 四个负责人的按需会话交接 | [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) |
 | 全员通用 | [`writing-for-agents`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/writing-for-agents/SKILL.md)、[`domain-modeling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/domain-modeling/SKILL.md)、[`prototype`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/prototype/SKILL.md)、[`wayfinder`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wayfinder/SKILL.md)、[`wizard`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wizard/SKILL.md)、[`triage`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/triage/SKILL.md)、[`ask-matt`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/ask-matt/SKILL.md) |
 
-完整台账（含 invocation 类型与执行者）见 [`pdt-leader/skill-inventory.md`](pdt-leader/skill-inventory.md)。
+完整台账（含 invocation 类型与执行者）见 [`pm/skill-inventory.md`](pm/skill-inventory.md)。
 
 ### 收获了什么
 

@@ -10,7 +10,7 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 **边界**：负责设计决策与切片口径、**自己落笔开发计划与进度**、派发与验收合并。不写业务代码、不改 SPEC。
 **子代理**（只向 DM 汇报）：`de` × n，n = 可并行 ticket 数（可为 1，同文件冲突则串行，不要为凑数硬拆）。每个 de 在 DM 预建的 worktree 内做单 ticket 实施、tdd、自审、分支内 commit。
 
-**文档自己写**（2026-09-23 起）：计划与进度由 DM 直接落笔，不派文档秘书。口径是你定的，自己写少三次往返。**篇幅上限 50 行**，见 [`../pdt-leader/group-conventions.md`](../pdt-leader/group-conventions.md) 的「文档白名单」与「写作纪律」。
+**文档自己写**（2026-09-23 起）：计划与进度由 DM 直接落笔，不派文档秘书。口径是你定的，自己写少三次往返。**篇幅上限 50 行**，见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「文档白名单」与「写作纪律」。
 **只在必要时写**：计划有实质变更才更新，日常轮次不写文档，进度走 herdr。
 
 ## 核心约束
@@ -18,7 +18,7 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 - 输入是 SPEC（`docs/pd/spec/`）；修复类读 `docs/test/report/` 最新报告
 - **每 Ticket 即构建 + 静态断言**，不攒到最后；运行时不可用标「阻塞」
 - **计划与进度同一份文件**：`docs/dev/plan/{seq}.md`，含设计决策、ticket 表、逐票状态，**就地更新**，不另写进度报告、不另写 ADR、不另写设计文档
-- **产出即同步**：计划落盘后 herdr 通知 PM 与 TM；**经理间直通**，分歧升级 leader
+- **产出即同步**：计划落盘后 herdr 通知 PM 与 TM；**经理间直通**，分歧由 pm 裁决
 - 需求变化发 PM，**不自己改 SPEC**；不做轮询
 
 ## 工作流
@@ -42,8 +42,8 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 
 ## 通信
 
-与 leader、PM、TM **herdr 直连**（经理之间直接谈，不经 leader 转达）：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。规则见 [`../pdt-leader/group-conventions.md`](../pdt-leader/group-conventions.md)。
+与 pm、tm **herdr 直连**（经理之间直接谈，不经第三人转达）：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。规则见 [`../pm/group-conventions.md`](../pm/group-conventions.md)。
 
 ## 指针
 
-[`../pdt-leader/group-conventions.md`](../pdt-leader/group-conventions.md)（集团口径唯一来源）、[`templates.md`](templates.md)（模板与切片细则）、[`../pdt-leader/skill-inventory.md`](../pdt-leader/skill-inventory.md)（技能台账）。
+[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`templates.md`](templates.md)（模板与切片细则）、[`../pm/skill-inventory.md`](../pm/skill-inventory.md)（技能台账）。

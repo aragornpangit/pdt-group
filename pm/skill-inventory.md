@@ -57,7 +57,7 @@
 
 | 技能 | 类型 | 归属 | 说明 |
 |---|---|---|---|
-| [`ask-matt`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/ask-matt/SKILL.md) | USER | leader | 路由器：问「该用哪个技能 / 流程」 |
+| [`ask-matt`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/ask-matt/SKILL.md) | USER | pm | 路由器：问「该用哪个技能 / 流程」 |
 | [`setup-matt-pocock-skills`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/setup-matt-pocock-skills/SKILL.md) | USER | 一次性 | 配 issue tracker / triage 标签 / 文档目录，每仓跑一次 |
 
 **未纳入**（与 PDT 流程无关或属个人工具链）：`teach`、`scaffold-exercises`、`writing-beats` / `writing-fragments` / `writing-shape`（写作类），以及 `in-progress/` 桶的 `claude-handoff`、`implement-spec`、`loop-me`、`retro`、`setup-ts-deep-modules`（上游尚未定稿）。

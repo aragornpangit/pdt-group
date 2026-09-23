@@ -36,4 +36,4 @@ n = 可并行批次数，按实际情况决定，可为 1。必须串行的有�
 
 ## It's working if
 
-`docs/test/report/{seq}.md` 存在且 ≤ 40 行，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 DM；没有产出报告以外的文档。
+`docs/test/report/{seq}.md` 存在且 ≤ 40 行，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 dm；没有产出报告以外的文档。

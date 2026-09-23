@@ -1,6 +1,6 @@
 # SPEC 格式（PM）
 
-写 SPEC 时才读这份参考：模板、粒度禁令、撰写原则、升版规则。命名与归属见 [`SKILL.md`](SKILL.md) 与 [`../pdt-leader/group-conventions.md`](../pdt-leader/group-conventions.md)。
+写 SPEC 时才读这份参考：模板、粒度禁令、撰写原则、升版规则。命名与归属见 [`SKILL.md`](SKILL.md) 与 [`group-conventions.md`](group-conventions.md)。
 
 SPEC 是**产品部门唯一的交付文档**，也是整条链的起点：同时承载 what/why（问题与方案，用户视角）与 how（实现决策与测试决策），供 DM 与 TM 直接开工。格式内化自 mattpocock [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md)（2026-09-21），不依赖外部命令。**上限 80 行**。
 

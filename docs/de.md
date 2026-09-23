@@ -17,8 +17,8 @@
 **在哪里写代码？**
 在 DM 预建的 git worktree 内（由 DM 创建并写进派单 prompt），不直接动主工作树。
 
-**能联系 leader / TM / PM 吗？**
-不能。只能与 DM 通信，不得直接联系 leader/TM/PM 或其他 engineer，也不得写跨部门文档。
+**能联系 pm / tm 吗？**
+不能。只能与 DM 通信，不得直接联系 pm/tm 或其他 engineer，也不得写跨部门文档。
 
 **自审和 `te` 的复核有什么区别？**
 轴不同。`de` 做 **Standards 轴**自审（合 repo 规范），`te` 做 **Spec + Standards 双轴独立复核**，两者互为独立证据。

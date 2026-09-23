@@ -1,6 +1,6 @@
-# 组建集团（PM / DM / TM 会话）
+# 组建集团（DM / TM 会话）
 
-pdt-leader 启动时才读这份参考：探测终端、检测伙伴会话、创建会话、角色指派。
+PM 启动时才读这份参考：探测终端、检测伙伴会话、创建会话、角色指派。PM 是集团入口，自己不开新会话，只补 `dm` / `tm`。
 
 ## 1. 探测终端模拟器
 
@@ -34,7 +34,6 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
   "terminal": "tmux",
   "agent_cmd": "codebuddy",
   "sessions": {
-    "pm": { "id": "pm", "created": "2026-09-06T07:40:00", "cwd": "/home/user/proj" },
     "dm": { "id": "dm", "created": "2026-09-06T07:40:01", "cwd": "/home/user/proj" },
     "tm": { "id": "tm", "created": "2026-09-06T07:40:02", "cwd": "/home/user/proj" }
   }
@@ -42,19 +41,19 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 ```
 
 - `terminal`：探测结果或用户选择，写入后不再重复问
-- `agent_cmd`：启动伙伴 agent 的命令行，默认与 leader 自身所用的 agent 相同；不同则问用户一次
-- `sessions`：只记录 leader 创建过的会话。可列举的终端以实时命令为准；不可列举的终端以此记录作为线索，不作存活证明
+- `agent_cmd`：启动伙伴 agent 的命令行，默认与 PM 自身所用的 agent 相同；不同则问用户一次
+- `sessions`：只记录 PM 创建过的伙伴会话（不含 PM 自己）。可列举的终端以实时命令为准；不可列举的终端以此记录作为线索，不作存活证明
 
-## 3. 点名：检测 pm / dm / tm 是否在运行
+## 3. 点名：检测 dm / tm 是否在运行
 
-会话名固定 `pm`、`dm`、`tm`，大小写一致。
+会话名固定 `dm`、`tm`，大小写一致。
 
 | 终端 | 检测 |
 |---|---|
-| Herdr | `herdr agent list`，按 agent 名或 tab label 找 `pm` / `dm` / `tm` |
-| tmux | `tmux ls` 输出里找 `^pm:`、`^dm:`、`^tm:` |
+| Herdr | `herdr agent list`，按 agent 名或 tab label 找 `dm` / `tm` |
+| tmux | `tmux ls` 输出里找 `^dm:`、`^tm:` |
 | WezTerm | `wezterm cli list --format json`，按 pane 的 title 找 |
-| 其他 | 查 `.pdt/team.json` 的 `sessions`；仍不能确定就问用户"pm / dm / tm 会话是否已在运行？"，不要凭空重复创建 |
+| 其他 | 查 `.pdt/team.json` 的 `sessions`；仍不能确定就问用户"dm / tm 会话是否已在运行？"，不要凭空重复创建 |
 
 ## 4. 补齐：创建缺失的会话
 
@@ -62,21 +61,21 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 
 | 能力 | 终端 | 做法 |
 |---|---|---|
-| 能从命令行创建并注入输入 | Herdr、tmux、WezTerm | leader 自己起，见下面各终端命令 |
+| 能从命令行创建并注入输入 | Herdr、tmux、WezTerm | PM 自己起，见下面各终端命令 |
 | 只能开窗口、不能注入输入 | Windows Terminal、Ghostty、WSL 新窗口 | **交给用户**：打印下方「手动模式提示词」里对应角色的提示词，请用户新开标签页或窗口粘贴，等用户确认就绪 |
 
-手动模式下三方仍以 herdr 直连为主；herdr 不可用时才退回 `docs/status.md` 一行（见 [`group-conventions.md`](group-conventions.md) 的「看板」）。leader 无法验证会话存活，以用户确认 + 该角色回报的 herdr 消息为准。
+手动模式下仍以 herdr 直连为主；herdr 不可用时才退回 `docs/status.md` 一行（见 [`group-conventions.md`](group-conventions.md) 的「看板」）。PM 无法验证会话存活，以用户确认 + 该角色回报的 herdr 消息为准。
 
 ### Herdr
 
 ```bash
 test "${HERDR_ENV:-}" = 1
 herdr pane split --current --direction right --cwd "$PWD" --no-focus   # 从 JSON 读 .result.pane.pane_id
-herdr agent start pm --kind <kind> --pane <pane-id>
-herdr agent prompt pm "<角色指派消息>" --wait --timeout 60000
+herdr agent start dm --kind <kind> --pane <pane-id>
+herdr agent prompt dm "<角色指派消息>" --wait --timeout 60000
 ```
 
-`dm`、`tm` 同法，方向用 `down` / `right`。CLI 语法、生命周期状态、ID 读取见 herdr 技能。
+`tm` 同法，方向用 `down` / `right`。CLI 语法、生命周期状态、ID 读取见 herdr 技能。
 
 **伙伴会话的两条通道**：用 `herdr agent start` 起的是 named agent，走 `herdr agent prompt`；未用 `agent start` 起的伙伴（Herdr 自动识别出的）走 pane 通道，对它发 `herdr agent prompt` 会报 `agent_not_ready`：
 
@@ -90,11 +89,11 @@ herdr pane send-keys <pane-id> enter
 ### tmux
 
 ```bash
-tmux new-session -d -s pm -c "$PWD" "$AGENT_CMD"
-tmux send-keys -t pm "<角色指派消息>" Enter
+tmux new-session -d -s dm -c "$PWD" "$AGENT_CMD"
+tmux send-keys -t dm "<角色指派消息>" Enter
 ```
 
-`dm`、`tm` 同法。
+`tm` 同法。
 
 ### WezTerm
 
@@ -108,7 +107,7 @@ wezterm cli send-text --pane-id <id> "<角色指派消息>" Enter
 先尝试开窗口，开完仍无法投递提示词：
 
 ```powershell
-wt.exe -w 0 new-tab --title pm -d <项目路径> <agent_cmd>      # Windows Terminal
+wt.exe -w 0 new-tab --title dm -d <项目路径> <agent_cmd>      # Windows Terminal
 ```
 
 ```bash
@@ -121,48 +120,30 @@ nohup ghostty --working-directory "$PWD" &                     # Ghostty：窗�
 
 可自动化的终端用这条短消息注入；手动模式的完整可粘贴提示词见第 7 节。新会话看不到本会话上下文，消息必须自包含：
 
-```
-你是 PM（产品经理，pd 产品部门负责人）。先完整读一遍技能文件 ~/.agents/skills/pm/SKILL.md，再动手。
-项目根目录：<cwd>。
-开工动作：等 leader 分派需求；收到后按技能工作流产出 SPEC（≤ 80 行）。
-沟通：与 leader / DM / TM 用 herdr 直连；不写状态文档，不每轮写文档。
-就绪后向 leader 回报：会话名、cwd、已就绪状态。阻塞时带 file:line 或命令输出说明。
-```
+DM 版：
 
-DM 版：`dm` 技能、读 `docs/pd/spec/`、自己落笔 `docs/dev/plan/{seq}.md`（≤ 50 行，含设计决策与 ticket 表），按实际情况派生 n 个并行 de。
+```
+你是 DM（开发经理，dev 开发部门负责人）。先完整读一遍技能文件 ~/.agents/skills/dm/SKILL.md，再动手。
+项目根目录：<cwd>。
+开工动作：等 pm 分派；收到后按技能工作流定设计决策并自己落笔 docs/dev/plan/{seq}.md（≤ 50 行）。
+沟通：与 pm / tm 用 herdr 直连；不写状态文档，不每轮写文档。
+就绪后向 pm 回报：会话名、cwd、已就绪状态。阻塞时带 file:line 或命令输出说明。
+```
 
 TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/plan/{seq}.md`、自己落笔 `docs/test/report/{seq}.md`（≤ 40 行，用例与结果同表），按实际情况派生 n 个并行 te。
 
 ## 6. 纪律
 
 - 起完先确认会话真的在跑（Herdr：`herdr agent get <name>`；tmux：`tmux ls`；WezTerm：`wezterm cli list`），再进入需求工作
-- 创建失败、或用户不希望 leader 自动操作其终端时，把命令原样交给用户手动执行，等用户确认会话就绪后再继续
-- 每轮 leader 会话点名一次：已在线的伙伴不重建、不重发角色指派
-- 伙伴会话由 leader 创建这件事写入 `.pdt/team.json`，换终端或换项目时重新探测
+- 创建失败、或用户不希望 PM 自动操作其终端时，把命令原样交给用户手动执行，等用户确认会话就绪后再继续
+- 每轮 PM 会话点名一次：已在线的伙伴不重建、不重发角色指派
+- 伙伴会话由 PM 创建这件事写入 `.pdt/team.json`，换终端或换项目时重新探测
 
 ## 7. 手动模式提示词（粘贴用）
 
-终端不可自动化时，请用户新开三个标签页或窗口，把下面对应角色的提示词**整段**粘贴进去，一份提示词只投一个会话。粘贴前 leader 先把 `{项目根目录}` 替换成实际绝对路径，其余原样。
+终端不可自动化时，请用户新开两个标签页或窗口，把下面对应角色的提示词**整段**粘贴进去，一份提示词只投一个会话。粘贴前 PM 先把 `{项目根目录}` 替换成实际绝对路径，其余原样。
 
-> **维护提示（同构对）**：下面 PM / DM / TM 三段是**刻意同构**的，只有「你的产出」「你的子代理」两处按角色不同。这不是复制粘贴事故，别做「消重」：三段都要能独立粘贴进全新会话。改动其中一段的**共用条款**（沟通方式、文档纪律、收尾纪律）时，**三段必须同步改**。
-
-### PM
-
-```
-你是 PM（产品经理，pd 产品部门负责人）。先完整读一遍技能文件 ~/.agents/skills/pm/SKILL.md，再动手。
-
-项目根目录：{项目根目录}
-你的输入：leader 分派的需求；docs/dev/plan/、docs/test/report/ 的已交付与已知问题
-你的产出：docs/pd/spec/spec-{seq}.md（SPEC，含 what/why 与 how，≤ 80 行，你自己落笔）、CONTEXT.md 领域术语
-你的子代理：无。需要事实自己读源码与报告，需要用户拍板的经 leader
-
-沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
-- 状态、口径、裁决请求都走 herdr 消息，不写状态文档
-- 不要每轮都写文档：只在 SPEC 新建或升版时落盘
-- 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
-
-现在：等 leader 分派需求；收到后按技能工作流产出 SPEC。完成后回报：会话角色、项目根目录、产出的文件路径。
-```
+> **维护提示（同构对）**：下面 DM / TM 两段是**刻意同构**的，只有「你的产出」「你的子代理」两处按角色不同。这不是复制粘贴事故，别做「消重」：两段都要能独立粘贴进全新会话。改动其中一段的**共用条款**（沟通方式、文档纪律、收尾纪律）时，**两段必须同步改**。
 
 ### DM
 
@@ -174,10 +155,10 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/plan/{seq}.md`、自己
 你的产出：docs/dev/plan/{seq}.md（开发计划与进度，一份文件就地更新，≤ 50 行，你自己落笔）
 你的子代理：de × n（n = 可并行 ticket 数，按实际情况派生），只向你汇报
 
-沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
+沟通方式（pm / dm / tm 之间 herdr 直连，经理之间直接谈）：
 - 进度、验收结论、缺陷退回、裁决请求都走 herdr 消息，不写状态文档
 - 不要每轮都写文档：只在计划有实质变更时更新
-- 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
+- 不做轮询：上游更新由用户/pm 触发，或在本轮任务开始时检查一次
 
 现在：读 docs/pd/spec/ 下最新 SPEC，按技能工作流定设计决策与开发计划。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
 ```
@@ -192,19 +173,19 @@ TM 版：`tm` 技能、读 `docs/pd/spec/` 与 `docs/dev/plan/{seq}.md`、自己
 你的产出：docs/test/report/{seq}.md（测试报告，用例与结果同表，≤ 40 行，你自己落笔）
 你的子代理：te × n（n = 可并行批次数，按实际情况派生），只向你汇报
 
-沟通方式（leader / PM / DM / TM 之间 herdr 直连，经理之间直接谈）：
+沟通方式（pm / dm / tm 之间 herdr 直连，经理之间直接谈）：
 - 测试结论、缺陷退回、裁决请求都走 herdr 消息，不写状态文档
 - 每条结论必须带 file:line 或 grep 证据，不接受无证据结论
 - 不要每轮都写文档：只在报告定稿或追加用例时落盘
-- 不做轮询：上游更新由用户/leader 触发，或在本轮任务开始时检查一次
+- 不做轮询：上游更新由用户/pm 触发，或在本轮任务开始时检查一次
 
 现在：读最新 SPEC 与开发计划，按技能工作流设计用例并派 te 执行。完成后回报：会话角色、项目根目录、已读取的 SPEC 编号、产出的文件路径。
 ```
 
 ### 流程与纪律
 
-1. leader 探测到宿主终端不可自动化 → 打印这段话给用户：
-   > 当前终端（{终端名}）无法从命令行创建会话。请新开三个标签页或窗口，分别把上面 PM / DM / TM 三段提示词整段粘贴进去。三个都启动后告诉我一声。
-2. 用户开好并回复后，leader 把三个会话写入 `.pdt/team.json`，标记 `"managed": "manual"`
-3. 用户开好之前 leader 不进入需求工作，先等确认
+1. PM 探测到宿主终端不可自动化 → 打印这段话给用户：
+   > 当前终端（{终端名}）无法从命令行创建会话。请新开两个标签页或窗口，分别把上面 DM / TM 两段提示词整段粘贴进去。两个都启动后告诉我一声。
+2. 用户开好并回复后，PM 把两个会话写入 `.pdt/team.json`，标记 `"managed": "manual"`
+3. 用户开好之前 PM 不进入需求工作，先等确认
 4. 之后集团以 herdr 定向沟通为主；herdr 不可用时才退回 `docs/status.md` 一行
