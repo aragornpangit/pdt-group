@@ -1,6 +1,6 @@
 # pdt-group 技能台账
 
-集团 5 个角色所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
+集团经理角色（pm / dm / tm）所用的 mattpocock 工程技能，按 **mattpocock 的语义**分配到 pd / dev / test 三个部门。`de` / `te` 是经理派发阶段动态生成的子代理，不装独立技能文件（模板见 `dm/templates.md`、`tm/templates.md`）。各角色 SKILL.md 只写自己接线用到的那几条，不在此复述。
 
 **上游仓库**：[`mattpocock/skills`](https://github.com/mattpocock/skills)（GitHub，`main` 分支）。下表每个技能名都链到它在 `main` 上的 `SKILL.md` raw 地址（raw 根 `https://raw.githubusercontent.com/mattpocock/skills/main/`），点开即读到上游原文。
 
@@ -31,9 +31,9 @@
 | [`codebase-design`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/codebase-design/SKILL.md) | MODEL | deep module 的共享词汇与纪律（行为多、接口小、放在干净 seam） | DM |
 | [`wayfinder`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wayfinder/SKILL.md) | USER | 超过单 session 的工作拆成决策票地图，逐张解 | DM |
 | [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md) | USER | plan/spec → tracer-bullet tickets + blocking 边（**已内化为 [`templates.md`](../dm/templates.md) 的「切片细则」**） | DM |
-| [`implement`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/implement/SKILL.md) | USER | 按 spec/tickets 实施，驱动 `tdd`，收尾 `code-review` | `de` |
-| [`tdd`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/tdd/SKILL.md) | MODEL | 红绿环，一次一个纵向切片 | `de` |
-| [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Standards 轴**自审（合 repo 规范 + Fowler 坏味道基线） | `de` |
+| [`implement`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/implement/SKILL.md) | USER | 按 spec/tickets 实施，驱动 `tdd`，收尾 `code-review` | `de`（DM 动态派生，见 dm/templates.md） |
+| [`tdd`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/tdd/SKILL.md) | MODEL | 红绿环，一次一个纵向切片 | `de`（DM 动态派生） |
+| [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Standards 轴**自审（合 repo 规范 + Fowler 坏味道基线） | `de`（DM 动态派生） |
 | [`resolving-merge-conflicts`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/resolving-merge-conflicts/SKILL.md) | MODEL | 逐 hunk 按意图追溯消解冲突，做完操作（绝不 `--abort`） | DM |
 | [`improve-codebase-architecture`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/improve-codebase-architecture/SKILL.md) | USER | 扫描深化机会 → HTML 报告 → 拷问选中的那个（**条件**：PM 明确要求技术债清理） | DM |
 | [`wizard`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wizard/SKILL.md) | MODEL | 生成交互式 bash 向导，带人做只有人能做的步骤（凭证 / CI / 迁移）（**条件**） | DM |
@@ -46,11 +46,11 @@
 
 | 技能 | 类型 | 语义 | 谁执行 |
 |---|---|---|---|
-| [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Spec + Standards 双轴**独立复核（并行子代理，互不污染），对应 `XX-CODE` 用例 | `te` |
-| [`diagnosing-bugs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md) | MODEL | 疑难缺陷 / 性能回退的诊断环（红 → 最小化 → 假设 → 插桩 → 修 → 回归） | `te` |
+| [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Spec + Standards 双轴**独立复核（并行子代理，互不污染），对应 `XX-CODE` 用例 | `te`（TM 动态派生，见 tm/templates.md） |
+| [`diagnosing-bugs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md) | MODEL | 疑难缺陷 / 性能回退的诊断环（红 → 最小化 → 假设 → 插桩 → 修 → 回归） | `te`（TM 动态派生） |
 | [`handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md) | USER | 会话自我交接（仅用户明确要求时） | TM |
 
-> `de` 与 `te` 共用 `code-review` 但轴不同：`de` 做 Standards 自审，`te` 做 Spec + Standards 独立复核，互为独立证据。
+> `de` 与 `te` 共用 `code-review` 但轴不同：`de` 做 Standards 自审，`te` 做 Spec + Standards 独立复核，互为独立证据。两者均为经理派发阶段动态生成的子代理，技能接线写在派发 prompt 模板（`dm/templates.md`、`tm/templates.md`）里。
 
 ## 跨角色与未纳入
 

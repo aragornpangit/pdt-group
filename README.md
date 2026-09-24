@@ -2,7 +2,7 @@
 
 **把一支软件团队装进 agent 会话里。**
 
-PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 5 个角色。每个角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来。
+PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 3 个可安装角色（pm / dm / tm），外加两类派单时动态生成的子代理（de / te）。每个经理角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来。
 
 它不是工具技能，而是**一套组织协议**：规定谁向谁汇报、产物落哪个目录、什么话走哪条通道。
 
@@ -30,23 +30,28 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
     └── te × n                用例执行
 ```
 
+`de` 与 `te` 是 DM / TM 工作到派发阶段时**动态生成的子代理**，不是可安装技能：角色边界、工作流与汇报格式由经理按派发 prompt 模板整段内嵌（见 [`dm/templates.md`](dm/templates.md) 与 [`tm/templates.md`](tm/templates.md)），n 由经理根据任务自动决定。
+
 三条派发铁律：
 
 - 子代理**只向本部门经理汇报**，只接受本部门经理安排
 - **经理间直通**：pm / dm / tm 用 herdr 横向直接协商，不经第三人转达
 - 两方无法一致时**由 pm 裁决**，结论用 herdr 回给相关部门
 
-## 五个角色
+## 角色与子代理
 
 | 角色 | 层级 | 职责 |
 |---|---|---|
 | [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（≤ 80 行，含 what/why 与 how），裁决开发/测试报告。集团层零文档产出 |
-| [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，≤ 50 行），按实际情况派生 n 个 `de`，验收合并 |
-| [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，≤ 40 行），按实际情况派生 n 个 `te`，复核并退回缺陷 |
-| [`de`](de/SKILL.md) | 子代理 | 开发工程师。在 DM 预建的 git worktree 内 implement → tdd → 自审 → commit |
-| [`te`](te/SKILL.md) | 子代理 | 测试工程师。执行用例，持 `code-review` 与 `diagnosing-bugs` |
+| [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，≤ 50 行），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
+| [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，≤ 40 行），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
 
-每个角色另有一页面向人的说明（四段式：What it does / When to reach for it / Common questions / It's working if），见 [`docs/`](docs/)。
+**动态子代理**（不装技能文件，由经理按派发 prompt 模板生成）：
+
+- `de` × n：开发工程师。在 DM 预建的 git worktree 内 implement → tdd → 自审 → commit（模板见 [`dm/templates.md`](dm/templates.md)）
+- `te` × n：测试工程师。执行用例，持 `code-review` 与 `diagnosing-bugs`（模板见 [`tm/templates.md`](tm/templates.md)）
+
+每个经理角色另有一页面向人的说明（四段式：What it does / When to reach for it / Common questions / It's working if），见 [`docs/`](docs/)。
 
 ## 一条需求怎么走完
 
@@ -70,10 +75,10 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ## 安装
 
-把 5 个角色目录**拍平**拷进 harness 的技能目录，不要带任何层级：
+把 3 个经理角色目录**拍平**拷进 harness 的技能目录，不要带任何层级（`de` / `te` 不安装，由 dm / tm 动态派生）：
 
 ```bash
-for d in pm dm tm de te; do
+for d in pm dm tm; do
   cp -r "$d" ~/.agents/skills/
 done
 ```
@@ -94,11 +99,9 @@ done
 │   ├── team-bootstrap.md     # 终端探测、dm/tm 会话创建、手动模式提示词
 │   ├── skill-inventory.md    # 角色 ↔ 上游技能台账
 │   └── spec-format.md        # SPEC 格式
-├── dm/{SKILL.md, templates.md}
-├── tm/{SKILL.md, templates.md}
-├── de/SKILL.md
-├── te/SKILL.md
-└── docs/                     # 面向人的四段式角色说明（5 页）
+├── dm/{SKILL.md, templates.md}   # templates.md 含「de 派发 prompt 模板」
+├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
+└── docs/                     # 面向人的四段式角色说明（3 页）
 ```
 
 ## 依赖

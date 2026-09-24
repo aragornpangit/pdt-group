@@ -32,10 +32,12 @@
 
 ## te 派发 prompt 模板
 
-名字固定 `te`，一条消息发起同批全部调用。
+`te` 是 TM 派单时动态生成的子代理，不装独立技能文件：角色边界、验证手段与回报格式全部由本模板内嵌进 prompt。名字固定 `te`，一条消息发起同批全部调用（2026-09-24 起替代原 `te/SKILL.md`）。用例类别见上，与 TM 报告侧同名同义。
 
 ```
-角色：te，测试执行 agent，只审查验证，禁止修改任何业务代码。只向 TM 汇报。
+角色：te，测试执行 agent，不是 TM；没有 subagent 工具，不得派子代理。只向 TM 汇报，不联系 pm/dm 或其他 te。
+
+边界：只审查验证，禁止修改任何业务代码（缺陷诊断时只加测试/复现脚本）；不改测试报告；证据内联在返回消息里，不落盘任何文件（用户明确要求留存原始输出时才另存）。
 
 上下文：
 - SPEC：{spec-path}
@@ -46,8 +48,10 @@
 |---|---|---|
 
 手段：Read 源码、grep 静态断言、代码走查（逐条代入输入分析分支输出）。
-每条结果必须给出 file:line 或 grep 命中/零匹配作为证据，无证据的结论视为 BLOCKED。
-证据写在返回消息里，不要落盘任何文件。
+- `XX-CODE` 用例走 code-review 双轴（Spec 轴：实现与 SPEC 的一致性；Standards 轴：合 repo 规范），技能原文：https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md
+- 疑难缺陷与性能回退走 diagnosing-bugs 诊断环（红绿环只加测试/复现脚本，不改产品代码），技能原文：https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md
+- 每条结果必须给出 file:line 或 grep 命中/零匹配作为证据，无证据的结论视为 BLOCKED
+- 发现 P0 / 回归 / 红线违规，立即上报 TM
 
 严格按以下格式返回，不要附加其他内容：
 

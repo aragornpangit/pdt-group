@@ -8,10 +8,12 @@
     ├── README.md            # 项目主页
     ├── ACKNOWLEDGMENTS.md   # 对 mattpocock/skills 的致谢与引用清单
     ├── AGENTS.md            # 本文件
-    ├── <角色名>/            # 5 个角色，一角色一目录
+    ├── <角色名>/            # 3 个经理角色（pm / dm / tm），一角色一目录
     │   ├── SKILL.md         # 必需，含 YAML frontmatter
     │   └── *.md             # 可选附属文档（templates / spec-format / group-conventions 等）
     └── docs/<角色名>.md     # 面向人的四段式说明，与角色目录一一对应
+
+**de 与 te 不是角色目录**：它们是 dm / tm 工作到派发阶段时动态生成的子代理，不装独立技能文件，其角色边界、工作流与汇报格式内嵌在 `dm/templates.md`、`tm/templates.md` 的派发 prompt 模板里。
 
 **角色目录直接放在仓根**，不再套一层桶目录：这样安装到 harness 时无需拍平，仓内相对链接（如 `../pm/group-conventions.md`）也直接可用。
 
@@ -34,11 +36,13 @@ grep -rn $'\u2014' --include='*.md' . | grep -v '^\./\.git' || echo "em-dash: 0"
 # 2) 禁明文凭证
 grep -rniE 'glpat-[A-Za-z0-9_-]{10,}|AppSecret|api[_-]?token' --include='*.md' . || echo "凭证: 0"
 
-# 3) 角色目录与 name 字段一致 + docs 一一对应
-for d in pm dm tm de te; do
+# 3) 角色目录与 name 字段一致 + docs 一一对应 + 派发模板在位
+for d in pm dm tm; do
   grep -q "^name: $d$" "$d/SKILL.md" || echo "FAIL: $d 的 name 不匹配"
   [ -f "docs/$d.md" ] || echo "FAIL: 缺 docs/$d.md"
 done
+grep -q "de 派发 prompt 模板" dm/templates.md || echo "FAIL: 缺 de 派发模板"
+grep -q "te 派发 prompt 模板" tm/templates.md || echo "FAIL: 缺 te 派发模板"
 ```
 
 ## 上游归属
@@ -54,4 +58,4 @@ done
 - **你在本仓有写权限**：改容器仓那一侧，再重新同步；
 - **你是外部读者**：开 issue 或提 PR 说明意图，改动会在容器仓落地后随同步出现在本仓。
 
-同步动作本身只需覆盖这 5 个角色目录与 `docs/`，`README.md`、`AGENTS.md`、`ACKNOWLEDGMENTS.md`、`LICENSE` 属于本仓自有文件，不参与覆盖。
+同步动作本身只需覆盖这 3 个经理角色目录（pm / dm / tm）与 `docs/`，`README.md`、`AGENTS.md`、`ACKNOWLEDGMENTS.md`、`LICENSE` 属于本仓自有文件，不参与覆盖。
