@@ -32,7 +32,7 @@
 
 ## te 派发 prompt 模板
 
-`te` 是 TM 派单时动态生成的子代理，不装独立技能文件：角色边界、验证手段与回报格式全部由本模板内嵌进 prompt。名字固定 `te`，一条消息发起同批全部调用（2026-09-24 起替代原 `te/SKILL.md`）。派发一律**后台/异步**（CodeBuddy `run_in_background: true`；pi subagent 工具 async），TM 发完即结束本轮（return control），由完成通知唤醒再复核，不在原地等结果。用例类别见上，与 TM 报告侧同名同义。
+`te` 是 TM 派单时动态生成的子代理，不装独立技能文件：角色边界、验证手段与回报格式全部由本模板内嵌进 prompt。名字固定 `te`，一条消息发起同批全部调用（2026-09-24 起替代原 `te/SKILL.md`）。派发一律**后台/异步**（机制映射见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），TM 发完即结束本轮（return control），由完成通知唤醒再复核，不在原地等结果。用例类别见上，与 TM 报告侧同名同义。
 
 ```
 角色：te，测试执行 agent，不是 TM；没有 subagent 工具，不得派子代理。只向 TM 汇报，不联系 pm/dm 或其他 te。
