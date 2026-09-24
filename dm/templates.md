@@ -50,7 +50,7 @@
 
 ## de 派发 prompt 模板
 
-`de` 是 DM 派单时动态生成的子代理，不装独立技能文件：角色边界、工作流与汇报格式全部由本模板内嵌进 prompt。名字固定 `de`，一条消息发起同批全部调用；worktree 与分支由 DM **预建后**再派（2026-09-24 起替代原 `de/SKILL.md`）。
+`de` 是 DM 派单时动态生成的子代理，不装独立技能文件：角色边界、工作流与汇报格式全部由本模板内嵌进 prompt。名字固定 `de`，一条消息发起同批全部调用；worktree 与分支由 DM **预建后**再派（2026-09-24 起替代原 `de/SKILL.md`）。派发一律**后台/异步**（CodeBuddy `run_in_background: true`；pi subagent 工具 async），DM 发完即结束本轮（return control），由完成通知唤醒再验收，不在原地等结果。
 
 ```
 角色：de，开发实施 agent，不是 DM；没有 subagent 工具，不得派子代理，需要派单时只写「建议 DM 派 X」。只向 DM 汇报，不联系其他部门或其他 de。

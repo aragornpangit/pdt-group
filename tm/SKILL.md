@@ -33,8 +33,8 @@ TM 是 test 测试部门负责人：设计用例与结论，派 `te` 执行，�
 
 1. **设计用例** SPEC 新增或变更时，按上述类别设计用例（不允许有未覆盖的验收标准），**直接写进报告文件的用例表**，不另立计划文档
 2. **确认可测** 读 `docs/dev/plan/{seq}.md` 确认实施状态、构建闸、静态断言均通过；未通过直接退回开发部门
-3. **派 te 并行** 先自跑编译闸（命令从项目配置读取），失败则终止；n 由 TM 根据本批用例自动决定（可并行批次数，建议 n ≤ 4），一条消息发起全部调用；prompt 按 [`templates.md`](templates.md) 的「te 派发 prompt 模板」生成，上下文路径与本批用例填进模板对应占位符
-4. **写报告** 对存疑或 FAIL 的用例亲自复核后定结论，按 [`templates.md`](templates.md) 自己落笔 `docs/test/report/{seq}.md`（≤ 40 行），落盘后 herdr 双发 pm 与 DM（两封分开写）
+3. **派 te 并行** 先自跑编译闸（命令从项目配置读取），失败则终止；n 由 TM 根据本批用例自动决定（可并行批次数，建议 n ≤ 4），一条消息发起全部调用；prompt 按 [`templates.md`](templates.md) 的「te 派发 prompt 模板」生成，上下文路径与本批用例填进模板对应占位符；**后台派发**（口径见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），派完即结束本轮，不在原地等结果
+4. **写报告** te 完成通知（task-notification / 原生唤醒）到达后，对存疑或 FAIL 的用例亲自复核后定结论，按 [`templates.md`](templates.md) 自己落笔 `docs/test/report/{seq}.md`（≤ 40 行），落盘后 herdr 双发 pm 与 DM（两封分开写）
 
 ## 通信
 
