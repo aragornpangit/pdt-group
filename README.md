@@ -24,6 +24,7 @@ PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门
 ```
 pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 ├── pd   产品部门       经理 pm  → SPEC（自己落笔，≤ 80 行）
+│   └── pm 子代理 × n         按需（取证 / 核查 / 资料整理），只向 pm 汇报，pm 汇总结果
 ├── dev  开发部门       经理 dm  → 开发计划与进度（自己落笔，≤ 50 行）
 │   └── de × n                单 ticket 实施 → git worktree + tdd
 ├── test 测试部门       经理 tm  → 测试报告（自己落笔，≤ 40 行）
@@ -43,7 +44,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 | 角色 | 层级 | 职责 |
 |---|---|---|
-| [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（≤ 80 行，含 what/why 与 how），裁决开发/测试报告。集团层零文档产出 |
+| [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（≤ 80 行，含 what/why 与 how），裁决开发/测试报告。可按需派生子代理（只向 pm 汇报，pm 汇总结果）；集团层零文档产出 |
 | [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，≤ 50 行），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
 | [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，≤ 40 行），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
 | [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/` |
@@ -69,10 +70,10 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 2026-09-23 起，本项目按「文档是副产品，不是工作日志」重排了文档面：
 
-- **文档白名单**：全集团只有 SPEC（≤ 80 行）、开发计划与进度（≤ 50 行）、测试报告（≤ 40 行）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
+- **文档白名单**：全集团只有 SPEC（≤ 80 行）、开发计划与进度（≤ 50 行）、测试报告（≤ 40 行）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
 - **不要每轮都写文档**：只在有实质产出或口径变化时才动文档，日常轮次进度与结论走 herdr
 - **一份需求一份文件，就地更新**：不按轮次新建文件，历史版本由 git 承载
-- **证据内联**：报告里给 `file:line` 或 grep 结果即可，不落盘证据文件
+- **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/<seq>-<topic>/`
 - **时间预算**：同一 feature 的文档写作累计不超过实现时间的 10%
 
 集团口径的唯一来源是 [`pm/group-conventions.md`](pm/group-conventions.md)。
@@ -99,13 +100,16 @@ done
 ├── LICENSE                   # MIT
 ├── pm/
 │   ├── SKILL.md              # 产品经理兼集团负责人（用户入口）
-│   ├── group-conventions.md  # 集团口径唯一来源：通信/文档/命名/看板
+│   ├── group-conventions.md  # 集团口径唯一来源：组织架构/通信/文档/表达/团队纪律
+│   ├── communication-style.md # 表达纪律唯一详细版：黑话对照表、grep 自检
+│   ├── self-check.md         # PM 自查：何时实核、裁决原则
 │   ├── team-bootstrap.md     # 终端探测、dm/tm 会话创建、手动模式提示词
 │   ├── skill-inventory.md    # 角色 ↔ 上游技能台账
 │   └── spec-format.md        # SPEC 格式
 ├── dm/{SKILL.md, templates.md}   # templates.md 含「de 派发 prompt 模板」
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
 ├── scout/{SKILL.md}          # 集团直属专家：调研报告落 docs/pd/research/
+├── scripts/check-mirror.sh   # 本仓校验（em-dash / 死链 / name / docs 对应）
 └── docs/                     # 面向人的四段式角色说明（4 页）
 ```
 

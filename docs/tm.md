@@ -17,7 +17,7 @@
 ## Common questions
 
 **`te` 是什么角色？**
-TM 的子代理（测试执行者）：只向 TM 汇报、只接受 TM 的安排，持有并执行 `code-review`（Spec + Standards 双轴独立复核，对应 `XX-CODE` 用例）与 `diagnosing-bugs`。`te` 不改产品代码、不写跨部门文档、不落盘证据文件。
+TM 的子代理（测试执行者）：只向 TM 汇报、只接受 TM 的安排，持有并执行 `code-review`（Spec + Standards 双轴独立复核，对应 `XX-CODE` 用例）与 `diagnosing-bugs`。`te` 不改产品代码、不写跨部门文档、不落盘证据文件；需要留存的 host 面机检证据由 TM 归档入 `docs/test/evidence/`。
 
 **`te` 派生几个？**
 n = 可并行批次数，按实际情况决定，可为 1。必须串行的有物理设备操作、同工作树写入、有顺序状态的流程。
@@ -36,4 +36,4 @@ n = 可并行批次数，按实际情况决定，可为 1。必须串行的有�
 
 ## It's working if
 
-`docs/test/report/{seq}.md` 存在且 ≤ 40 行，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 dm；没有产出报告以外的文档。
+`docs/test/report/{seq}.md` 存在且 ≤ 40 行，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 dm；除报告与 `docs/test/evidence/` 证据目录外没有其他产出文档。
