@@ -2,7 +2,7 @@
 
 **把一支软件团队装进 agent 会话里。**
 
-PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 3 个可安装角色（pm / dm / tm），外加两类派单时动态生成的子代理（de / te）。每个经理角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来。
+PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 4 个可安装角色（pm / dm / tm / scout），外加两类派单时动态生成的子代理（de / te）。每个经理角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来；scout 是集团直属专家，承接选型与重构调研。
 
 它不是工具技能，而是**一套组织协议**：规定谁向谁汇报、产物落哪个目录、什么话走哪条通道。
 
@@ -26,8 +26,9 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 ├── pd   产品部门       经理 pm  → SPEC（自己落笔，≤ 80 行）
 ├── dev  开发部门       经理 dm  → 开发计划与进度（自己落笔，≤ 50 行）
 │   └── de × n                单 ticket 实施 → git worktree + tdd
-└── test 测试部门       经理 tm  → 测试报告（自己落笔，≤ 40 行）
-    └── te × n                用例执行
+├── test 测试部门       经理 tm  → 测试报告（自己落笔，≤ 40 行）
+│   └── te × n                用例执行
+└── scout 集团直属专家  scout    → 调研报告（自己落笔，docs/pd/research/）
 ```
 
 `de` 与 `te` 是 DM / TM 工作到派发阶段时**动态生成的子代理**，不是可安装技能：角色边界、工作流与汇报格式由经理按派发 prompt 模板整段内嵌（见 [`dm/templates.md`](dm/templates.md) 与 [`tm/templates.md`](tm/templates.md)），n 由经理根据任务自动决定。
@@ -45,13 +46,14 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 | [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（≤ 80 行，含 what/why 与 how），裁决开发/测试报告。集团层零文档产出 |
 | [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，≤ 50 行），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
 | [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，≤ 40 行），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
+| [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/` |
 
 **动态子代理**（不装技能文件，由经理按派发 prompt 模板生成）：
 
 - `de` × n：开发工程师。在 DM 预建的 git worktree 内 implement → tdd → 自审 → commit（模板见 [`dm/templates.md`](dm/templates.md)）
 - `te` × n：测试工程师。执行用例，持 `code-review` 与 `diagnosing-bugs`（模板见 [`tm/templates.md`](tm/templates.md)）
 
-每个经理角色另有一页面向人的说明（四段式：What it does / When to reach for it / Common questions / It's working if），见 [`docs/`](docs/)。
+每个角色另有一页面向人的说明（四段式：What it does / When to reach for it / Common questions / It's working if），见 [`docs/`](docs/)。
 
 ## 一条需求怎么走完
 
@@ -60,6 +62,8 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 1. **pd**：`grilling` 拷问收敛决策 → pm 自己取证（读源码、报告、配置）→ pm 自己落 SPEC
 2. **dev**：DM 定设计决策（落 `docs/dev/plan/{seq}.md`）并按 tracer-bullet 纵向切片 → 按实际情况派生 n 个 `de`，各自在 worktree 内实施、走 tdd 红绿环、Standards 轴自审、分支内 commit → DM 验收合并
 3. **test**：tm 按五类用例设计（直接写进报告）→ 派生 n 个 `te` 并行执行 → tm 复核后 herdr 双发 pm 与 dm
+
+调研支线：pd 或 dev 阶段遇到技术选型、竞品对标、重构前评估，pm / dm 派 scout 调研，架构 Spec 落 `docs/pd/research/`，结论一句话回流 SPEC 或开发计划。
 
 ## 文档纪律（本项目的核心取舍）
 
@@ -75,10 +79,10 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ## 安装
 
-把 3 个经理角色目录**拍平**拷进 harness 的技能目录，不要带任何层级（`de` / `te` 不安装，由 dm / tm 动态派生）：
+把 4 个角色目录**拍平**拷进 harness 的技能目录，不要带任何层级（`de` / `te` 不安装，由 dm / tm 动态派生）：
 
 ```bash
-for d in pm dm tm; do
+for d in pm dm tm scout; do
   cp -r "$d" ~/.agents/skills/
 done
 ```
@@ -101,7 +105,8 @@ done
 │   └── spec-format.md        # SPEC 格式
 ├── dm/{SKILL.md, templates.md}   # templates.md 含「de 派发 prompt 模板」
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
-└── docs/                     # 面向人的四段式角色说明（3 页）
+├── scout/{SKILL.md}          # 集团直属专家：调研报告落 docs/pd/research/
+└── docs/                     # 面向人的四段式角色说明（4 页）
 ```
 
 ## 依赖

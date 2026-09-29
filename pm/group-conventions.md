@@ -9,11 +9,12 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 ├── pd   产品部门       经理 pm  → SPEC（自己落笔）
 ├── dev  开发部门       经理 dm  → 开发计划与进度（自己落笔）
 │   └── de × n                单 ticket 实施 → .worktrees/{ticket}
-└── test 测试部门       经理 tm  → 测试报告（自己落笔）
-    └── te × n                用例执行
+├── test 测试部门       经理 tm  → 测试报告（自己落笔）
+│   └── te × n                用例执行
+└── scout 集团直属专家  scout    → 调研报告（docs/pd/research/，自己落笔）
 ```
 
-- 三个经理**自己落笔**本部门文档；不设文档秘书，也不设调研与 SPEC 子代理（2026-09-23 起）
+- 三个经理**自己落笔**本部门文档；不设文档秘书，也不设调研与 SPEC 子代理（2026-09-23 起；2026-09-29 起集团直属专家 scout 例外：选型 / 竞品 / 重构调研派 scout，见其 SKILL.md）
 - **pm 兼集团负责人与产品经理**（2026-09-23 起取消独立 leader 角色）：承接用户诉求、组建并管理 dm / tm 会话、顶层裁决
 - `de` / `te` 由 DM / TM **按实际情况派生 n 个并行子代理**（n = 可并行 ticket 数 / 可并行批次数，可为 1，不要为凑数硬拆）；子代理只向本部门经理汇报、只接受本部门经理安排
 - **子代理后台派发**（2026-09-24 起）：经理派子代理一律后台/异步（CodeBuddy `run_in_background: true`；pi subagent 工具 async，默认即开；Codex 原生 subagents 并行），派完立即结束本轮（return control）、保持会话可收 herdr 消息，禁止原地等待、轮询、bg_wait；子代理完成经完成通知（task-notification / 原生唤醒）触发验收或复核。经理可同时持有多个批次
@@ -38,10 +39,11 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 | SPEC | `docs/pd/spec/spec-{seq}.md` | 80 行 | PM |
 | 开发计划与进度 | `docs/dev/plan/{seq}.md` | 50 行 | DM |
 | 测试报告 | `docs/test/report/{seq}.md` | 40 行 | TM |
+| 调研报告 | `docs/pd/research/{语义}-{YYYYMMDD}-v{N}.md` | 按需 | Scout |
 | 领域术语 | `CONTEXT.md` | 按需 | PM |
 | 看板（兜底，见下） | `docs/status.md` | 一行一需求 | 三方各管自己的列 |
 
-- 已废除（2026-09-23）：`docs/adr/`（架构决策并入开发计划的「设计决策」节）、`docs/pd/research/`（调研结论直接进 SPEC）、`docs/dev/report/`、`docs/test/plan/`、`docs/dev/evidence/`、`docs/test/evidence/`、`docs/handoff/`（交接改为按需）
+- 已废除（2026-09-23）：`docs/adr/`（架构决策并入开发计划的「设计决策」节）、`docs/dev/report/`、`docs/test/plan/`、`docs/dev/evidence/`、`docs/test/evidence/`、`docs/handoff/`（交接改为按需）。其中 `docs/pd/research/`（调研结论直接进 SPEC）于 2026-09-29 因 scout 角色恢复，**仅 scout 产物入内**，其余角色的调研结论仍直接进 SPEC
 - **证据内联**：报告里给 `file:line` 或 grep 结果即可，不落盘证据文件；用户明确要求留存原始输出时才另存，目录当次商定
 - **脚本 / 探针不属白名单管辖**：探针 / 单测 / 静态断言脚本是**可复算必需的工具**（第 7 条）⇒ **入仓代码树** `ncnn-android-yolo11/tools/<ticket>/`（不进 APK）；「证据内联」**只管产物**（截图 / 侧车 / 日志），**不管工具**：「脚本不入仓 ⇒ 按需重建」= 不可复算（重建依赖原脚本 ⇒ 循环）
 - **没有内容的节直接删掉**，不写「无」「N/A」「待补充」占位
@@ -100,7 +102,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ## 会话与 label
 
-会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm}`（pm 是集团入口，dm / tm 由 pm 起）。
+会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm, scout}`（pm 是集团入口，dm / tm 由 pm 起；scout 由 pm 按需起，或用户直接在其会话下达调研）。
 
 ## 跨技能引用纪律
 

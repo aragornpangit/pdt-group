@@ -57,7 +57,7 @@
 | 技能 | 类型 | 归属 | 说明 |
 |---|---|---|---|
 | [`ask-matt`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/ask-matt/SKILL.md) | USER | pm | 路由器：问「该用哪个技能 / 流程」 |
-| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | pm | 2026-09-23 起未接线：PM 需要事实自行读源码与报告，不派调研子代理 |
+| [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) | MODEL | scout | 2026-09-23 起未接线；2026-09-29 接线给集团直属专家 scout：选型 / 竞品 / 重构调研派 scout（其 SKILL.md 内化 research 纪律并加防幻觉交叉验证），产出落 `docs/pd/research/` |
 | [`setup-matt-pocock-skills`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/setup-matt-pocock-skills/SKILL.md) | USER | 一次性 | 配 issue tracker / triage 标签 / 文档目录，每仓跑一次 |
 
 **未纳入**（与 PDT 流程无关或属个人工具链）：`teach`、`scaffold-exercises`、`writing-beats` / `writing-fragments` / `writing-shape`（写作类），以及 `in-progress/` 桶的 `claude-handoff`、`implement-spec`、`loop-me`、`retro`、`setup-ts-deep-modules`（上游尚未定稿）。
