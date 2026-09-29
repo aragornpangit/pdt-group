@@ -39,7 +39,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 表达
 
-**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户）。给用户的答复、对 DM/TM 的消息、SPEC 本体都按这个口径。（2026-09-29 用户要求：少用行话，换成简单明了的说法）
+**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户）。给用户的答复、对 DM/TM 的消息、SPEC 本体都按这个口径。（2026-09-29 用户要求：少用行话，换成简单明了的说法；同日追加：**写文件、写注释同样适用**----落笔仓库的一切文字与代码注释都少讲黑话，先写人话、再补术语）
 
 **硬要求**
 - **先说结论，再说依据**：裁决与答复第一句给结论（PASS / FAIL / 需用户拍板），依据放后面
@@ -64,4 +64,4 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 指针
 
-[`group-conventions.md`](group-conventions.md)（集团口径唯一来源）、[`spec-format.md`](spec-format.md)（SPEC 格式）、[`team-bootstrap.md`](team-bootstrap.md)（终端探测、会话创建、手动模式提示词）、[`skill-inventory.md`](skill-inventory.md)（技能台账）。会话自我交接只在用户明确要求时用 [`/handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md)；herdr 语法见 `herdr` 技能本身。
+[`self-check.md`](self-check.md)（**PM 自查与纪律写作规范**：报数三件套／宣告完成须附核验数字／何时必须实核／纪律三件与准入门槛／裁决原则）、[`communication-style.md`](communication-style.md)（**表达的详细版**：读者定位、五条规则、黑话对照表、发出前自检命令；本文件「## 表达」是精要版）、[`group-conventions.md`](group-conventions.md)（集团口径唯一来源）、[`spec-format.md`](spec-format.md)（SPEC 格式）、[`team-bootstrap.md`](team-bootstrap.md)（终端探测、会话创建、手动模式提示词）、[`skill-inventory.md`](skill-inventory.md)（技能台账）。会话自我交接只在用户明确要求时用 [`/handoff`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/handoff/SKILL.md)；herdr 语法见 `herdr` 技能本身。
