@@ -8,6 +8,10 @@
 # 用法：bash scripts/check-skills.sh
 #   退出码 0  = §8 问题数 0
 #   退出码 非0 = 校验失败（原样透传 §8 的 rc）或提取失败（3）
+#
+# 注意（2026-09-29）：本仓是拍平发布镜像，§8 的结构规则在这里必然报
+# <role>/SKILL.md 4 条 FAIL，退出码不可用。镜像布局请用 scripts/check-mirror.sh；
+# 本脚本只对容器仓布局（skills/<bucket>/<name>/）有意义。
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
