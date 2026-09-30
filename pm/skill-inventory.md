@@ -29,7 +29,7 @@
 | 技能 | 类型 | 语义 | 谁执行 |
 |---|---|---|---|
 | [`codebase-design`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/codebase-design/SKILL.md) | MODEL | deep module 的共享词汇与纪律（行为多、接口小、放在干净 seam） | DM |
-| [`wayfinder`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wayfinder/SKILL.md) | USER | 超过单 session 的工作拆成决策票地图，逐张解 | DM |
+| [`wayfinder`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wayfinder/SKILL.md) | USER | 超过单 session 的工作拆成决策工单地图，逐张解 | DM |
 | [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md) | USER | plan/spec → tracer-bullet tickets + blocking 边（**已内化为 [`templates.md`](../dm/templates.md) 的「切片细则」**） | DM |
 | [`implement`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/implement/SKILL.md) | USER | 按 spec/tickets 实施，驱动 `tdd`，收尾 `code-review` | `de`（DM 动态派生，见 dm/templates.md） |
 | [`tdd`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/tdd/SKILL.md) | MODEL | 红绿环，一次一个纵向切片 | `de`（DM 动态派生） |

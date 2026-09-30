@@ -61,7 +61,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 需求从 pm 进，沿 pd → dev → test 单向流动，`{seq}` 是贯穿全链的锚（由 pm 立 SPEC 时生成，开发计划与测试报告沿用）：
 
 1. **pd**：`grilling` 拷问收敛决策 → pm 自己取证（读源码、报告、配置）→ pm 自己落 SPEC
-2. **dev**：DM 定设计决策（落 `docs/dev/plan/{seq}.md`）并按 tracer-bullet 纵向切片 → 按实际情况派生 n 个 `de`，各自在 worktree 内实施、走 tdd 红绿环、Standards 轴自审、分支内 commit → DM 验收合并
+2. **dev**：DM 定设计决策（落 `docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v1-{seq}.md`）并按 tracer-bullet 纵向切片 → 按实际情况派生 n 个 `de`，各自在 worktree 内实施、走 tdd 红绿环、Standards 轴自审、分支内 commit → DM 验收合并
 3. **test**：tm 按五类用例设计（直接写进报告）→ 派生 n 个 `te` 并行执行 → tm 复核后 herdr 双发 pm 与 dm
 
 调研支线：pd 或 dev 阶段遇到技术选型、竞品对标、重构前评估，pm / dm 派 scout 调研，架构 Spec 落 `docs/pd/research/`，结论一句话回流 SPEC 或开发计划。
@@ -72,8 +72,8 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 - **文档白名单**：全集团只有 SPEC（≤ 80 行）、开发计划与进度（≤ 50 行）、测试报告（≤ 40 行）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
 - **不要每轮都写文档**：只在有实质产出或口径变化时才动文档，日常轮次进度与结论走 herdr
-- **一份需求一份文件，就地更新**：不按轮次新建文件，历史版本由 git 承载
-- **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/<seq>-<topic>/`
+- **一份需求一份文件，版本内就地更新**：实质修订升版落新文件（统一命名 `{前缀}-{语义slug}-{时间戳}-v{N}-{seq}.md`，见 [`pm/group-conventions.md`](pm/group-conventions.md)「文件命名」），逐轮修改历史由 git 承载
+- **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/`
 - **时间预算**：同一 feature 的文档写作累计不超过实现时间的 10%
 
 集团口径的唯一来源是 [`pm/group-conventions.md`](pm/group-conventions.md)。

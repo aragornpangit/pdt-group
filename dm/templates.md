@@ -1,14 +1,14 @@
 # 开发部门（dev）模板（DM）
 
-**一份需求一份文件**：`docs/dev/plan/{seq}.md`，含设计决策、ticket 表、逐 ticket 进度。**就地更新**，不另写进度报告、不另写 ADR、不另写设计文档。**上限 50 行**。
+**一份需求一份文件**：`docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v{N}-{seq}.md`（命名见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「文件命名」），含设计决策、ticket 表、逐 ticket 进度。**版本内就地更新**，实质修订升版落新文件；不另写进度报告、不另写 ADR、不另写设计文档。**上限 50 行**。
 
 ## 模板
 
 ```markdown
 # 开发计划与进度：{功能标题}
 
-- 编号：{seq}｜版本：v{x.y}（跟随 SPEC）｜分支：`{branch}`（基于 {hash}）
-- 关联 SPEC：`docs/pd/spec/spec-{seq}.md`｜关联测试报告：`docs/test/report/{seq}.md`
+- 编号：{seq}｜版本：v{N}（跟随 SPEC）｜分支：`{branch}`（基于 {hash}）
+- 关联 SPEC：`docs/pd/spec/pd-spec-*-{seq}.md`｜关联测试报告：`docs/test/report/test-report-*-{seq}.md`
 
 ## 设计决策
 

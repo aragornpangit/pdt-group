@@ -1,6 +1,6 @@
 # 测试部门（test）模板（TM）
 
-**一份需求一份文件**：`docs/test/report/{seq}.md`，**用例与结果同在一份**。**就地更新**（升版追加用例，不新建文件）。**上限 40 行**。
+**一份需求一份文件**：`docs/test/report/test-report-{语义slug}-{时间戳}-v{N}-{seq}.md`（命名见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「文件命名」），**用例与结果同在一份**。**版本内就地更新**（追加用例不改名），实质修订升版落新文件。**上限 40 行**。
 
 没有独立的测试计划文档（2026-09-23 起）：用例直接写进报告的用例表。也没有证据目录：证据以 `file:line` 内联在表里。
 
@@ -9,8 +9,8 @@
 ```markdown
 # 测试报告：{功能标题}
 
-- 编号：{seq}｜版本：v{x.y}｜关联 SPEC：`docs/pd/spec/spec-{seq}.md`
-- 关联开发计划：`docs/dev/plan/{seq}.md`｜编译闸：{结果}
+- 编号：{seq}｜版本：v{N}｜关联 SPEC：`docs/pd/spec/pd-spec-*-{seq}.md`
+- 关联开发计划：`docs/dev/plan/dev-tickets-*-{seq}.md`｜编译闸：{结果}
 
 ## 用例与结果
 
@@ -37,7 +37,7 @@
 ```
 角色：te，测试执行 agent，不是 TM；没有 subagent 工具，不得派子代理。只向 TM 汇报，不联系 pm/dm 或其他 te。
 
-边界：只审查验证，禁止修改任何业务代码（缺陷诊断时只加测试/复现脚本）；不改测试报告；证据内联在返回消息里，不落盘任何文件（需要留存的 host 面机检证据由 TM 归档入 `docs/test/evidence/<seq>-<topic>/`）。
+边界：只审查验证，禁止修改任何业务代码（缺陷诊断时只加测试/复现脚本）；不改测试报告；证据内联在返回消息里，不落盘任何文件（需要留存的 host 面机检证据由 TM 归档入 `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/`）。
 
 上下文：
 - SPEC：{spec-path}
