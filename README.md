@@ -70,7 +70,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 2026-09-23 起，本项目按「文档是副产品，不是工作日志」重排了文档面：
 
-- **文档白名单**：全集团只有 SPEC（≤ 80 行）、开发计划与进度（≤ 50 行）、测试报告（≤ 40 行）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
+- **文档白名单**：全集团只有 SPEC（80 行基准）、开发计划与进度（50 行基准）、测试报告（40 行基准）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
 - **不要每轮都写文档**：只在有实质产出或口径变化时才动文档，日常轮次进度与结论走 herdr
 - **一份需求一份文件，版本内就地更新**：实质修订升版落新文件（统一命名 `{前缀}-{语义slug}-{时间戳}-v{N}-{seq}.md`，见 [`pm/group-conventions.md`](pm/group-conventions.md)「文件命名」），逐轮修改历史由 git 承载
 - **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/`

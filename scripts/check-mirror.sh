@@ -78,6 +78,12 @@ for p in sorted(root.rglob('*.md')):
         if t and not (p.parent / t).exists():
             fails.append(f'失效链接: {p} -> {t}')
 
+# 7) SKILL.md 行数 ≤ 50（2026-09-30 用户指定；附属参考文档不限，细则拆同目录 .md）
+for name, d in roles.items():
+    n = len((d / 'SKILL.md').read_text(encoding='utf-8').splitlines())
+    if n > 50:
+        fails.append(f'{d}/SKILL.md 行数 {n} > 50')
+
 for f in fails:
     print('FAIL:', f)
 print(f'\n角色数: {len(roles)}，问题数: {len(fails)}')

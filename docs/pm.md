@@ -22,7 +22,7 @@
 PM 自己写。2026-09-23 起取消了 SPEC 子代理与调研子代理：口径是你定的，自己写少三次往返。需要事实就自己读源码与报告。
 
 **PM 写哪些文档？**
-产品层只有 `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v{N}-{seq}.md`（≤ 80 行，格式见 [`pm/spec-format.md`](../pm/spec-format.md)）；集团层**零文档产出**，裁决、分派、协调全走 herdr，唯一落盘是 `.pdt/team.json`（会话登记）。用户明确要求时才写一份 ≤ 25 行的自我交接。
+产品层只有 `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v{N}-{seq}.md`（80 行基准，格式见 [`pm/spec-format.md`](../pm/spec-format.md)）；集团层**零文档产出**，裁决、分派、协调全走 herdr，唯一落盘是 `.pdt/team.json`（会话登记）。用户明确要求时才写一份 ≤ 25 行的自我交接。
 
 **每轮都要更新文档吗？**
 不要。只在 SPEC 新建或升版时落盘；日常轮次的口径沟通走 herdr。
@@ -41,4 +41,4 @@ Windows Terminal / Ghostty / WSL 这类不能注入输入的终端，PM 把 [`pm
 
 ## It's working if
 
-`docs/pd/spec/pd-spec-*-{seq}.md` 存在且 ≤ 80 行、七节齐全（无内容的节已删）；每条 User Story 都能转成用例；`dm` / `tm` 会话在跑并各自回报过就绪；分派与裁决结论已用 herdr 送达并写明依据；整个过程中没有产出 SPEC 以外的文档。
+`docs/pd/spec/pd-spec-*-{seq}.md` 存在且 80 行基准、七节齐全（无内容的节已删）；每条 User Story 都能转成用例；`dm` / `tm` 会话在跑并各自回报过就绪；分派与裁决结论已用 herdr 送达并写明依据；整个过程中没有产出 SPEC 以外的文档。
