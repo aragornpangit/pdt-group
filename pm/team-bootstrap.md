@@ -35,14 +35,15 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
   "agent_cmd": "<启动 agent 的命令行>",
   "sessions": {
     "dm": { "id": "dm", "created": "<ISO 时间>", "cwd": "/home/user/proj" },
-    "tm": { "id": "tm", "created": "<ISO 时间>", "cwd": "/home/user/proj" }
+    "tm": { "id": "tm", "created": "<ISO 时间>", "cwd": "/home/user/proj" },
+    "scout": { "id": "scout", "created": "<ISO 时间>", "cwd": "/home/user/proj" }
   }
 }
 ```
 
 - `terminal`：探测结果或用户选择，写入后不再重复问
 - `agent_cmd`：启动伙伴 agent 的命令行，默认与 PM 自身所用的 agent 相同；不同则问用户一次
-- `sessions`：只记录 PM 创建过的伙伴会话（不含 PM 自己）。可列举的终端以实时命令为准；不可列举的终端以此记录作为线索，不作存活证明
+- `sessions`：只记录 PM 创建过的伙伴会话（不含 PM 自己），label 集合 `{dm, tm, scout}`；`scout` 是按需创建，没起过就不写这个键。可列举的终端以实时命令为准；不可列举的终端以此记录作为线索，不作存活证明
 
 ## 3. 点名：检测 dm / tm 是否在运行
 
@@ -77,7 +78,24 @@ herdr agent prompt dm "<角色指派消息>" --wait --timeout 60000
 
 `tm` 同法，方向用 `down` / `right`。CLI 语法、生命周期状态、ID 读取见 herdr 技能。
 
-**伙伴会话的两条通道**：用 `herdr agent start` 起的是 named agent，走 `herdr agent prompt`；未用 `agent start` 起的伙伴（Herdr 自动识别出的）走 pane 通道，对它发 `herdr agent prompt` 会报 `agent_not_ready`：
+**`scout` 按需起**（只在接到调研类诉求时）：用户自己启 harness，所以用**独立 tab** 而不是 pane split，起完把 label 登记进 `.pdt/team.json`：
+
+```bash
+herdr tab create --label scout --cwd "$PWD" --no-focus   # 从 JSON 读 .result.tab / .result.root_pane
+```
+
+起完请用户在该 tab 里启动自己的 harness，确认就绪后才派活。harness 没起来之前不发消息、不反复重试。
+
+**伙伴会话的两条通道**：herdr 的 agent 目标只认 **agent 名**或 **pane ID**，**tab label 不是 agent 目标**（对它发 `herdr agent prompt <label>` 报 `agent_not_found`）。用 `herdr agent start <name>` 起的有名字，直接用名字；用户手动起的**没有名字**，只能用 pane ID：
+
+```bash
+# 手动起的伙伴：先查 pane ID，再发
+herdr tab list      # label → tab_id
+herdr pane list     # tab_id → pane_id
+herdr agent prompt <pane-id> "<消息>" --wait --timeout 60000
+```
+
+若连 agent 都没识别出来（`herdr agent list` 里没有它），退回 pane 通道裸发：
 
 ```bash
 herdr pane send-text <pane-id> "<消息>"

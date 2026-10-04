@@ -95,15 +95,70 @@ if gc.exists():
     elif nums != list(range(1, len(nums) + 1)):
         fails.append(f'团队纪律编号不连续: {nums}')
 
-# 9) group-conventions.md 内的「第 N 条」必须指向本文件真实存在的纪律编号
-#    （曾出现「第 22 条」指向已被删掉的旧编号，读者无处可查）
-if gc.exists() and nums:
-    for m in re.finditer(r'第\s*(\d+)\s*条', gtext):
-        n = int(m.group(1))
+# 9) 纪律编号引用不得悬空（跨文件）
+#    跨文件只认显式写法「团队纪律第 N 条」/「纪律第 N 条」（dm 的 19 条是另一张表，
+#    裸「第 N 条」在 dm/tm 侧指的是各自文件内的条号，不查）；
+#    group-conventions.md 内部的裸「第 N 条」一律指本文件的团队纪律表，必须查。
+#    （曾出现「第 22 条」指向已删旧编号；也出现过 communication-style.md 的「纪律 16」，
+#      纪律表只有 9 条。旧版只扫 group-conventions.md 本文件，跨文件漏检）
+for p in sorted(root.rglob('*.md')):
+    if '.git' in p.parts:
+        continue
+    text = p.read_text(encoding='utf-8')
+    # 「纪律第 N 条」一律查；「纪律 N 条」若是**数自己那张表的条数**（如 dm 的 19 条全文）
+    # 则跳过，只有后面不跟「条」时（「按纪律 16，」）才算悬空引用；
+    # group-conventions.md 内部的裸「第 N 条」一律指本文件的团队纪律表，必须查。
+    pat = (r'(?:团队纪律|纪律)[ \t]*第[ \t]*(\d+)[ \t]*条|'
+           r'(?:团队纪律|纪律)[ \t]+(\d+)(?![ \t]*条)' if p != gc
+           else r'(?:团队纪律|纪律)[ \t]*第[ \t]*(\d+)[ \t]*条|'
+                r'(?:团队纪律|纪律)[ \t]+(\d+)(?![ \t]*条)|'
+                r'第[ \t]*(\d+)[ \t]*条')
+    for m in re.finditer(pat, text):
+        n = int(next(g for g in m.groups() if g))
         if n not in nums:
-            line = gtext[:m.start()].count('\n') + 1
-            fails.append(f'group-conventions.md:{line} 悬空引用「第 {n} 条」，'
-                         f'纪律表只有 {nums}')
+            line = text[:m.start()].count('\n') + 1
+            fails.append(f'{p}:{line} 悬空引用「第 {n} 条」，纪律表只有 {nums}')
+
+# 10) communication-style.md §3 对照表与 §4 grep 词表必须一致（防两表漂移 ⇒ 机检假绿）
+cs = root / 'pm' / 'communication-style.md'
+if cs.exists():
+    ctext = cs.read_text(encoding='utf-8')
+    try:
+        table = ctext.split('## 3.')[1].split('## 4.')[0]
+        terms = set()
+        for line in table.splitlines():
+            if line.startswith('|') and '---' not in line:
+                cells = [c.strip() for c in line.strip('|').split('|')]
+                if cells[0] == '内部术语':
+                    continue
+                for w in re.split(r'\s*/\s*', cells[0]):
+                    if w.strip():
+                        terms.add(w.strip())
+        g = re.search(r"grep -nE '([^']+)'", ctext)
+        words = set(g.group(1).split('|')) if g else set()
+        # 纯英文词不进 grep（避免误伤正常英文），比对时剔除
+        en = {w for w in terms if w.isascii()}
+        if (terms - en) - words:
+            fails.append('communication-style.md §3 有词不在 §4 grep 词表: '
+                         f'{sorted((terms - en) - words)}')
+        if words - terms:
+            fails.append('communication-style.md §4 grep 词表有词不在 §3 对照表: '
+                         f'{sorted(words - terms)}')
+    except IndexError:
+        fails.append('communication-style.md 找不到 §3 / §4 标题')
+
+# 11) dm/disciplines.md 条号必须 1 起连续，且与 dm/SKILL.md 声明的条数一致
+dd = root / 'dm' / 'disciplines.md'
+if dd.exists():
+    dtext = dd.read_text(encoding='utf-8')
+    dnums = [int(m.group(1)) for m in
+             re.finditer(r'^(\d+)\.\s+\*\*', dtext, re.M)]
+    if dnums != list(range(1, len(dnums) + 1)):
+        fails.append(f'dm/disciplines.md 条号不连续: {dnums}')
+    m = re.search(r'派单与收口纪律（强制，(\d+) 条）',
+                  (root / 'dm' / 'SKILL.md').read_text(encoding='utf-8'))
+    if m and int(m.group(1)) != len(dnums):
+        fails.append(f'dm/SKILL.md 声明 {m.group(1)} 条，disciplines.md 实有 {len(dnums)} 条')
 
 for f in fails:
     print('FAIL:', f)

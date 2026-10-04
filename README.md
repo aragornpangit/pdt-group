@@ -41,7 +41,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 - **经理间直通**：pm / dm / tm 用 herdr 横向直接协商，不经第三人转达
 - **调研派 scout**：选型 / 竞品 / 重构前评估派活给 scout 会话，不自己拉调研子代理
 - 两方无法一致时**由 pm 裁决**，结论用 herdr 回给相关部门
-- **发消息前先定位伙伴**：跑 `herdr tab list` 读出 tab label，确认收件人 label 在列表里再发，不写死 ID
+- **发消息前先定位伙伴**：跑 `herdr tab list` 按 tab label 确认收件人在列，再查 `herdr pane list` 拿到 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 tab label），不写死 ID
 
 ## 角色与子代理
 
@@ -76,7 +76,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 - **文档白名单**：全集团只有 SPEC（80 行基准）、开发计划与进度（50 行基准）、测试报告（40 行基准）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、三个部门各自的交接文档（`docs/pd|dev|test/handoff/`，用 `/handoff` 时才产生）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
 - **不要每轮都写文档**：只在有实质产出或口径变化时才动文档，日常轮次进度与结论走 herdr
 - **一份需求一份文件，版本内就地更新**：实质修订升版落新文件（统一命名 `{前缀}-{语义slug}-{时间戳}-v{N}-{seq}.md`，见 [`pm/group-conventions.md`](pm/group-conventions.md)「文件命名」），逐轮修改历史由 git 承载
-- **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/`
+- **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/test-report-{语义slug}-{seq}-ev/`（一个需求链一个目录，报告升版不换目录）
 - **时间预算**：同一 feature 的文档写作累计不超过实现时间的 10%
 
 集团口径的唯一来源是 [`pm/group-conventions.md`](pm/group-conventions.md)。
@@ -107,7 +107,7 @@ done
 │   ├── communication-style.md # 表达纪律唯一详细版：黑话对照表、grep 自检
 │   ├── self-check.md         # PM 自查：何时实核、裁决原则
 │   ├── team-bootstrap.md     # 终端探测、dm/tm 会话创建、手动模式提示词
-│   ├── inventory.md           # 角色 ↔ 上游技能台账
+│   ├── inventory.md          # 角色 ↔ 上游技能台账
 │   └── spec-format.md        # SPEC 格式
 ├── dm/{SKILL.md, disciplines.md, templates.md}   # disciplines.md＝派单与收口纪律全文；templates.md 含「de 派发 prompt 模板」
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」

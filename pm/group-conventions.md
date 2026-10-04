@@ -19,9 +19,9 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 - 各经理**自己落笔**本部门文档；pm 可按需派生子代理干活（取证 / 核查 / 资料整理类），交付文档仍由 pm 汇总后自己落笔
 - **pm 兼集团负责人与产品经理**：承接用户诉求、组建并管理 dm / tm 会话、顶层裁决
 - `de` / `te`、pm 的子代理、scout 的调研子代理，一律由**派生他的那个经理**按实际情况派生 n 个并行子代理（n = 可并行 ticket 数 / 可并行批次数 / 调研子问题数，可为 1，不要为凑数硬拆）；**子代理只向派生自己的经理汇报、只接受该经理安排**，pm 负责汇总自己派生的子代理的工作结果
-- **子代理后台派发**（2026-09-24 起）：经理派子代理一律后台/异步，**派完立即结束本轮（return control）**、保持会话可收 herdr 消息，禁止原地等待、轮询、阻塞式等待子代理返回；子代理完成经完成通知（task-notification / 原生唤醒）触发验收或复核。经理可同时持有多个批次。具体开关按你所用的 agent 工具映射（如后台运行参数、async subagent、原生并行 subagents）
+- **子代理后台派发**（2026-09-24 起）：**任何角色派子代理一律后台/异步**（含 pm 的取证 / 核查子代理、scout 的调研子代理），**派完立即结束本轮（return control）**、保持会话可收 herdr 消息，禁止原地等待、轮询、阻塞式等待子代理返回；子代理完成经完成通知（task-notification / 原生唤醒）触发验收或复核。可同时持有多个批次。具体开关按你所用的 agent 工具映射（如后台运行参数、async subagent、原生并行 subagents）
 - 经理间直通（pm / dm / tm 横向协商）；两方无法一致时由 pm 裁决
-- **调研派 scout**：pm / dm 遇到技术选型、竞品对标、重构前评估，派活给 scout 会话（herdr 发给 `scout` label），**不自己拉调研子代理**；scout 的结论一句话回流 SPEC 或开发计划。scout 会话不存在时 pm 先按 [`team-bootstrap.md`](team-bootstrap.md) 起一个
+- **调研派 scout**：pm / dm 遇到技术选型、竞品对标、重构前评估，派活给 scout 会话（先按「通信」节定位到 `scout` 所在的 pane ID），**不自己拉调研子代理**；scout 的结论一句话回流 SPEC 或开发计划。scout 会话不存在时 pm 先按 [`team-bootstrap.md`](team-bootstrap.md) 起一个
 
 ## 通信：herdr 直连，这是主通道
 
@@ -29,8 +29,16 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 - 状态、进度、结论、缺陷退回、裁决请求，都走 herdr 消息
 - 消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
-- **发消息前必须先定位伙伴（硬性，2026-10-04 用户要求）**：先跑 `herdr tab list` 列出当前所有 tab 的 label，确认收件人 label 在列表里，再用该 label 作 `herdr agent prompt <label> "<消息>"` 的目标。**不许凭记忆写 label，不许写死 pane ID 或 tab ID**（label 稳定，ID 重启就变）
-- **label 不在列表里 ⇒ 不许发**：先按「会话与 label」补齐会话（补齐流程见 [`team-bootstrap.md`](team-bootstrap.md)），确认就绪再发；不要对一个不存在的会话反复重试
+- **发消息前必须先定位伙伴（硬性，2026-10-04 用户要求）**：先跑 `herdr tab list` 列出当前所有 tab 的 label，确认收件人 label 在列表里；**label 只用来查人，不能直接当发消息的目标**（原因与完整三步见下）。
+
+- **herdr 的 agent 目标只认「agent 名」或「pane ID」，不认 tab label**（2026-10-04 实测：`herdr agent get scout` 返回 `agent_not_found`，而 `herdr tab list` 里 `scout` label 明明在）。定位伙伴的完整三步：
+
+  1. `herdr tab list` → 找到收件人 label 对应的 `tab_id`
+  2. `herdr pane list` → 找到该 `tab_id` 下的 `pane_id`
+  3. `herdr agent prompt <pane_id> "<消息>"`
+
+  用 `herdr agent start <name>` 起过的会话可以直接用那个 `<name>`；用户手动起的 agent 未命名，只能用 `pane_id`。**不许凭记忆写 label 或 ID，不许写死 ID**（ID 每次会话都可能变，必须现查现用）。
+- **收件人 label 不在 `herdr tab list` 里 ⇒ 不许发**：先按「会话与 label」补齐会话（补齐流程见 [`team-bootstrap.md`](team-bootstrap.md)），确认就绪再发；不要对一个不存在的会话反复重试
 - 不做轮询：上游更新由用户 / pm 触发，或在本轮任务开始时检查一次
 - **不写状态通报文档**：进度靠消息同步，不靠写文件互相感知
 
@@ -43,14 +51,14 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 | SPEC | `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v{N}-{seq}.md` | 80 行（基准） | PM |
 | 开发计划与进度 | `docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v{N}-{seq}.md` | 50 行（基准） | DM |
 | 测试报告 | `docs/test/report/test-report-{语义slug}-{时间戳}-v{N}-{seq}.md` | 40 行（基准） | TM |
-| 证据目录 | `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/` | 按需 | TM |
+| 证据目录 | `docs/test/evidence/test-report-{语义slug}-{seq}-ev/` | 按需 | TM |
 | 调研报告 | `docs/pd/research/pd-research-{语义slug}-{时间戳}-v{N}-{seq}.md` | 按需 | Scout |
 | 交接文档 | `docs/pd/handoff/pm-{语义slug}-{时间戳}-v{N}.md`<br>`docs/dev/handoff/dm-{语义slug}-{时间戳}-v{N}.md`<br>`docs/test/handoff/tm-{语义slug}-{时间戳}-v{N}.md` | 25 行（基准） | PM / DM / TM 各写自己的 |
 | 领域术语 | `CONTEXT.md` | 按需 | PM |
 | 看板（兜底，见下） | `docs/status.md` | 一行一需求 | 三方各管自己的列 |
 
 - 已废除（2026-09-23）：`docs/adr/`（架构决策并入开发计划的「设计决策」节）、`docs/dev/report/`、`docs/test/plan/`、`docs/dev/evidence/`、`docs/handoff/`。三处后来恢复：`docs/pd/research/` 于 2026-09-29 因 scout 角色恢复（**仅 scout 产物入内**，其余角色的调研结论仍直接进 SPEC）；`docs/test/evidence/` 于 2026-09-28 因「host 面证据入仓」恢复（**仅 TM 归档用**）；交接改按部门分目录恢复，见下「交接」节（**原仓根 `docs/handoff/` 仍不用**）
-- **证据两层**（2026-09-28 起，TM 证据入仓裁定为准）：① **结论证据内联**：报告里给 `file:line` 或 grep 结果即可，不另落盘证据文件；② **host 面机检证据入仓**：`selftest` 日志、机检输出等落 `docs/test/evidence/test-report-*-{seq}/`（**目录名＝对应测试报告文件名去 `.md`**，主题作其下子目录；证据归属需求链，报告升版不换目录），报告内联「命令 ＋ 摘要 ＋ 路径」；可截断摘要，但须保留断言计数、失败行、`rc`、命令行等**足以复算的关键行**。`de` / `te` 不落盘，证据由 TM / DM 归档
+- **证据两层**（2026-09-28 起，TM 证据入仓裁定为准）：① **结论证据内联**：报告里给 `file:line` 或 grep 结果即可，不另落盘证据文件；② **host 面机检证据入仓**：`selftest` 日志、机检输出等落 `docs/test/evidence/`（报告在版本内就地更新、文件名带时间戳与 `v{N}`，直接拿它当目录名会导致报告升版就换目录，证据断链；因此目录名**去掉时间戳与版本号**，末尾加 `-ev` 后缀），目录形如 `test-report-{语义slug}-{seq}-ev/`，主题作其下子目录；**证据归属需求链，一个 seq 一个目录，报告升版不换目录**，报告内联「命令 ＋ 摘要 ＋ 路径」；可截断摘要，但须保留断言计数、失败行、`rc`、命令行等**足以复算的关键行**。`de` / `te` 不落盘，证据由 TM / DM 归档
 - **脚本 / 探针不属白名单管辖**：探针 / 单测 / 静态断言脚本是**可复算必需的工具**（第 7 条）⇒ **入仓代码树** `tools/<ticket>/`（不进构建产物）；「证据内联」**只管产物**（截图 / 侧车 / 日志），**不管工具**：「脚本不入仓 ⇒ 按需重建」= 不可复算（重建依赖原脚本 ⇒ 循环）
 - **没有内容的节直接删掉**，不写「无」「N/A」「待补充」占位
 
@@ -128,8 +136,8 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 ```
 
 - 一行一个需求，更新时间写绝对日期
-- PM：新增行，维护 `SPEC`（seq）与 `标题`；DM：维护 `开发状态`（`规划中` / `实施中` / `已提交` / `待验证`）；TM：维护 `测试状态`（`待编写` / `待执行` / `通过` / `阻塞` / `需修复`）
-- pm：只读总览；跨部门裁决结论写进本表
+- **PM 维护两列**：`SPEC`（seq）与 `标题`；**DM 维护 `开发状态`**（`规划中` / `实施中` / `已提交` / `待验证`）；**TM 维护 `测试状态`**（`待编写` / `待执行` / `通过` / `阻塞` / `需修复`）
+- **PM 只读另两列**（不替 DM / TM 改状态），但**跨部门裁决结论由 PM 写进本表**
 - 由 seq 可推出同链三类产物：`docs/pd/spec/pd-spec-*-{seq}.md`、`docs/dev/plan/dev-tickets-*-{seq}.md`、`docs/test/report/test-report-*-{seq}.md`
 - 看板与实际不一致时，以实际为准并回写看板
 
@@ -154,7 +162,9 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ## 会话与 label
 
-会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm, scout}`（pm 是集团入口，dm / tm 由 pm 起；scout 由 pm 按需起，或用户直接在其会话下达调研）。**发消息时 `herdr tab list` 里要查的就是这四个 label**：经理之间查 `pm` / `dm` / `tm`，派调研查 `scout`；查得到才发，查不到先补会话。
+会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm, scout}`（pm 是集团入口，dm / tm 由 pm 起；scout 由 pm 按需起，或用户直接在其会话下达调研）。**发消息时 `herdr tab list` 里要查的就是这四个 label**：经理之间查 `pm` / `dm` / `tm`，派调研查 `scout`；查得到才继续解析成 pane ID（步骤见「通信」节），查不到先补会话。
+
+- **`.pdt/team.json` 的 `sessions` 登记四个 label**：`dm` / `tm` 由 pm 创建时写入；`scout` 由 pm 按需起，起完同样登记（字段与 `dm` / `tm` 同构）
 
 - **运行时底座与通信优先级（2026-09-29 用户建议）**：优先用 **herdr 作终端运行时底座**，各角色会话尽量跑在 herdr 会话里（一个角色一个会话，label 见上）；会话之间**优先用 `herdr agent prompt` 定向发消息**通信，不靠文件轮询、不靠跨会话转达。herdr 不可用时才回落（兜底见 [`team-bootstrap.md`](team-bootstrap.md) 的手动模式）。
 

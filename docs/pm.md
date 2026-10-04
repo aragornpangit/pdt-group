@@ -19,7 +19,7 @@
 ## Common questions
 
 **谁写 SPEC？**
-PM 自己写。口径是你定的，自己写少三次往返；需要事实就自己读源码与报告，取证 / 核查类的活可以派子代理（见下）。
+PM 自己写。需求是你定的，自己写少三次往返；需要事实就自己读源码与报告，查证 / 核查类的活可以派子代理（见下）。
 
 **PM 写哪些文档？**
 产品层只有 `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v{N}-{seq}.md`（80 行基准，格式见 [`pm/spec-format.md`](../pm/spec-format.md)）；集团层**零文档产出**，裁决、分派、协调全走 herdr，唯一落盘是 `.pdt/team.json`（会话登记）。用 `/handoff` 做会话自我交接时，落 `docs/pd/handoff/pm-{语义slug}-{时间戳}-v{N}.md`（25 行基准）。

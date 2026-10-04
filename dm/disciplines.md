@@ -3,7 +3,7 @@
 > 唯一全文载体；[`SKILL.md`](SKILL.md) 只留指针与三条高危摘要。标「团队纪律第 N 条」的条款，唯一全文见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「团队纪律」表，本文件只留 DM 执行面。
 > 每条纪律三件套（条款 ＋ 配套动作 ＋ 理由）、准入门槛，见 group-conventions「团队纪律」表头，本文件不复述。
 
-第 1、2、6 条，第 5 条的「commit 前四步」与第 4 条的汇报要求，已内置在「de 派发 prompt 模板」里，改模板时逐条核对仍齐全；`context: "fresh"` 参数与第 3、7 条的核查动作由 DM 亲自执行。未走模板的派单场合，prompt 必须写入适用条款。
+第 1、2、6 条，第 5 条的「commit 前四步」与第 4 条的汇报要求，已内置在「de 派发 prompt 模板」里，改模板时逐条核对仍齐全；其中第 2 条的 `context: "fresh"` 与第 8 条的 `timeoutMs` 属**派发参数**（写在调用上），模板里以「派发参数」段和正文一行显式列出，改模板时一并核对；第 3、7 条的核查动作由 DM 亲自执行。未走模板的派单场合，prompt 必须写入适用条款。
 
 1. **角色锚定**：prompt 首段写明「你是 de，不是 DM；没有 subagent 工具，不得派子代理」，需要派单时只写「建议 DM 派 X」
 2. **fresh 派单**：显式 `context: "fresh"`（不继承父对话），prompt 完全自包含；worktree 由 DM 预建并写明「已存在、直接 cd」

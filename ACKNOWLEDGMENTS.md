@@ -15,7 +15,7 @@
 | 本项目位置 | 引用的上游技能 |
 |---|---|
 | `pm` 的访谈环节 | [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md) |
-| `pm` 的事实取证方式（已内化为自行读源码与报告，不派子代理） | [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) |
+| `scout` 的调研方法（防幻觉交叉验证，已内化为 scout SKILL.md 的工作流第 3 步） | [`research`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/research/SKILL.md) |
 | `pm` 的 SPEC 格式 | [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md)，已内化为 `pm/spec-format.md` |
 | `dm` 的设计词汇 | [`codebase-design`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/codebase-design/SKILL.md) |
 | `dm` 的切片口径 | [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md)，已内化为 `dm/templates.md` 的「切片细则」 |

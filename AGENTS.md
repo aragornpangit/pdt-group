@@ -42,6 +42,22 @@
 bash scripts/check-mirror.sh
 ```
 
-必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项：根目录无 SKILL.md、SKILL.md 只在 `<role>/` 一层、name 与目录名一致、全仓无 em-dash、docs/ 与角色一一对应、相对链接可达、SKILL.md ≤ 50 行、团队纪律编号从 1 起连续且无悬空「第 N 条」引用。
+必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项（11 条）：
+
+| # | 检查项 |
+|---|---|
+| 1 | 根目录无 SKILL.md |
+| 2 | SKILL.md 只在 `<role>/` 一层 |
+| 3 | frontmatter `name` 与目录名一致 |
+| 4 | 全仓无 em-dash（U+2014） |
+| 5 | `docs/<role>.md` 与角色目录一一对应 |
+| 6 | 相对链接可达（剥离围栏代码块后） |
+| 7 | `SKILL.md` ≤ 50 行 |
+| 8 | 团队纪律表编号从 1 起连续无缺号 |
+| 9 | 纪律编号引用不悬空：`团队纪律第 N 条` / `纪律 N` 全仓查，`group-conventions.md` 内的裸「第 N 条」也查（`dm` 的 19 条是另一张表，不查） |
+| 10 | `pm/communication-style.md` §3 黑话对照表与 §4 grep 词表一致（防两表漂移 ⇒ 机检假绿） |
+| 11 | `dm/disciplines.md` 条号 1 起连续，且与 `dm/SKILL.md` 声明的条数一致 |
+
+第 9-11 条是 2026-10-04 补的（旧版只查 group-conventions.md 本文件，跨文件漏检，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。
 
 > 容器仓布局的 `check-skills.sh`（抽取容器仓宪法 §8 执行）在本仓必然结构 FAIL，已删除；不要在本仓重建它。

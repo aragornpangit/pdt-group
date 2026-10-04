@@ -15,7 +15,7 @@
 | [`grill-with-docs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/SKILL.md) | USER | 拷问 + 同步更新 `CONTEXT.md` | 用户敲，PM 接 |
 | [`domain-modeling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/domain-modeling/SKILL.md) | MODEL | 主动建/磨领域模型：挑战术语、边界场景压测、更新 `CONTEXT.md` | PM |
 | [`prototype`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/prototype/SKILL.md) | MODEL | 一次性原型回答设计问题（状态/逻辑类或 UI 变体） | PM（决定是否做） |
-| [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md) | USER | 对话 → SPEC，发布到 tracker（**已内化为 [`spec-format.md`](../pm/spec-format.md)**） | PM |
+| [`to-spec`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-spec/SKILL.md) | USER | 对话 → SPEC，发布到 tracker（**已内化为 [`spec-format.md`](spec-format.md)**） | PM |
 | [`writing-for-agents`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/writing-for-agents/SKILL.md) | MODEL | 写「给 agent 读」的文档（SPEC 正是此类） | PM |
 | [`to-questionnaire`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/to-questionnaire/SKILL.md) | USER | 自己答不了的决策 → 交给能答的人填的问卷 | 用户敲，PM 接 |
 | [`triage`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/triage/SKILL.md) | USER | issue 走 triage 角色状态机（需标签配置） | 用户敲，PM 接 |
@@ -28,7 +28,7 @@
 |---|---|---|---|
 | [`codebase-design`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/codebase-design/SKILL.md) | MODEL | deep module 的共享词汇与纪律（行为多、接口小、放在干净 seam） | DM |
 | [`wayfinder`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/wayfinder/SKILL.md) | USER | 超过单 session 的工作拆成决策工单地图，逐张解 | DM |
-| [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md) | USER | plan/spec → tracer-bullet tickets + blocking 边（**已内化为 [`templates.md`](../dm/templates.md) 的「切片细则」**） | DM |
+| [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md) | USER | plan/spec → tracer-bullet tickets + blocking 边（**已内化为 [`../dm/templates.md`](../dm/templates.md) 的「切片细则」**） | DM |
 | [`implement`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/implement/SKILL.md) | USER | 按 spec/tickets 实施，驱动 `tdd`，收尾 `code-review` | `de`（DM 动态派生，见 dm/templates.md） |
 | [`tdd`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/tdd/SKILL.md) | MODEL | 红绿环，一次一个纵向切片 | `de`（DM 动态派生） |
 | [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) | MODEL | **Standards 轴**自审（合 repo 规范 + Fowler 坏味道基线） | `de`（DM 动态派生） |
