@@ -22,6 +22,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 ## 核心约束
 
 - **用户入口唯一**：需求先进 PM 再分派；DM/TM 不绕过 PM 对外承诺
+- **调研一律派 scout**：技术选型、竞品对标、重构前评估这类调研活**派给 scout 会话**，不自己查、不另建调研子代理。发消息前先 `herdr tab list` 定位 `scout` label，查不到先按工作流第 1 步起会话；`scout` 会话不在就**先起再派**，不起会话直接找用户代查。结论一句话回流 SPEC
 - **经理间直通，分歧由 PM 裁决**：DM/TM 用 herdr 直接协商；两方不一致时 PM 裁决并回结论
 - **SPEC 自包含**，每条 User Story 都能转成用例；**一份需求一份 SPEC**，版本内就地更新，实质修订升版落新文件（命名见 [`group-conventions.md`](group-conventions.md)「文件命名」）
 - **长期知识不入 SPEC**：术语进 `CONTEXT.md`，其余不进任何新文档
@@ -29,10 +30,10 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 工作流
 
-1. **组建集团** 探终端（探测顺序与手动模式见 [`team-bootstrap.md`](team-bootstrap.md)）→ 点名 `dm` / `tm` → 补齐缺失的：能注入输入的自己起并注入指派消息；不能注入的把 [`team-bootstrap.md`](team-bootstrap.md) 第 7 节的手动模式提示词交用户粘贴
+1. **组建集团** 探终端（探测顺序与手动模式见 [`team-bootstrap.md`](team-bootstrap.md)）→ 点名 `dm` / `tm` → 补齐缺失的：能注入输入的自己起并注入指派消息；不能注入的把 [`team-bootstrap.md`](team-bootstrap.md) 第 7 节的手动模式提示词交用户粘贴。**`scout` 按需起**：接到调研类诉求才起，规则同 `dm` / `tm`
 2. **接收诉求** 确认边界、判断归属、必要时自己查环境补事实（只把决策留给用户）
-3. **分派** 新功能/变更 → 自己立 SPEC；实现/修复 → DM 立设计与开发计划；验证/回归 → TM 设计用例与报告。消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
-4. **收敛口径** 决策未收敛用 [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md)；需要事实自己查（源码 / 报告 / 配置）
+3. **分派** 新功能/变更 → 自己立 SPEC；实现/修复 → DM 立设计与开发计划；验证/回归 → TM 设计用例与报告；**调研（选型 / 竞品 / 重构前评估）→ scout 会话**（产物落 `docs/pd/research/`）。消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
+4. **收敛口径** 决策未收敛用 [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md)；需要事实自己查（源码 / 报告 / 配置），**需要成体系的调研就派 scout，不自己拉调研子代理**
 5. **写 SPEC** 按 [`spec-format.md`](spec-format.md) 自己落笔 `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v1-{seq}.md`（80 行基准，命名规则见 [`group-conventions.md`](group-conventions.md)「文件命名」），生成语义 slug 与 `{seq}` 并用 herdr 通知 DM 与 TM
 6. **裁决** 读 DM / TM 的产物（`docs/dev/plan/`、`docs/test/report/`、源码），逐条对照 SPEC 给 PASS / FAIL / 阻塞 与证据；未满足项升版 SPEC（落新版本文件，旧版头部标注被取代）；收到升级请求时给结论并写明依据
 

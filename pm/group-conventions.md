@@ -21,10 +21,11 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 - `de` / `te`、pm 的子代理、scout 的调研子代理，一律由**派生他的那个经理**按实际情况派生 n 个并行子代理（n = 可并行 ticket 数 / 可并行批次数 / 调研需求数，可为 1，不要为凑数硬拆）；**子代理只向派生自己的经理汇报、只接受该经理安排**，pm 负责汇总自己派生的子代理的工作结果
 - **子代理后台派发**（2026-09-24 起）：经理派子代理一律后台/异步，**派完立即结束本轮（return control）**、保持会话可收 herdr 消息，禁止原地等待、轮询、阻塞式等待子代理返回；子代理完成经完成通知（task-notification / 原生唤醒）触发验收或复核。经理可同时持有多个批次。具体开关按你所用的 agent 工具映射（如后台运行参数、async subagent、原生并行 subagents）
 - 经理间直通（pm / dm / tm 横向协商）；两方无法一致时由 pm 裁决
+- **调研派 scout**：pm / dm 遇到技术选型、竞品对标、重构前评估，派活给 scout 会话（herdr 发给 `scout` label），**不自己拉调研子代理**；scout 的结论一句话回流 SPEC 或开发计划。scout 会话不存在时 pm 先按 [`team-bootstrap.md`](team-bootstrap.md) 起一个
 
 ## 通信：herdr 直连，这是主通道
 
-**pm / dm / tm 之间一律用 `herdr` 定向直连**（CLI 语法见 herdr 技能本身），经理之间直接谈，不经第三人转达。
+**pm / dm / tm 之间，以及 pm / dm → scout，一律用 `herdr` 定向直连**（CLI 语法见 herdr 技能本身），直接谈，不经第三人转达。scout 只接用户或 pm / dm 的派单，不主动插话。
 
 - 状态、进度、结论、缺陷退回、裁决请求，都走 herdr 消息
 - 消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
@@ -153,7 +154,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 ## 会话与 label
 
-会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm, scout}`（pm 是集团入口，dm / tm 由 pm 起；scout 由 pm 按需起，或用户直接在其会话下达调研）。**经理之间发消息时，`herdr tab list` 里要查的就是 `pm` / `dm` / `tm` 这三个 label**：查得到才发，查不到先补会话。
+会话名固定 `pm` / `dm` / `tm`，label 集合 `{pm, dm, tm, scout}`（pm 是集团入口，dm / tm 由 pm 起；scout 由 pm 按需起，或用户直接在其会话下达调研）。**发消息时 `herdr tab list` 里要查的就是这四个 label**：经理之间查 `pm` / `dm` / `tm`，派调研查 `scout`；查得到才发，查不到先补会话。
 
 - **运行时底座与通信优先级（2026-09-29 用户建议）**：优先用 **herdr 作终端运行时底座**，各角色会话尽量跑在 herdr 会话里（一个角色一个会话，label 见上）；会话之间**优先用 `herdr agent prompt` 定向发消息**通信，不靠文件轮询、不靠跨会话转达。herdr 不可用时才回落（兜底见 [`team-bootstrap.md`](team-bootstrap.md) 的手动模式）。
 

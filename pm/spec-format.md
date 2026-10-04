@@ -9,7 +9,7 @@ SPEC 是**产品部门唯一的交付文档**，也是整条链的起点：同�
 ```markdown
 # SPEC: {功能标题}
 
-- 编号：{seq}｜版本：v1｜落盘：{YYYY-MM-DD HH:MM:SS}｜状态：Draft
+- 编号：{seq}｜版本：v1｜落盘：{YYYY-MM-DD HH:MM:SS}
 - 前序 SPEC：{关联编号，无则删此行}
 
 ## 1. Problem Statement

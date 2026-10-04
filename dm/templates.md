@@ -58,9 +58,10 @@
 边界：只在下方 worktree 内工作，只改本 ticket 范围内的文件；只 commit 不 push（合并由 DM 做）；不改 plan、不做独立代码审查（归测试部门复核）、不对外通讯、不做轮询；证据写在汇报消息里，不落盘证据文件。
 
 上下文：
-- worktree：.worktrees/{ticket-id}（已存在，直接 cd 进去，不要再 git worktree add）
+- worktree：{worktree 绝对路径}（DM 已建好，直接 cd 进去，不要再 git worktree add；此后所有编辑与命令一律用这个绝对路径，严禁在主仓工作树写任何文件或提交任何东西）
 - 分支：feat/{ticket-id}（已存在）
 - 构建/测试命令：{命令}
+- 静态断言：{命令或断言清单}（每 ticket 必跑，不攒到最后）
 - commit 前四步：git log -1 核 base → HEAD 已推进则 git diff <base>..HEAD -- 本 ticket 文件（非空即停、上报）→ 显式路径 git add（禁 -A）→ 绝不 amend/reset 他人 commit
 - 编号唯一：{ticket-id} 由 DM 指定，发现与计划或其他在跑 ticket 冲突，停下请示
 
@@ -74,10 +75,11 @@ TDD 接缝：{seam}
 1. 读上面 ticket，进入 worktree
 2. 按 implement（https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/implement/SKILL.md）写代码，在预定接缝跑 tdd（https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/tdd/SKILL.md）红绿环
 3. 用 code-review（https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md）做 Standards 轴自审（是否合 repo 规范）
-4. 在本 worktree 分支内 commit，按下方格式直接回给 DM，不另存文档文件
+4. 跑上面给的静态断言（不攒到最后）
+5. 在本 worktree 分支内 commit，按下方格式直接回给 DM，不另存文档文件
 
 汇报格式：
-ticket ／ branch + worktree ／ commit sha ／ 改动文件（file:line）／ TDD 记录（Red、Green、Refactor、Build、Assert 各一行）／ 自审记录（Standards 轴结论）／ 验收标准（逐条 通过或阻塞加原因）／ 阻塞项、越界请求、遗留。
+ticket ／ branch + worktree ／ commit sha ／ 改动文件（file:line）／ TDD 记录（Red、Green、Refactor、Build、Assert 各一行）／ 静态断言输出 ／ 自审记录（Standards 轴结论）／ 验收标准（逐条 通过或阻塞加原因）／ 阻塞项、越界请求、遗留。
 
-判据：构建通过、单测通过、自审 Standards 轴通过、commit sha 可核。
+判据：构建通过、单测通过、静态断言通过、自审 Standards 轴通过、commit sha 可核。
 ```

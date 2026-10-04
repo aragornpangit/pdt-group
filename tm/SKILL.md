@@ -37,7 +37,7 @@ TM 是 test 测试部门负责人：设计用例与结论，派 `te` 执行，�
 
 1. **设计用例** SPEC 新增或变更时按以下类别设计（覆盖每条验收标准），直接写进报告文件的用例表：`XX-CODE` 代码审查（Spec + Standards 双轴）、`XX-VAL` 逻辑、`XX-UI` 交互、`XX-REG` 回归、`XX-EDGE` 边界（`XX` 按 SPEC 主题自定义，与「te 派发 prompt 模板」同名同义）
 2. **确认可测** 读 `docs/dev/plan/dev-tickets-*-{seq}.md` 确认实施状态、构建闸、静态断言均通过；未通过直接退回开发部门
-3. **派 te（先派后判，不得跳步）** 顺序固定：设计用例 → 派单 → `te` 执行 → TM 复核 / 判定；未派单即下结论 = 违「执行面归属」。先自跑编译闸（命令从项目配置读取），失败终止；prompt 按 [`templates.md`](templates.md) 生成（上下文路径与本批用例填占位符；`XX-CODE` 用 [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) 双轴，疑难缺陷用 [`diagnosing-bugs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md)），一条消息发起全部调用
+3. **派 te（先派后判，不得跳步）** 顺序固定：设计用例 → 派单 → `te` 执行 → TM 复核 / 判定；未派单即下结论 = 违「执行面归属」。**编译闸与静态断言以第 2 步从 plan 读到的结果为准，TM 不自跑**（自跑属执行面，归 `te`；TM 本职不含构建）；prompt 按 [`templates.md`](templates.md) 生成（上下文路径与本批用例填占位符；`XX-CODE` 用 [`code-review`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md) 双轴，疑难缺陷用 [`diagnosing-bugs`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md)），一条消息发起全部调用
 4. **写报告** 先跑「执行」列机检（见核心约束③），再对存疑或 FAIL 的用例**定向**复核后定结论，按 [`templates.md`](templates.md) 落笔 `docs/test/report/test-report-{语义slug}-{时间戳}-v1-{seq}.md`（40 行基准，命名规则见 group-conventions「文件命名」），落盘后 herdr 双发 pm 与 DM（两封分开写）
 
 ## 表达与通信
