@@ -14,7 +14,7 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 
 | 命中变量 | 终端 | 能否列举会话 | 创建方式 |
 |---|---|---|---|
-| `HERDR_ENV=1` | Herdr | 能，`herdr agent list` | herdr 技能 |
+| `HERDR_ENV=1` | Herdr | 能，`herdr tab list` | herdr 技能 |
 | `TMUX` | tmux | 能，`tmux ls` | `tmux new-session` |
 | `WEZTERM_PANE` | WezTerm | 能，`wezterm cli list` | `wezterm cli spawn` |
 | `WT_SESSION` | Windows Terminal | 不能 | `wt.exe new-tab` |
@@ -32,10 +32,10 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 ```json
 {
   "terminal": "tmux",
-  "agent_cmd": "codebuddy",
+  "agent_cmd": "<启动 agent 的命令行>",
   "sessions": {
-    "dm": { "id": "dm", "created": "2026-09-06T07:40:01", "cwd": "/home/user/proj" },
-    "tm": { "id": "tm", "created": "2026-09-06T07:40:02", "cwd": "/home/user/proj" }
+    "dm": { "id": "dm", "created": "<ISO 时间>", "cwd": "/home/user/proj" },
+    "tm": { "id": "tm", "created": "<ISO 时间>", "cwd": "/home/user/proj" }
   }
 }
 ```
@@ -50,7 +50,7 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 
 | 终端 | 检测 |
 |---|---|
-| Herdr | `herdr agent list`，按 agent 名或 tab label 找 `dm` / `tm` |
+| Herdr | `herdr tab list` 读 tab label 列表（**发消息前定位伙伴就用它**）；`herdr agent list` 看 agent 是否已就绪 |
 | tmux | `tmux ls` 输出里找 `^dm:`、`^tm:` |
 | WezTerm | `wezterm cli list --format json`，按 pane 的 title 找 |
 | 其他 | 查 `.pdt/team.json` 的 `sessions`；仍不能确定就问用户"dm / tm 会话是否已在运行？"，不要凭空重复创建 |

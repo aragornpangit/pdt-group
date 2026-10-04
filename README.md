@@ -2,7 +2,7 @@
 
 **把一支软件团队装进 agent 会话里。**
 
-PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 4 个可安装角色（pm / dm / tm / scout），外加两类派单时动态生成的子代理（de / te）。每个经理角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来；scout 是集团直属专家，承接选型与重构调研。
+PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门，共 4 个可安装角色（pm / dm / tm / scout），另有一类派单时动态生成的子代理（`de` / `te`）与两处按需派生的子代理（pm 的取证 / 核查子代理、scout 的调研子代理）。每个经理角色是一个可被 agent 加载的 `SKILL.md`，各自运行在独立会话中，通过 herdr 消息协作，把「用户需求 → SPEC → 纵向切片实施 → 独立验证」这条链路完整跑起来；scout 是集团直属专家，承接选型与重构调研。
 
 它不是工具技能，而是**一套组织协议**：规定谁向谁汇报、产物落哪个目录、什么话走哪条通道。
 
@@ -23,31 +23,33 @@ PDT 集团是一套**角色技能族**：一个一级部门加三个二级部门
 
 ```
 pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
-├── pd   产品部门       经理 pm  → SPEC（自己落笔，≤ 80 行）
+├── pd   产品部门       经理 pm  → SPEC（自己落笔，80 行基准）
 │   └── pm 子代理 × n         按需（取证 / 核查 / 资料整理），只向 pm 汇报，pm 汇总结果
-├── dev  开发部门       经理 dm  → 开发计划与进度（自己落笔，≤ 50 行）
+├── dev  开发部门       经理 dm  → 开发计划与进度（自己落笔，50 行基准）
 │   └── de × n                单 ticket 实施 → git worktree + tdd
-├── test 测试部门       经理 tm  → 测试报告（自己落笔，≤ 40 行）
+├── test 测试部门       经理 tm  → 测试报告（自己落笔，40 行基准）
 │   └── te × n                用例执行
 └── scout 集团直属专家  scout    → 调研报告（自己落笔，docs/pd/research/）
+    └── 调研子代理 × 1         按需，一个研究需求派一个
 ```
 
-`de` 与 `te` 是 DM / TM 工作到派发阶段时**动态生成的子代理**，不是可安装技能：角色边界、工作流与汇报格式由经理按派发 prompt 模板整段内嵌（见 [`dm/templates.md`](dm/templates.md) 与 [`tm/templates.md`](tm/templates.md)），n 由经理根据任务自动决定。
+`de` 与 `te` 是 DM / TM 工作到派发阶段时**动态生成的子代理**，不是可安装技能：角色边界、工作流与汇报格式由经理按派发 prompt 模板整段内嵌（见 [`dm/templates.md`](dm/templates.md) 与 [`tm/templates.md`](tm/templates.md)），n 由经理根据任务自动决定。pm 的取证 / 核查子代理与 scout 的调研子代理同理，都是按需派生、不装技能文件。
 
-三条派发铁律：
+四条派发铁律：
 
 - 子代理**只向本部门经理汇报**，只接受本部门经理安排
 - **经理间直通**：pm / dm / tm 用 herdr 横向直接协商，不经第三人转达
 - 两方无法一致时**由 pm 裁决**，结论用 herdr 回给相关部门
+- **发消息前先定位伙伴**：跑 `herdr tab list` 读出 tab label，确认收件人 label 在列表里再发，不写死 ID
 
 ## 角色与子代理
 
 | 角色 | 层级 | 职责 |
 |---|---|---|
-| [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（≤ 80 行，含 what/why 与 how），裁决开发/测试报告。可按需派生子代理（只向 pm 汇报，pm 汇总结果）；集团层零文档产出 |
-| [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，≤ 50 行），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
-| [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，≤ 40 行），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
-| [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/` |
+| [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（80 行基准，含 what/why 与 how），裁决开发/测试报告。可按需派生子代理（只向 pm 汇报，pm 汇总结果）；集团层零文档产出 |
+| [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，50 行基准），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
+| [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，40 行基准），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
+| [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/`；按需派一个调研子代理 |
 
 **动态子代理**（不装技能文件，由经理按派发 prompt 模板生成）：
 
@@ -70,7 +72,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 2026-09-23 起，本项目按「文档是副产品，不是工作日志」重排了文档面：
 
-- **文档白名单**：全集团只有 SPEC（80 行基准）、开发计划与进度（50 行基准）、测试报告（40 行基准）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
+- **文档白名单**：全集团只有 SPEC（80 行基准）、开发计划与进度（50 行基准）、测试报告（40 行基准）、Scout 的调研报告（`docs/pd/research/`）、host 面证据目录（`docs/test/evidence/`，TM 归档）、三个部门各自的交接文档（`docs/pd|dev|test/handoff/`，用 `/handoff` 时才产生）、`CONTEXT.md` 领域术语，以及 herdr 不可用时的 `docs/status.md` 兜底。**不新建文档类型**；集团层（pm 的用户入口职责）**零文档产出**
 - **不要每轮都写文档**：只在有实质产出或口径变化时才动文档，日常轮次进度与结论走 herdr
 - **一份需求一份文件，版本内就地更新**：实质修订升版落新文件（统一命名 `{前缀}-{语义slug}-{时间戳}-v{N}-{seq}.md`，见 [`pm/group-conventions.md`](pm/group-conventions.md)「文件命名」），逐轮修改历史由 git 承载
 - **证据两层**：结论证据内联（`file:line` / grep 结果）；host 面机检证据入仓 `docs/test/evidence/test-report-{语义slug}-{时间戳}-v{N}-{seq}/`
@@ -106,10 +108,10 @@ done
 │   ├── team-bootstrap.md     # 终端探测、dm/tm 会话创建、手动模式提示词
 │   ├── skill-inventory.md    # 角色 ↔ 上游技能台账
 │   └── spec-format.md        # SPEC 格式
-├── dm/{SKILL.md, templates.md}   # templates.md 含「de 派发 prompt 模板」
+├── dm/{SKILL.md, disciplines.md, templates.md}   # disciplines.md＝派单与收口纪律全文；templates.md 含「de 派发 prompt 模板」
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
-├── scout/{SKILL.md}          # 集团直属专家：调研报告落 docs/pd/research/
-├── scripts/check-mirror.sh   # 本仓校验（em-dash / 死链 / name / docs 对应）
+├── scout/{SKILL.md, templates.md}   # templates.md 含「TUI 质询界面」与「产出文档模板」
+├── scripts/check-mirror.sh   # 本仓校验（结构 / em-dash / 死链 / name / docs 对应 / SKILL.md 行数 / 纪律编号连续与悬空引用）
 └── docs/                     # 面向人的四段式角色说明（4 页）
 ```
 

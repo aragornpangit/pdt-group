@@ -84,6 +84,27 @@ for name, d in roles.items():
     if n > 50:
         fails.append(f'{d}/SKILL.md 行数 {n} > 50')
 
+# 8) 团队纪律编号必须从 1 起连续无缺号（2026-10-04 立；曾出现 15,16,18,...,99）
+gc = (root / 'pm' / 'group-conventions.md')
+if gc.exists():
+    gtext = gc.read_text(encoding='utf-8')
+    nums = [int(m.group(1)) for m in
+            re.finditer(r'^\|\s*(\d+)\s*\|\s*[^|]+\|', gtext, re.M)]
+    if not nums:
+        fails.append('group-conventions.md 里找不到团队纪律表')
+    elif nums != list(range(1, len(nums) + 1)):
+        fails.append(f'团队纪律编号不连续: {nums}')
+
+# 9) group-conventions.md 内的「第 N 条」必须指向本文件真实存在的纪律编号
+#    （曾出现「第 22 条」指向已被删掉的旧编号，读者无处可查）
+if gc.exists() and nums:
+    for m in re.finditer(r'第\s*(\d+)\s*条', gtext):
+        n = int(m.group(1))
+        if n not in nums:
+            line = gtext[:m.start()].count('\n') + 1
+            fails.append(f'group-conventions.md:{line} 悬空引用「第 {n} 条」，'
+                         f'纪律表只有 {nums}')
+
 for f in fails:
     print('FAIL:', f)
 print(f'\n角色数: {len(roles)}，问题数: {len(fails)}')
