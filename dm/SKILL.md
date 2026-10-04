@@ -31,10 +31,10 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 2. **写计划** 自己落笔 `docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v1-{seq}.md`（按 [`templates.md`](templates.md)，50 行基准）：设计决策 + **ticket 表** + 依赖与批次
 3. **拆 Ticket** 按 tracer-bullet 纵向切片（贯穿各层、可独立验证、单上下文可完成），编号按依赖序，**默认一张表**；**发布前把清单交用户过一遍**。细则见 [`templates.md`](templates.md)「切片细则」
 4. **派 de** 按依赖图分批并行；**DM 预建 worktree 与分支**（`.worktrees/{ticket-id}` ＋ `feat/{ticket-id}`）；prompt 按 [`templates.md`](templates.md) 生成，**只 commit 不 merge/push**；后台派发，派完即收轮并 herdr 告知 PM 本批在跑
-5. **验收合并** de 完成通知后：读 diff 核验收 → 主干构建 + 全量测试 → 合并（**冲突逐 hunk 按意图追溯消解，绝不 `--abort` 弃掉已做的合并**）→ 未通过打回原 worktree → 收口 `git worktree remove`
+5. **验收合并** de 完成通知后：读 diff 核验收 → 主干构建 + 全量测试 → 合并（**冲突逐 hunk 按意图追溯消解，绝不 `--abort` 弃掉已做的合并**）→ 未通过打回原 worktree → 收口 `git worktree remove`。**验收配套动作（2026-10-03 加；PM 照准）**：凡产物含「**范围自证／机检类脚本**」（如 `90-scope-check.sh`、`90-*check*.py`），验收时**必须给该脚本喂坏输入**（坏基准 SHA／坏数据／缺输入）并确认 **`rc≠0`**（只看它打印 `ALL_PASS` **不算通过**：`{ … } | tee`／`| tail` 这类写法会把出口码判据变量留在子 shell ⇒ **rc 恒 0（假绿）**）；**同时检查脚本本身有没有用管道吞返回码，有则要求改成「出口码由块后变量或 `${PIPESTATUS[0]}` 显式承载」**（实例：`t108-tryinvert/90-scope-check.sh` 曾如此，我漏了这一步而放行，后由 T109 的 de 揪出、T111/T112 横扫修复）
 6. **收口** 计划文件更新逐 ticket 状态与「本轮结论」→ 提交 → herdr 通知 PM 与 TM；**不另写进度报告**
 
-## 派单与收口纪律（强制，19 条）
+## 派单与收口纪律（强制，20 条）
 
 **全文见 [`disciplines.md`](disciplines.md)**，此处只留三条高危：**超时必填**（写 ticket/prompt 时即填 `timeoutMs`，设备 / 长链路 ≥ 45 min 并按段切分汇报）；**主工作树只读**（子代理只在预建 worktree 编辑与提交，工单里凡给路径一律带 worktree 绝对路径前缀）；**引用取源**（派单前对每个被引用的 SPEC／判据条目跑原文 grep，命中原句贴进工单）。第 1、2、6 条与「commit 前四步」已内置在 de 派发 prompt 模板，其中 `context: "fresh"` 与 `timeoutMs` 是**派发参数**（模板已显式列出），改模板时逐条核对仍齐全；第 3、7 条核查动作由 DM 亲自执行；标「团队纪律第 N 条」的条款，唯一全文见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「团队纪律」表。
 
@@ -44,4 +44,4 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 
 ## 指针
 
-[`disciplines.md`](disciplines.md)（派单与收口纪律 19 条全文）、[`templates.md`](templates.md)（模板、切片细则与 de 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/inventory.md`](../pm/inventory.md)（技能台账）。
+[`disciplines.md`](disciplines.md)（派单与收口纪律 20 条全文）、[`templates.md`](templates.md)（模板、切片细则与 de 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/inventory.md`](../pm/inventory.md)（技能台账）。
