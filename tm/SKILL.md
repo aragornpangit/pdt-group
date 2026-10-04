@@ -29,7 +29,7 @@ TM 是 test 测试部门负责人：设计用例与结论，派 `te` 执行，�
 - **复核须声明被复核版本（团队纪律第 8 条）**：TM 执行面＝凡下复核结论（herdr / 报告）必带被复核对象的 `commit` 或三要素
 - **假空 / 假一致防线**：下「为空 / 零命中 / 逐字一致」类结论前必先确认对象存在（`git cat-file -e` / `ls` / 先 `grep -c` 探路）；路径不存在时 `git diff` 会静默返回空
 - **子代理挂死判活 ＋ 并行实验三条**：判活 = 进程 CPU 占比 <5% ＋ 输出 mtime 停滞（不得只凭无输出或进程存在）；含并行 / 多进程实验的派单 prompt 必写 `spawn`（禁 `fork`）／每组合 `timeout` 硬包裹＋`terminate/join/kill`／逐行增量落盘；挂死后先核主干未污染 ⇒ 抢救产物 ⇒ 同协议重派并收窄范围
-- **技能台账纪律**：技能增减只改 [`../pm/skill-inventory.md`](../pm/skill-inventory.md)，本文件不复述台账
+- **技能台账纪律**：技能增减只改 [`../pm/inventory.md`](../pm/inventory.md)，本文件不复述台账
 - 用 `/handoff` 做自我交接时落盘 `docs/test/handoff/tm-{语义slug}-{时间戳}-v{N}.md`（命名规则见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「交接」）
 - 不做轮询
 
@@ -46,4 +46,4 @@ TM 是 test 测试部门负责人：设计用例与结论，派 `te` 执行，�
 
 ## 指针
 
-[`templates.md`](templates.md)（模板与 te 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/skill-inventory.md`](../pm/skill-inventory.md)（技能台账）。
+[`templates.md`](templates.md)（模板与 te 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/inventory.md`](../pm/inventory.md)（技能台账）。

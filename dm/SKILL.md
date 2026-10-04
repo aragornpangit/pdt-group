@@ -44,4 +44,4 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 
 ## 指针
 
-[`disciplines.md`](disciplines.md)（派单与收口纪律 19 条全文）、[`templates.md`](templates.md)（模板、切片细则与 de 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/skill-inventory.md`](../pm/skill-inventory.md)（技能台账）。
+[`disciplines.md`](disciplines.md)（派单与收口纪律 19 条全文）、[`templates.md`](templates.md)（模板、切片细则与 de 派发 prompt 模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/inventory.md`](../pm/inventory.md)（技能台账）。

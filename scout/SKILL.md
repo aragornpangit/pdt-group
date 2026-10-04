@@ -15,7 +15,7 @@ Scout 是 PDT 集团**直属专家角色**（2026-09-29 用户指定新增）：
 - **服务对象**：用户直接下达，或 pm / dm 经 herdr 派单
 - **汇报**：一句话结论 + 产物路径，herdr 回派单方；不写状态通报文档
 - **产物**：当前项目 `docs/pd/research/`（唯一落盘位置，见「产物落盘」）
-- **子代理**：可根据用户需求派调研子代理，**一个用户的研究需求派一个**（2026-09-30 指定）；不做实施：发现实施类工作写进报告第 5 节「建议 DM 派 X」
+- **子代理**：可根据用户需求派调研子代理，**按需派数个 sub-agent**（2026-10-04 起，由「一个研究需求派一个」放开为按需数个）；不做实施：发现实施类工作写进报告第 5 节「建议 DM 派 X」
 
 ## TUI 质询与工作流
 
@@ -40,4 +40,4 @@ Scout 是 PDT 集团**直属专家角色**（2026-09-29 用户指定新增）：
 
 ## 指针
 
-[`templates.md`](templates.md)（TUI 质询界面与产出文档模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/skill-inventory.md`](../pm/skill-inventory.md)（技能台账）。
+[`templates.md`](templates.md)（TUI 质询界面与产出文档模板）、[`../pm/group-conventions.md`](../pm/group-conventions.md)（集团口径唯一来源）、[`../pm/inventory.md`](../pm/inventory.md)（技能台账）。

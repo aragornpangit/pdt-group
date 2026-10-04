@@ -21,7 +21,7 @@
 
 ## 2. 角色与内容归属
 
-- `pm` / `dm` / `tm` / `scout` 是四个可安装角色；`de` / `te` 是 DM / TM 派发阶段动态生成的子代理，**不装技能文件**（模板内嵌在 `dm/templates.md`、`tm/templates.md`）。另有两处按需派生、同样不装技能文件：PM 的取证 / 核查类子代理、Scout 的调研子代理（一个研究需求派一个）
+- `pm` / `dm` / `tm` / `scout` 是四个可安装角色；`de` / `te` 是 DM / TM 派发阶段动态生成的子代理，**不装技能文件**（模板内嵌在 `dm/templates.md`、`tm/templates.md`）。另有两处按需派生、同样不装技能文件：PM 的取证 / 核查类子代理、Scout 的调研子代理（按需派数个 sub-agent）
 - **集团口径唯一来源 = `pm/group-conventions.md`**：组织架构、通信、文档白名单、表达纪律、团队纪律表都只在那里写一份，四个角色的 SKILL.md 只留指针与角色特有的执行面，**不复述全文**（防多份漂移）
 - **表达纪律唯一详细版 = `pm/communication-style.md`**：黑话对照表与 grep 自检只在这一份
 - 改纪律先改 group-conventions.md，再核对各 SKILL.md 的指针与执行面描述仍然准确

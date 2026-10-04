@@ -30,7 +30,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 ├── test 测试部门       经理 tm  → 测试报告（自己落笔，40 行基准）
 │   └── te × n                用例执行
 └── scout 集团直属专家  scout    → 调研报告（自己落笔，docs/pd/research/）
-    └── 调研子代理 × 1         按需，一个研究需求派一个
+    └── 调研子代理 × n         按需派数个 sub-agent
 ```
 
 `de` 与 `te` 是 DM / TM 工作到派发阶段时**动态生成的子代理**，不是可安装技能：角色边界、工作流与汇报格式由经理按派发 prompt 模板整段内嵌（见 [`dm/templates.md`](dm/templates.md) 与 [`tm/templates.md`](tm/templates.md)），n 由经理根据任务自动决定。pm 的取证 / 核查子代理与 scout 的调研子代理同理，都是按需派生、不装技能文件。
@@ -50,7 +50,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 | [`pm`](pm/SKILL.md) | 集团入口 ＋ 经理 | 产品经理兼集团负责人：集团唯一用户入口，组建并管理 dm/tm 会话，跨部门协调与顶层裁决；自己落笔 SPEC（80 行基准，含 what/why 与 how），裁决开发/测试报告。可按需派生子代理（只向 pm 汇报，pm 汇总结果）；集团层零文档产出 |
 | [`dm`](dm/SKILL.md) | 经理 | 开发经理。定设计决策与切片口径（自己落笔计划与进度，50 行基准），工作到派单阶段时动态派生 n 个 `de`，验收合并 |
 | [`tm`](tm/SKILL.md) | 经理 | 测试经理。设计用例与结论（自己落笔测试报告，40 行基准），工作到派发阶段时动态派生 n 个 `te`，复核并退回缺陷 |
-| [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/`；按需派一个调研子代理 |
+| [`scout`](scout/SKILL.md) | 集团直属专家 | 首席软件架构师兼研发情报专家。接技术选型、竞品分析、重构前调研：先质询性能/可维护性偏好，再向内评估代码库、向外对标 2-3 个开源标杆，产出架构 Spec 落 `docs/pd/research/`；按需派数个 sub-agent |
 
 **动态子代理**（不装技能文件，由经理按派发 prompt 模板生成）：
 
@@ -107,7 +107,7 @@ done
 │   ├── communication-style.md # 表达纪律唯一详细版：黑话对照表、grep 自检
 │   ├── self-check.md         # PM 自查：何时实核、裁决原则
 │   ├── team-bootstrap.md     # 终端探测、dm/tm 会话创建、手动模式提示词
-│   ├── skill-inventory.md    # 角色 ↔ 上游技能台账
+│   ├── inventory.md           # 角色 ↔ 上游技能台账
 │   └── spec-format.md        # SPEC 格式
 ├── dm/{SKILL.md, disciplines.md, templates.md}   # disciplines.md＝派单与收口纪律全文；templates.md 含「de 派发 prompt 模板」
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
