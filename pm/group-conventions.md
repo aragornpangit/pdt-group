@@ -35,7 +35,15 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
   1. `herdr tab list` → 找到收件人 label 对应的 `tab_id`
   2. `herdr pane list` → 找到该 `tab_id` 下的 `pane_id`
-  3. `herdr agent prompt <pane_id> "<消息>"`
+  3. **codebuddy 会话固定两步发送**（2026-10-04 实测）：codebuddy 不在 herdr 的 agent kind 列表里，`herdr agent prompt` 解析不到它（对 pane_id 直发报 `agent_not_ready`，"not an active named agent"，失败发生在投递前，pane 无副作用），必须走 pane 原始通道：
+
+     ```bash
+     herdr pane send-text <pane_id> "<消息>"
+     sleep 0.5 && herdr pane send-keys <pane_id> enter
+     ```
+
+     **发送前置检查**：该 pane 的 `agent_status`（`herdr pane list` 可见）必须是 `idle` / `done`；`blocked`（停在权限确认框）时盲发会误答对话框，先人工处理。
+     **enter 偶发被吞**：表现为消息只躺在输入框里没提交（2026-10-04 实测，补一刀 enter 即恢复）。两秒后复查 `agent_status`，仍非 `working` 就补发 `herdr pane send-keys <pane_id> enter`，并在读取 pane 输出确认提交成功前不要重发消息正文（防止重复投递）。
 
   用 `herdr agent start <name>` 起过的会话可以直接用那个 `<name>`；用户手动起的 agent 未命名，只能用 `pane_id`。**不许凭记忆写 label 或 ID，不许写死 ID**（ID 每次会话都可能变，必须现查现用）。
 - **收件人 label 不在 `herdr tab list` 里 ⇒ 不许发**：先按「会话与 label」补齐会话（补齐流程见 [`team-bootstrap.md`](team-bootstrap.md)），确认就绪再发；不要对一个不存在的会话反复重试

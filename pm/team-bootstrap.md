@@ -71,20 +71,14 @@ env | grep -E '^(HERDR_ENV|HERDR_PANE_ID|TMUX|TMUX_PANE|WEZTERM_PANE|WEZTERM_UNI
 
 ```bash
 test "${HERDR_ENV:-}" = 1
-herdr pane split --current --direction right --cwd "$PWD" --no-focus   # 从 JSON 读 .result.pane.pane_id
+herdr tab create --label dm --cwd "$PWD" --no-focus   # 从 JSON 读 .result.root_pane
 herdr agent start dm --kind <kind> --pane <pane-id>
 herdr agent prompt dm "<角色指派消息>" --wait --timeout 60000
 ```
 
-`tm` 同法，方向用 `down` / `right`。CLI 语法、生命周期状态、ID 读取见 herdr 技能。
+tab 的 `--label` 就是角色名（`herdr tab list` 按它定位伙伴）。`tm` 同法，`--label tm`。CLI 语法、生命周期状态、ID 读取见 herdr 技能。
 
-**`scout` 按需起**（只在接到调研类诉求时）：用户自己启 harness，所以用**独立 tab** 而不是 pane split，起完把 label 登记进 `.pdt/team.json`：
-
-```bash
-herdr tab create --label scout --cwd "$PWD" --no-focus   # 从 JSON 读 .result.tab / .result.root_pane
-```
-
-起完请用户在该 tab 里启动自己的 harness，确认就绪后才派活。harness 没起来之前不发消息、不反复重试。
+**`scout` 按需起**（只在接到调研类诉求时）：同法 `herdr tab create --label scout --cwd "$PWD" --no-focus`，但用户自己启 harness，**不在里面跑 `agent start`**。起完把 label 登记进 `.pdt/team.json`，请用户在该 tab 里启动自己的 harness，确认就绪后才派活。harness 没起来之前不发消息、不反复重试。
 
 **伙伴会话的两条通道**：herdr 的 agent 目标只认 **agent 名**或 **pane ID**，**tab label 不是 agent 目标**（对它发 `herdr agent prompt <label>` 报 `agent_not_found`）。用 `herdr agent start <name>` 起的有名字，直接用名字；用户手动起的**没有名字**，只能用 pane ID：
 
