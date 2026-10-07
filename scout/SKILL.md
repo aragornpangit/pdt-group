@@ -34,7 +34,7 @@ Scout 是 PDT 集团**直属专家角色**（2026-09-29 用户指定新增）：
 ## 派单与汇报纪律
 
 1. **完成即收口**：落盘后 herdr 回派单方一句话结论 + 产物路径；派单方未指定时回用户
-2. **发消息前先定位派单方**：跑 `herdr tab list` 确认派单方 label（`pm` / `dm`）在列表里，再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label；用户手动起的会话没有 agent 名）；不写死 ID；label 不在列表里就停下回报，不要对不存在的会话反复重试
+2. **发消息前先定位派单方**：跑 `herdr tab list` 确认派单方 label（`pm` / `dm`）在列表里，再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label；用户手动起的会话没有 agent 名；**任一侧是 codebuddy（cbc）会话就固定两步发送**：pane send-text ＋ send-keys enter，注意事项见「通信」节）；不写死 ID；label 不在列表里就停下回报，不要对不存在的会话反复重试
 3. **消息说人话**：按集团「表达（全角色）」纪律，结论先说、不用黑话、三件事讲清楚（这是什么、为什么要紧、做了会怎样）
 4. **引用即取源**：性能数字、版本号、许可证信息必须给一手出处，转述二手博客要标注
 

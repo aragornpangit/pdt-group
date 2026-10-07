@@ -40,7 +40,7 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 
 ## 通信
 
-与 pm、tm **herdr 直连**：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。**表达不说黑话**：先说结论、术语翻成人话，黑话对照表与发出前自检的唯一详细版见 [`../pm/communication-style.md`](../pm/communication-style.md)（集团「表达（全角色）」纪律）。**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `tm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。规则见同一份文件。
+与 pm、tm **herdr 直连**：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。**表达不说黑话**：先说结论、术语翻成人话，黑话对照表与发出前自检的唯一详细版见 [`../pm/communication-style.md`](../pm/communication-style.md)（集团「表达（全角色）」纪律）。**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `tm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label；**任一侧是 codebuddy（cbc）会话就固定两步发送**：pane send-text ＋ send-keys enter，注意事项见「通信」节）。规则见同一份文件。
 
 ## 指针
 

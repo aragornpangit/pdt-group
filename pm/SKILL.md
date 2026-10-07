@@ -39,7 +39,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 表达与通信
 
-**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户），**不说黑话**。纪律条款、黑话对照表与发出前自检的唯一详细版见 [`group-conventions.md`](group-conventions.md)「表达（全角色）」与 [`communication-style.md`](communication-style.md)，本文件不复述。与 DM、TM **herdr 直连**：**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`dm` / `tm`，查不到先补会话），再按 [`group-conventions.md`](group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。需求口径、分派、裁决结论、升版通知都走消息，不写状态通报文档。
+**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户），**不说黑话**。纪律条款、黑话对照表与发出前自检的唯一详细版见 [`group-conventions.md`](group-conventions.md)「表达（全角色）」与 [`communication-style.md`](communication-style.md)，本文件不复述。与 DM、TM **herdr 直连**：**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`dm` / `tm`，查不到先补会话），再按 [`group-conventions.md`](group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label；**任一侧是 codebuddy（cbc）会话就固定两步发送**：pane send-text ＋ send-keys enter，注意事项见「通信」节）。需求口径、分派、裁决结论、升版通知都走消息，不写状态通报文档。
 
 ## 指针
 

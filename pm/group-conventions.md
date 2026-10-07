@@ -36,7 +36,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
   1. `herdr tab list` → 找到收件人 label 对应的 `tab_id`
   2. `herdr pane list` → 找到该 `tab_id` 下的 `pane_id`
-  3. **codebuddy 会话固定两步发送**（2026-10-04 实测）：codebuddy 不在 herdr 的 agent kind 列表里，`herdr agent prompt` 解析不到它（对 pane_id 直发报 `agent_not_ready`，"not an active named agent"，失败发生在投递前，pane 无副作用），必须走 pane 原始通道：
+  3. **codebuddy（cbc）会话固定两步发送**（2026-10-04 实测）：codebuddy（cbc）不在 herdr 的 agent kind 列表里，`herdr agent prompt` 解析不到它（对 pane_id 直发报 `agent_not_ready`，"not an active named agent"，失败发生在投递前，pane 无副作用），必须走 pane 原始通道：
 
      ```bash
      herdr pane send-text <pane_id> "<消息>"
