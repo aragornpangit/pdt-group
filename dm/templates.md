@@ -66,6 +66,7 @@
 - worktree：{worktree 绝对路径}（DM 已建好，直接 cd 进去，不要再 git worktree add；此后所有编辑与命令一律用这个绝对路径，严禁在主仓工作树写任何文件或提交任何东西）
 - 分支：feat/{ticket-id}（已存在）
 - 构建/测试命令：{命令}
+- 定位材料：{报错原文 ＋ file:line ＋ 复现命令或日志路径；修复 / 诊断类工单必填三件，团队纪律第 12 条，缺件 DM 先取证再派}
 - 静态断言：{命令或断言清单}（每 ticket 必跑，不攒到最后）
 - commit 前四步：git log -1 核 base → HEAD 已推进则 git diff <base>..HEAD -- 本 ticket 文件（非空即停、上报）→ 显式路径 git add（禁 -A）→ 绝不 amend/reset 他人 commit
 - 编号唯一：{ticket-id} 由 DM 指定，发现与计划或其他在跑 ticket 冲突，停下请示

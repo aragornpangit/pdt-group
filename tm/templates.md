@@ -56,6 +56,7 @@
 - `XX-CODE` 用例走 code-review 双轴（Spec 轴：实现与 SPEC 的一致性；Standards 轴：合 repo 规范），技能原文：https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/code-review/SKILL.md
 - 疑难缺陷与性能回退走 diagnosing-bugs 诊断环（红绿环只加测试/复现脚本，不改产品代码），技能原文：https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/diagnosing-bugs/SKILL.md
 - 每条结果必须给出 file:line 或 grep 命中/零匹配作为证据，无证据的结论视为 BLOCKED
+- 上报缺陷必须带三件：报错原文 ＋ file:line ＋ 复现命令或日志路径（团队纪律第 12 条，缺件 TM 无法退回开发部门）
 - 发现 P0 / 回归 / 红线违规，立即上报 TM
 
 严格按以下格式返回，不要附加其他内容：
