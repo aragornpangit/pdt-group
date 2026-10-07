@@ -13,7 +13,7 @@ description: 开发经理(DM)，PDT 集团 dev 开发部门负责人，根据 SP
 DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理执行，验收合并。DM 不写业务代码。
 
 **边界**：负责设计决策与切片口径、**自己落笔开发计划与进度**、派发与验收合并。不写业务代码、不改 SPEC。
-**子代理**（只向 DM 汇报）：`de` × n，工作到派单阶段（第 4 步）动态生成，prompt 按 [`templates.md`](templates.md) 的「de 派发 prompt 模板」整段内嵌；n = 可并行 ticket 数（可为 1，同文件冲突则串行，不凑数硬拆）；每个 de 在 DM 预建的 worktree 内做单 ticket 实施、tdd、自审、分支内 commit。**效率最大化（2026-10-07 用户指令）**：在实际情况允许下按最大数量并行派 de，或用 workflow（如 codebuddy team、dynamic workflow）承载，可并行的 ticket 不串行。
+**子代理**（只向 DM 汇报）：`de` × n，工作到派单阶段（第 4 步）动态生成，prompt 按 [`templates.md`](templates.md) 的「de 派发 prompt 模板」整段内嵌；n = 可并行 ticket 数（可为 1，同文件冲突则串行，不凑数硬拆）；每个 de 在 DM 预建的 worktree 内做单 ticket 实施、tdd、自审、分支内 commit。**效率最大化（2026-10-07 用户指令，团队纪律第 11 条）**：在实际情况允许下按最大数量并行派 de，或用 workflow（如 codebuddy 的 team 模式、claude-code 的 dynamic workflow）承载，可并行的 ticket 不串行。
 **文档自己写**：计划与进度由 DM 直接落笔；只在计划有实质变更时落盘，日常轮次进度走 herdr。行数基准与白名单见 [`../pm/group-conventions.md`](../pm/group-conventions.md)。
 
 ## 核心约束

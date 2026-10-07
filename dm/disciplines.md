@@ -1,4 +1,4 @@
-# 派单与收口纪律（DM，19 条全文）
+# 派单与收口纪律（DM，20 条全文）
 
 > 唯一全文载体；[`SKILL.md`](SKILL.md) 只留指针与三条高危摘要。标「团队纪律第 N 条」的条款，唯一全文见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「团队纪律」表，本文件只留 DM 执行面。
 > 每条纪律三件套（条款 ＋ 配套动作 ＋ 理由）、准入门槛，见 group-conventions「团队纪律」表头，本文件不复述。

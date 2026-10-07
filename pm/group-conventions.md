@@ -20,7 +20,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 - **pm 兼集团负责人与产品经理**：承接用户诉求、组建并管理 dm / tm 会话、顶层裁决
 - `de` / `te`、pm 的子代理、scout 的调研子代理，一律由**派生他的那个经理**按实际情况派生 n 个并行子代理（n = 可并行 ticket 数 / 可并行批次数 / 调研子问题数，可为 1，不要为凑数硬拆）；**子代理只向派生自己的经理汇报、只接受该经理安排**，pm 负责汇总自己派生的子代理的工作结果
 - **子代理后台派发**（2026-09-24 起）：**任何角色派子代理一律后台/异步**（含 pm 的取证 / 核查子代理、scout 的调研子代理），**派完立即结束本轮（return control）**、保持会话可收 herdr 消息，禁止原地等待、轮询、阻塞式等待子代理返回；子代理完成经完成通知（task-notification / 原生唤醒）触发验收或复核。可同时持有多个批次。具体开关按你所用的 agent 工具映射（如后台运行参数、async subagent、原生并行 subagents）
-- **效率最大化（2026-10-07 用户指令）**：可并行必并行，按最大数量派 subagents 或用 workflow（如 codebuddy 的 team 模式、claude-code 的 dynamic workflow）承载；只有真实资源约束（设备、同工作树写入、顺序状态）才能收敛并行数，保守习惯（如「先开一个看看」）不算约束。卡壳排查同样并行：多假设同时取证，不单线串行猜
+- **效率最大化（2026-10-07 用户指令）**：可并行必并行，唯一全文见「团队纪律」第 11 条（载体点名：codebuddy 的 team 模式、claude-code 的 dynamic workflow）；卡壳排查同样并行：多假设同时取证，不单线串行猜
 - 经理间直通（pm / dm / tm 横向协商）；两方无法一致时由 pm 裁决
 - **调研派 scout**：pm / dm 遇到技术选型、竞品对标、重构前评估，派活给 scout 会话（先按「通信」节定位到 `scout` 所在的 pane ID），**不自己拉调研子代理**；scout 的结论一句话回流 SPEC 或开发计划。scout 会话不存在时 pm 先按 [`team-bootstrap.md`](team-bootstrap.md) 起一个
 
@@ -192,7 +192,7 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 
 - **`.pdt/team.json` 的 `sessions` 登记四个 label**：`dm` / `tm` 由 pm 创建时写入；`scout` 由 pm 按需起，起完同样登记（字段与 `dm` / `tm` 同构）
 
-- **运行时底座与通信优先级（2026-09-29 用户建议）**：优先用 **herdr 作终端运行时底座**，各角色会话尽量跑在 herdr 会话里（一个角色一个会话，label 见上）；会话之间**优先用 `herdr agent prompt` 定向发消息**通信，不靠文件轮询、不靠跨会话转达。herdr 不可用时才回落（兜底见 [`team-bootstrap.md`](team-bootstrap.md) 的手动模式）。
+- **运行时底座与通信优先级（2026-09-29 用户建议）**：优先用 **herdr 作终端运行时底座**，各角色会话尽量跑在 herdr 会话里（一个角色一个会话，label 见上）；会话之间**优先用 herdr 定向发消息**通信（codebuddy 会话按「通信」节固定两步：pane send-text ＋ send-keys enter），不靠文件轮询、不靠跨会话转达。herdr 不可用时才回落（兜底见 [`team-bootstrap.md`](team-bootstrap.md) 的手动模式）。
 
 ## 跨技能引用纪律
 
