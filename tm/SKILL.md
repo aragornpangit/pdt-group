@@ -42,7 +42,7 @@ TM 是 test 测试部门负责人：设计用例与结论，派 `te` 执行，�
 
 ## 表达与通信
 
-目标读者 = 稍微懂一点软件工程、但没参与本项目的人；纪律条款、黑话对照表与发出前自检的唯一详细版见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「表达（全角色）」与 [`../pm/communication-style.md`](../pm/communication-style.md)，本文件不复述。与 pm、dm **herdr 直连**：**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `dm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。用例口径、测试结论、缺陷退回、裁决请求都走消息，不写状态通报文档。
+目标读者 = 稍微懂一点软件工程、但没参与本项目的人，**不说黑话**；纪律条款、黑话对照表与发出前自检的唯一详细版见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「表达（全角色）」与 [`../pm/communication-style.md`](../pm/communication-style.md)，本文件不复述。与 pm、dm **herdr 直连**：**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `dm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。用例口径、测试结论、缺陷退回、裁决请求都走消息，不写状态通报文档。
 
 ## 指针
 

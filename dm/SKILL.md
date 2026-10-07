@@ -36,11 +36,11 @@ DM 是 dev 开发部门负责人：定设计决策与切片口径，派子代理
 
 ## 派单与收口纪律（强制，20 条）
 
-**全文见 [`disciplines.md`](disciplines.md)**，此处只留三条高危：**超时必填**（写 ticket/prompt 时即填 `timeoutMs`，设备 / 长链路 ≥ 45 min 并按段切分汇报）；**主工作树只读**（子代理只在预建 worktree 编辑与提交，工单里凡给路径一律带 worktree 绝对路径前缀）；**引用取源**（派单前对每个被引用的 SPEC／判据条目跑原文 grep，命中原句贴进工单）。第 1、2、6 条与「commit 前四步」已内置在 de 派发 prompt 模板，其中 `context: "fresh"` 与 `timeoutMs` 是**派发参数**（模板已显式列出），改模板时逐条核对仍齐全；第 3、7 条核查动作由 DM 亲自执行；标「团队纪律第 N 条」的条款，唯一全文见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「团队纪律」表。
+**全文见 [`disciplines.md`](disciplines.md)**，此处只留三条高危：**超时必填**（写 ticket/prompt 时即填 `timeoutMs`，设备 / 长链路 ≥ 45 min 并按段切分汇报）；**主工作树只读**（子代理只在预建 worktree 编辑与提交，工单里凡给路径一律带 worktree 绝对路径前缀）；**引用取源**（派单前对每个被引用的 SPEC／判据条目跑原文 grep，命中原句贴进工单）。第 1、2、6、8 条、第 4 条汇报要求与第 5 条「commit 前四步」已内置在 de 派发 prompt 模板，其中第 2 条的 `context: "fresh"` 与第 8 条的 `timeoutMs` 是**派发参数**（模板已显式列出），改模板时逐条核对仍齐全；第 3、7 条核查动作由 DM 亲自执行；标「团队纪律第 N 条」的条款，唯一全文见 [`../pm/group-conventions.md`](../pm/group-conventions.md) 的「团队纪律」表。
 
 ## 通信
 
-与 pm、tm **herdr 直连**：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `tm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。规则见同一份文件。
+与 pm、tm **herdr 直连**：进度、验收结论、缺陷退回、裁决请求都走消息，不写状态通报文档。**表达不说黑话**：先说结论、术语翻成人话，黑话对照表与发出前自检的唯一详细版见 [`../pm/communication-style.md`](../pm/communication-style.md)（集团「表达（全角色）」纪律）。**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`pm` / `tm`，查不到就停下回报），再按 [`../pm/group-conventions.md`](../pm/group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label）。规则见同一份文件。
 
 ## 指针
 
