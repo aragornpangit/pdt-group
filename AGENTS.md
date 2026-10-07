@@ -34,7 +34,7 @@
 4. **不留死代码**：内容废除就删除，不建 `deprecated/` 坟场；需要在别处留指针。
 5. **凭证不入库**：任何文件不得出现明文密码 / token / PAT；示例一律用环境变量占位符。
 6. **同步方向单向**：容器仓 → 本仓。在本仓直接改动会被下次同步覆盖；确需修改时先改容器仓再同步（急修可先落本仓，但必须登记回流）。
-7. **SKILL.md 不超过 50 行**（2026-09-30 用户指定，`check-mirror.sh` 机检）：细则、长清单放同目录附属参考文档（如 `disciplines.md` / `templates.md`），SKILL.md 只留入口、核心约束与指针。交付物（SPEC / 计划 / 报告 / 调研）的行数上限是**基准**，可适当超出（见 group-conventions「写作纪律」）。
+7. **SKILL.md 不超过 50 行**（`check-mirror.sh` 机检）：细则、长清单放同目录附属参考文档（如 `disciplines.md` / `templates.md`），SKILL.md 只留入口、核心约束与指针。交付物（SPEC / 计划 / 报告 / 调研）的行数上限是**基准**，可适当超出（见 group-conventions「写作纪律」）。
 
 ## 4. 校验（改完跑一遍）
 
@@ -58,6 +58,6 @@ bash scripts/check-mirror.sh
 | 10 | `pm/communication-style.md` §3 黑话对照表与 §4 grep 词表一致（防两表漂移 ⇒ 机检假绿） |
 | 11 | `dm/disciplines.md` 条号 1 起连续，且与 `dm/SKILL.md` 声明的条数一致 |
 
-第 9-11 条是 2026-10-04 补的（旧版只查 group-conventions.md 本文件，跨文件漏检，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。
+第 9-11 条是后补的（旧版只查 group-conventions.md 本文件，跨文件漏检，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。
 
 > 容器仓布局的 `check-skills.sh`（抽取容器仓宪法 §8 执行）在本仓必然结构 FAIL，已删除；不要在本仓重建它。

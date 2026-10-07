@@ -36,7 +36,7 @@
 
 ## 切片细则
 
-内化自 mattpocock [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md)（2026-09-21），DM 直接执行，不依赖 `/to-tickets` 命令：
+内化自 mattpocock [`to-tickets`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/to-tickets/SKILL.md)，DM 直接执行，不依赖 `/to-tickets` 命令：
 
 - 每片切一条**窄而完整**的通路（贯穿 schema / API / UI / 测试），**纵向而非横向分层**；可独立演示或验证；能在单个 fresh 上下文内完成
 - 先做 **prefactor**（"先让改动变容易，再做容易的改动"）
@@ -52,7 +52,7 @@
 
 ## de 派发 prompt 模板
 
-`de` 是 DM 派单时动态生成的子代理，不装独立技能文件：角色边界、工作流与汇报格式全部由本模板内嵌进 prompt。名字固定 `de`，一条消息发起同批全部调用；worktree 与分支由 DM **预建后**再派（2026-09-24 起替代原 `de/SKILL.md`）。派发一律**后台/异步**（机制映射见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），DM 发完即结束本轮（return control），由完成通知唤醒再验收，不在原地等结果。
+`de` 是 DM 派单时动态生成的子代理，不装独立技能文件：角色边界、工作流与汇报格式全部由本模板内嵌进 prompt。名字固定 `de`，一条消息发起同批全部调用；worktree 与分支由 DM **预建后**再派。派发一律**后台/异步**（机制映射见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），DM 发完即结束本轮（return control），由完成通知唤醒再验收，不在原地等结果。
 
 **派发参数（写在调用上，不写进 prompt 文本）**：`context: "fresh"`（不继承父对话）＋ `timeoutMs`（团队纪律第 6 条：写工单时即填，设备 / 长链路 ≥ 45 min 并按段切分汇报，纯文档工单可短）。模板正文也把 `timeoutMs` 列成一行，让 DM 抄工单时不会漏。
 

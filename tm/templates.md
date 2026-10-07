@@ -2,7 +2,7 @@
 
 **一份需求一份文件**：`docs/test/report/test-report-{语义slug}-{时间戳}-v{N}-{seq}.md`（命名见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「文件命名」），**用例与结果同在一份**。**版本内就地更新**（追加用例不改名），实质修订升版落新文件。**40 行基准，可适度超出**（超了先删冗余，删无可删在文件头登记原因）。
 
-没有独立的测试计划文档（2026-09-23 起）：用例直接写进报告的用例表。证据分两层：结论证据以 `file:line` 内联在表里；host 面机检证据（`selftest` 日志、机检输出）入仓 `docs/test/evidence/test-report-{语义slug}-{seq}-ev/`（2026-09-28 起恢复，仅 TM 归档用；一个 seq 一个目录，报告升版不换目录）。
+没有独立的测试计划文档：用例直接写进报告的用例表。证据分两层：结论证据以 `file:line` 内联在表里；host 面机检证据（`selftest` 日志、机检输出）入仓 `docs/test/evidence/test-report-{语义slug}-{seq}-ev/`（恢复，仅 TM 归档用；一个 seq 一个目录，报告升版不换目录）。
 
 ## 模板
 
@@ -34,7 +34,7 @@
 
 ## te 派发 prompt 模板
 
-`te` 是 TM 派单时动态生成的子代理，不装独立技能文件：角色边界、验证手段与回报格式全部由本模板内嵌进 prompt。名字固定 `te`，一条消息发起同批全部调用（2026-09-24 起替代原 `te/SKILL.md`）。派发一律**后台/异步**（机制映射见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），TM 发完即结束本轮（return control），由完成通知唤醒再复核，不在原地等结果。用例类别见上，与 TM 报告侧同名同义。
+`te` 是 TM 派单时动态生成的子代理，不装独立技能文件：角色边界、验证手段与回报格式全部由本模板内嵌进 prompt。名字固定 `te`，一条消息发起同批全部调用。派发一律**后台/异步**（机制映射见 [`../pm/group-conventions.md`](../pm/group-conventions.md)「组织架构」），TM 发完即结束本轮（return control），由完成通知唤醒再复核，不在原地等结果。用例类别见上，与 TM 报告侧同名同义。
 
 **派发参数（写在调用上，不写进 prompt 文本）**：`timeoutMs`（团队纪律第 6 条：写用例时即填，设备工单 / 长链路 ≥ 45 min 并按段切分汇报）。模板正文也把 `timeoutMs` 列成一行，让 TM 抄工单时不会漏。
 
