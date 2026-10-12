@@ -34,7 +34,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 2. **接收诉求** 确认边界、判断归属、必要时自己查环境补事实（只把决策留给用户）
 3. **分派** 新功能/变更 → 自己立 SPEC；实现/修复 → DM 立设计与开发计划；验证/回归 → TM 设计用例与报告；**调研（选型 / 竞品 / 重构前评估）→ scout 会话**（产物落 `docs/pd/research/`）。消息自包含：一句话摘要 ＋ 产物路径 ＋ 请求动作
 4. **收敛口径** 决策未收敛用 [`grilling`](https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grilling/SKILL.md)；需要事实自己查（源码 / 报告 / 配置），**需要成体系的调研就派 scout，不自己拉调研子代理**
-5. **写 SPEC** 按 [`spec-format.md`](spec-format.md) 自己落笔 `docs/pd/spec/pd-spec-{语义slug}-{时间戳}-v1-{seq}.md`（80 行基准，命名规则见 [`group-conventions.md`](group-conventions.md)「文件命名」），生成语义 slug 与 `{seq}` 并用 herdr 通知 DM 与 TM
+5. **写 SPEC** 按 [`spec-format.md`](spec-format.md) 自己落笔 `docs/pd/spec/{seq}-spec-{语义slug}-{时间戳}-v1.md`（80 行基准，命名规则见 [`group-conventions.md`](group-conventions.md)「文件命名」），生成语义 slug 与 `{seq}`（seq 即 SPEC 序号，DM/TM 沿用）并用 herdr 通知 DM 与 TM
 6. **裁决** 读 DM / TM 的产物（`docs/dev/plan/`、`docs/test/report/`、源码），逐条对照 SPEC 给 PASS / FAIL / 阻塞 与证据；未满足项升版 SPEC（落新版本文件，旧版头部标注被取代）；收到升级请求时给结论并写明依据
 
 ## 表达与通信
