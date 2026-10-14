@@ -17,7 +17,7 @@
 ## Common questions
 
 **报告写到哪？**
-当前项目 `docs/pd/research/`，文件名 `pd-research-{语义slug}-{时间戳}-v{N}-{seq}.md`，例 `pd-research-graph-db-selection-20260930-14-23-05-v1-003.md`（seq 是 scout 自累计流水号）。实质修订另立新版本号文件，旧文件头部就地标注「已被 vX 取代」。
+当前项目 `docs/pd/research/`，文件名 `{seq}-research-{语义slug}-{YYMMDD-HHMM}-v{N}.md`，例 `003-research-graph-db-selection-260930-1423-v1.md`（seq 是 scout 自累计流水号）。实质修订另立新版本号文件，旧文件头部就地标注「已被 vX 取代」。
 
 **会派子代理吗？**
 会：按需派数个 sub-agent 做调研。但不做实施：发现实施类工作，写进报告「建议 DM 派 X」。

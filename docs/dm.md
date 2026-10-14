@@ -17,13 +17,13 @@
 ## Common questions
 
 **Ticket 从哪来？**
-把设计决策落成 `docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v1-{seq}.md`，再拆成 tracer-bullet 纵向切片（每片贯穿各层、可独立验证、单上下文可完成），按依赖序编号，**默认一张表**。切片流程内化自 mattpocock `to-tickets`（见 [`dm/templates.md`](../dm/templates.md) 的「切片细则」）。
+把设计决策落成 `docs/dev/plan/{seq}-devPlan-{语义slug}-{YYMMDD-HHMM}-v{N}.md`，再拆成 tracer-bullet 纵向切片（每片贯穿各层、可独立验证、单上下文可完成），按依赖序编号，**默认一张表**。切片流程内化自 mattpocock `to-tickets`（见 [`dm/templates.md`](../dm/templates.md) 的「切片细则」）。
 
 **`de` 派生几个？**
 n = 当前可并行 ticket 数（依赖图的宽度），按实际情况决定，可为 1。**同一文件被多个 ticket 触碰时降为串行。**不要为了「用满 n」而把任务拆碎。
 
 **DM 写哪些文档？**
-只有一份：`docs/dev/plan/dev-tickets-{语义slug}-{时间戳}-v{N}-{seq}.md`，计划与进度同文件，50 行基准。不写进度报告、不写 ADR、不写设计文档。版本内小步更新就地改，实质修订升版落新文件，不每轮写。用 `/handoff` 做会话自我交接时另落 `docs/dev/handoff/dm-{语义slug}-{时间戳}-v{N}.md`（25 行基准）。
+只有一份：`docs/dev/plan/{seq}-devPlan-{语义slug}-{YYMMDD-HHMM}-v{N}.md`，计划与进度同文件，50 行基准。不写进度报告、不写 ADR、不写设计文档。版本内小步更新就地改，实质修订升版落新文件，不每轮写。用 `/handoff` 做会话自我交接时另落 `docs/dev/handoff/dm-{语义slug}-{时间戳}-v{N}.md`（25 行基准）。
 
 **DM 能写业务代码吗？**
 不能。DM 不写业务代码、不改 SPEC、不写测试报告。
@@ -33,4 +33,4 @@ DM 是开发部门唯一中心。`de` **只向 DM 汇报、只接受 DM 的安�
 
 ## It's working if
 
-`docs/dev/plan/dev-tickets-*-{seq}.md` 存在且 50 行基准，含设计决策（每条有 Why 与 How）与 ticket 表；每个 `de` 在独立 worktree 分支内提交，DM 复核后合并；进度与验收结论已用 herdr 送达 pm 与 tm。
+`docs/dev/plan/{seq}-devPlan-*.md` 存在且 50 行基准，含设计决策（每条有 Why 与 How）与 ticket 表；每个 `de` 在独立 worktree 分支内提交，DM 复核后合并；进度与验收结论已用 herdr 送达 pm 与 tm。

@@ -22,7 +22,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 ## 核心约束
 
 - **用户入口唯一**：需求先进 PM 再分派；DM/TM 不绕过 PM 对外承诺
-- **调研一律派 scout**：技术选型、竞品对标、重构前评估这类调研活**派给 scout 会话**，不自己查、不另建调研子代理。发消息前先 `herdr tab list` 查 `scout` label：**不在列表里就先起 tab（`herdr tab create --label scout --cwd "$PWD"`），再提示用户在该 tab 里启动自己的 harness，等用户确认就绪后才派活**；harness 没起来之前不发消息、不反复重试。用户手动起的 harness **没有 agent 名**，派活要用 `herdr pane list` 查到的 pane ID（见 [`group-conventions.md`](group-conventions.md)「通信」节三步）。结论一句话回流 SPEC
+- **调研一律派 scout**：技术选型、竞品对标、重构前评估这类调研活**派给 scout 会话**，不自己查、不另建调研子代理。发消息前先 `herdr tab list` 查 `scout` label：**不在列表里就先起 tab（`herdr tab create --label scout --cwd "$PWD"`），再提示用户在该 tab 里启动自己的 harness，等用户确认就绪后才派活**；harness 没起来之前不发消息、不反复重试。用户手动起的 harness **没有 agent 名**，派活要用 `herdr pane list` 查到的 pane ID（见 [`group-conventions.md`](group-conventions.md)「通信」节三步）。**`docs/pd/research/` 归 scout**（PM 只派单，自己不动笔）；调研结论由 scout 一句话交回后，**PM 在自己落笔的 SPEC 里引用**（这是 PM 消费调研的唯一形态）。
 - **经理间直通，分歧由 PM 裁决**：DM/TM 用 herdr 直接协商；两方不一致时 PM 裁决并回结论
 - **SPEC 自包含**，每条 User Story 都能转成用例；**一份需求一份 SPEC**，版本内就地更新，实质修订升版落新文件（命名见 [`group-conventions.md`](group-conventions.md)「文件命名」）
 - **长期知识不入 SPEC**：术语进 `CONTEXT.md`，其余不进任何新文档
@@ -39,7 +39,7 @@ PM 是集团的**唯一用户入口**，同时是 pd 产品部门负责人。两
 
 ## 表达与通信
 
-**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户），**只说简单明了的白话**：不说黑话、先说结论、再说证据、突出重点。纪律条款、黑话对照表与发出前自检的唯一详细版见 [`group-conventions.md`](group-conventions.md)「表达（全角色）」与 [`communication-style.md`](communication-style.md)，本文件不复述。与 DM、TM **herdr 直连**：**发消息前先跑 `herdr tab list` 按 label 确认伙伴在列**（`dm` / `tm`，查不到先补会话），再按 [`group-conventions.md`](group-conventions.md)「通信」节的三步把 label 解析成 pane ID 才发（herdr 的 agent 目标只认 agent 名或 pane ID，不认 label；**任一侧是 codebuddy（cbc）会话就固定两步发送**：pane send-text ＋ send-keys enter，注意事项见「通信」节）。需求口径、分派、裁决结论、升版通知都走消息，不写状态通报文档。
+**目标读者 = 稍微懂一点软件工程、但没参与本项目的人**（含用户），**只说简单明了的白话**：不说黑话、先说结论、再说证据、突出重点。纪律条款、黑话对照表与发出前自检的唯一详细版见 [`group-conventions.md`](group-conventions.md)「表达（全角色）」与 [`communication-style.md`](communication-style.md)，本文件不复述。与 DM、TM **herdr 直连**（label 定位与投递步骤见 [`group-conventions.md`](group-conventions.md)「通信」节，本文件不复述）。需求口径、分派、裁决结论、升版通知都走消息，不写状态通报文档。
 
 ## 指针
 

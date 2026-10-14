@@ -76,12 +76,12 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 | 开发计划与进度 | `docs/dev/plan/{seq}-devPlan-{语义slug}-{时间戳}-v{N}.md` | 50 行（基准） | DM |
 | 测试报告 | `docs/test/report/{seq}-testReport-{语义slug}-{时间戳}-v{N}.md` | 40 行（基准） | TM |
 | 证据目录 | `docs/test/evidence/{seq}-testReport-{语义slug}-ev/` | 按需 | TM |
-| 调研报告 | `docs/pd/research/{seq}-research-{语义slug}-{时间戳}-v{N}.md` | 按需 | PM / Scout 各自落笔 |
+| 调研报告 | `docs/pd/research/{seq}-research-{语义slug}-{时间戳}-v{N}.md` | 按需 | **Scout**（PM 派单，自己不动笔） |
 | 交接文档 | `docs/pd/handoff/pm-{语义slug}-{时间戳}-v{N}.md`<br>`docs/dev/handoff/dm-{语义slug}-{时间戳}-v{N}.md`<br>`docs/test/handoff/tm-{语义slug}-{时间戳}-v{N}.md` | 25 行（基准） | PM / DM / TM 各写自己的 |
 | 领域术语 | `CONTEXT.md` | 按需 | PM |
 | 看板（兜底，见下） | `docs/status.md` | 一行一需求 | 三方各管自己的列 |
 
-- 已废除：`docs/adr/`（架构决策并入开发计划的「设计决策」节）、`docs/dev/report/`、`docs/test/plan/`、`docs/dev/evidence/`、`docs/handoff/`。三处后来恢复：`docs/pd/research/` 因调研报告恢复（**仅 PM / Scout 的调研产物入内**，其余角色的调研结论仍直接进 SPEC）；`docs/test/evidence/` 因「host 面证据入仓」恢复（**仅 TM 归档用**）；交接改按部门分目录恢复，见下「交接」节（**原仓根 `docs/handoff/` 仍不用**）
+- 已废除：`docs/adr/`（架构决策并入开发计划的「设计决策」节）、`docs/dev/report/`、`docs/test/plan/`、`docs/dev/evidence/`、`docs/handoff/`。三处后来恢复：`docs/pd/research/` 因调研报告恢复（**仅 Scout 的调研产物入内**，其余角色的调研结论仍直接进 SPEC）；`docs/test/evidence/` 因「host 面证据入仓」恢复（**仅 TM 归档用**）；交接改按部门分目录恢复，见下「交接」节（**原仓根 `docs/handoff/` 仍不用**）
 - **证据两层**（TM 证据入仓裁定为准）：① **结论证据内联**：报告里给 `file:line` 或 grep 结果即可，不另落盘证据文件；② **host 面机检证据入仓**：`selftest` 日志、机检输出等落 `docs/test/evidence/`（报告在版本内就地更新、文件名带时间戳与 `v{N}`，直接拿它当目录名会导致报告升版就换目录，证据断链；因此目录名**去掉时间戳与版本号**，末尾加 `-ev` 后缀），目录形如 `{seq}-testReport-{语义slug}-ev/`，主题作其下子目录；**证据归属需求链，一个 seq 一个目录，报告升版不换目录**，报告内联「命令 ＋ 摘要 ＋ 路径」；可截断摘要，但须保留断言计数、失败行、`rc`、命令行等**足以复算的关键行**。`de` / `te` 不落盘，证据由 TM / DM 归档
 - **脚本 / 探针不属白名单管辖**：探针 / 单测 / 静态断言脚本是**可复算必需的工具**（第 7 条）⇒ **入仓代码树** `tools/<ticket>/`（不进构建产物）；「证据内联」**只管产物**（截图 / 侧车 / 日志），**不管工具**：「脚本不入仓 ⇒ 按需重建」= 不可复算（重建依赖原脚本 ⇒ 循环）
 - **没有内容的节直接删掉**，不写「无」「N/A」「待补充」占位
@@ -162,11 +162,10 @@ pdt-group（一级部门，负责人 pm：用户入口 ＋ 产品经理）
 `{seq}-{前缀}-{语义slug}-{YYMMDD-HHMM}-v{N}.md`
 
 - **`{seq}` 放文件名开头，以 SPEC 的序号为准**：PM 立 SPEC 时取号（001 起，取号互斥见团队纪律第 14 条），**开发计划与测试报告沿用同一份 SPEC 的 seq**，不另取号；调研报告不挂 SPEC 链，用自累计流水号
-- **前缀四选一**：`spec`（SPEC）／`devPlan`（开发计划与 ticket）／`testReport`（测试报告）／`research`（调研报告，PM / Scout 共用）。**交接文档不属这四类**，命名见「交接」节
+- **前缀四选一**：`spec`（SPEC）／`devPlan`（开发计划与 ticket）／`testReport`（测试报告）／`research`（调研报告，Scout 落笔、PM 派单）。**交接文档不属这四类**，命名见「交接」节
 - **语义 slug**：英文短横线连接，不超过 5 个词（如 `user-sync`），表示这份文件的目标语义
 - **时间戳**：该版本首次落盘时刻，格式 `YYMMDD-HHMM`（两位年、两位月、两位日、两位时、两位分）
 - **版本号 `v{N}`，从 v1 起**：**版本内小步更新**（追加用例、逐 ticket 状态、进度）就地改同一文件、不改名；**实质修订升版落新文件**（新时间戳、`v{N+1}`、seq 不变），旧文件头部就地标注「已被 vX 取代」（留痕 vs 残留：旧字面显式作废，不靠删除冒充没发生）
-- **`{seq}` 以 SPEC 的序号为准**：PM 立 SPEC 时取号（001 起，取号互斥见团队纪律第 14 条），**开发计划与测试报告沿用同一份 SPEC 的 seq**，不另取号；调研报告不挂 SPEC 链，用自累计流水号
 - **引用同链产物**：按 `{seq}-{前缀}-*.md` 定位（时间戳与版本号不进引用，glob 补齐）
 - 目录缺失时 `mkdir -p`
 

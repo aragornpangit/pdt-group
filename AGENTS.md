@@ -14,7 +14,7 @@
 ├── CHANGELOG 不在本仓维护，变更记录以容器仓为准
 ├── pm/  dm/  tm/  scout/   # 四个可安装角色，各含 SKILL.md 与附属参考文档
 ├── docs/              # 面向人的四段式角色说明（docs/<role>.md，与角色一一对应）
-└── scripts/check-mirror.sh  # 本仓专属校验：结构、em-dash、死链、name 一致、docs 对应、SKILL.md 行数、纪律编号连续与悬空引用
+└── scripts/check-mirror.sh  # 本仓专属校验：结构、em-dash、死链、name 一致、docs 对应、SKILL.md 行数、纪律编号连续与悬空引用、旧命名残留、同文件重复行、SKILL.md 复述通信步骤
 ```
 
 **根目录不放 `SKILL.md`**；`SKILL.md` 只能出现在 `<role>/SKILL.md` 一层。
@@ -42,7 +42,7 @@
 bash scripts/check-mirror.sh
 ```
 
-必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项（11 条）：
+必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项（14 条）：
 
 | # | 检查项 |
 |---|---|
@@ -57,7 +57,10 @@ bash scripts/check-mirror.sh
 | 9 | 纪律编号引用不悬空：`团队纪律第 N 条` / `纪律 N` 全仓查，`group-conventions.md` 内的裸「第 N 条」也查（`dm` 的 20 条是另一张表，不查） |
 | 10 | `pm/communication-style.md` §3 黑话对照表与 §4 grep 词表一致（防两表漂移 ⇒ 机检假绿） |
 | 11 | `dm/disciplines.md` 条号 1 起连续，且与 `dm/SKILL.md` 声明的条数一致 |
+| 12 | 旧命名残留：全仓 `*.md` 不得出现改版前的旧前缀与旧「seq 后置」顺序（具体模式串见 `scripts/check-mirror.sh` 的 `LEGACY_PATTERNS`，此处不复写以免自命中；命名唯一来源＝group-conventions「文件命名」） |
+| 13 | 同文件内逐字重复行（≥60 字符；排除表格、代码块；`pm/team-bootstrap.md` 的「手动模式提示词」节声明刻意同构，该节豁免） |
+| 14 | `SKILL.md` 不得复述通信投递步骤（出现 `pane send-text` 即 FAIL，唯一全文在 group-conventions「通信」节） |
 
-第 9-11 条是后补的（旧版只查 group-conventions.md 本文件，跨文件漏检，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。
+第 9-11 条与第 12-14 条都是后补的。第 9-11 条补的是**跨文件漏检**（旧版只查 group-conventions.md 本文件，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。第 12-14 条补的是**语义面漏检**：2026-10-14 实测「文件命名改版只落到唯一来源与角色目录，`docs/` 与 `README.md` 仍是旧格式」，而第 1-11 条全过 ⇒ 补上这三条，并各配反向臂（注入坏输入 ⇒ 必须 FAIL）验证有牙。
 
 > 容器仓布局的 `check-skills.sh`（抽取容器仓宪法 §8 执行）在本仓必然结构 FAIL，已删除；不要在本仓重建它。

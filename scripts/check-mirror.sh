@@ -5,6 +5,8 @@
 # skills/<bucket>/<name>/ 布局判定；本仓是拍平镜像（<role>/SKILL.md 直接放仓根），
 # 结构规则必然 4 条 FAIL，退出码不可用。本脚本按镜像布局重写同一套检查，
 # 让退出码真正可用（em-dash / 死链 / name 一致性 / docs 对应全保留）。
+# 2026-10-14 补：旧命名残留 / 同文件重复行 / SKILL.md 复述通信步骤（三条均为实测过的失效形态）；
+# em-dash 范围按宪法扩到代码注释（*.sh）。
 #
 # 用法：bash scripts/check-mirror.sh
 #   退出码 0  = 问题数 0
@@ -49,8 +51,9 @@ for name, d in roles.items():
         fails.append(f'{d}/SKILL.md 的 name={got}，目录名={name}')
 
 # 4) 全仓禁用 em-dash（U+2014），按码点判定
-for p in sorted(root.rglob('*.md')):
-    if '.git' in p.parts:
+#    宪法范围＝*.md ＋ 代码注释 ⇒ 本仓扫 *.md 与 *.sh
+for p in sorted(root.rglob('*')):
+    if '.git' in p.parts or p.suffix not in ('.md', '.sh'):
         continue
     for i, line in enumerate(p.read_text(encoding='utf-8').splitlines(), 1):
         if '\u2014' in line:
@@ -159,6 +162,51 @@ if dd.exists():
                   (root / 'dm' / 'SKILL.md').read_text(encoding='utf-8'))
     if m and int(m.group(1)) != len(dnums):
         fails.append(f'dm/SKILL.md 声明 {m.group(1)} 条，disciplines.md 实有 {len(dnums)} 条')
+
+# 12) 旧命名残留（2026-10-14 立：命名改版只落一半 ⇒ 机检防复发）
+LEGACY_PATTERNS = (r'pd-spec-', r'dev-tickets-', r'test-report-', r'pd-research-',
+                   r'-v\{N\}-\{seq\}', r'-v\d+-\{seq\}')
+for p in sorted(root.rglob('*.md')):
+    if '.git' in p.parts:
+        continue
+    for i, line in enumerate(p.read_text(encoding='utf-8').splitlines(), 1):
+        for pat in LEGACY_PATTERNS:
+            if re.search(pat, line):
+                fails.append(f'旧命名残留: {p}:{i} 命中 /{pat}/')
+
+# 13) 同文件内逐字重复行（≥60 字符；防「同一文件里同一段写两遍」）
+#     例外：pm/team-bootstrap.md 的「手动模式提示词」节声明刻意同构，跳过该节
+for p in sorted(root.rglob('*.md')):
+    if '.git' in p.parts:
+        continue
+    section = ''
+    seen = {}
+    in_fence = False
+    for i, line in enumerate(p.read_text(encoding='utf-8').splitlines(), 1):
+        if line.startswith('## '):
+            section = line
+            seen = {}
+            continue
+        if line.startswith('```'):
+            in_fence = not in_fence
+            continue
+        if in_fence or '手动模式提示词' in section:
+            continue
+        s = line.strip()
+        if len(s) < 60 or s.startswith(('|', '#')):
+            continue
+        key = re.sub(r'[\s\*`（）()]', '', s)
+        if key in seen:
+            fails.append(f'同文件内重复行: {p}:{i} 与 :{seen[key]}（≥60 字符逐字重复）')
+        else:
+            seen[key] = i
+
+# 14) SKILL.md 不得复述通信投递步骤（唯一全文在 group-conventions.md「通信」节）
+for name, d in roles.items():
+    text = (d / 'SKILL.md').read_text(encoding='utf-8')
+    if 'pane send-text' in text:
+        fails.append(f'{d}/SKILL.md 复述了通信投递步骤（出现 pane send-text）'
+                     ' ⇒ 改为指向 group-conventions「通信」节')
 
 for f in fails:
     print('FAIL:', f)

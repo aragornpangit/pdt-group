@@ -23,7 +23,7 @@ TM 的子代理（测试执行者）：只向 TM 汇报、只接受 TM 的安排
 n = 可并行批次数，按实际情况决定，可为 1。必须串行的有物理设备操作、同工作树写入、有顺序状态的流程。
 
 **还有测试计划文档吗？**
-没有。用例直接写进 `docs/test/report/test-report-{语义slug}-{时间戳}-v{N}-{seq}.md` 的用例表，省掉一份文档与一次派发。
+没有。用例直接写进 `docs/test/report/{seq}-testReport-{语义slug}-{YYMMDD-HHMM}-v{N}.md` 的用例表，省掉一份文档与一次派发。
 
 **会话交接怎么落盘？**
 日常跨角色传递走 herdr 消息，不写文档。用 `/handoff` 做会话自我交接时，落 `docs/test/handoff/tm-{语义slug}-{时间戳}-v{N}.md`（25 行基准）。
@@ -39,4 +39,4 @@ n = 可并行批次数，按实际情况决定，可为 1。必须串行的有�
 
 ## It's working if
 
-`docs/test/report/test-report-*-{seq}.md` 存在且 40 行基准，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 dm；除报告与 `docs/test/evidence/` 证据目录外没有其他产出文档。
+`docs/test/report/{seq}-testReport-*.md` 存在且 40 行基准，每条验收标准都有对应用例；`te` 的复核结论有证据支撑（`file:line` 或 grep）；发现的缺陷已用 herdr 退回 dm；除报告与 `docs/test/evidence/` 证据目录外没有其他产出文档。
