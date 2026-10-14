@@ -113,6 +113,7 @@ done
 ├── tm/{SKILL.md, templates.md}   # templates.md 含「te 派发 prompt 模板」
 ├── scout/{SKILL.md, templates.md}   # templates.md 含「TUI 质询界面」与「产出文档模板」
 ├── scripts/check-mirror.sh   # 本仓校验（结构 / em-dash / 死链 / name / docs 对应 / SKILL.md 行数 / 纪律编号 / 两表一致 / dm 条数 / 旧命名残留 / 同文件重复行 / 通信步骤复述）
+├── scripts/check-cross-repo.sh  # 跨仓校验（ACKNOWLEDGMENTS ↔ 容器仓 inventory；须给容器仓路径或设 PDT_CONTAINER_REPO）
 └── docs/                     # 面向人的四段式角色说明（4 页）
 ```
 

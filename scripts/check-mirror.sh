@@ -7,6 +7,8 @@
 # 让退出码真正可用（em-dash / 死链 / name 一致性 / docs 对应全保留）。
 # 2026-10-14 补：旧命名残留 / 同文件重复行 / SKILL.md 复述通信步骤（三条均为实测过的失效形态）；
 # em-dash 范围按宪法扩到代码注释（*.sh）。
+# 2026-10-14 再补：跨仓一致性（inventory ↔ ACKNOWLEDGMENTS，见 scripts/check-cross-repo.sh）；
+# 需容器仓路径（PDT_CONTAINER_REPO），未提供则跳过不判 FAIL（公开读者没有容器仓），但发布前必须跑。
 #
 # 用法：bash scripts/check-mirror.sh
 #   退出码 0  = 问题数 0
@@ -225,5 +227,23 @@ if [ "$rc" -ne 0 ]; then
 fi
 
 r="$(printf '%s\n' "$out" | sed -n 's/.*角色数: \([0-9]\{1,\}\)，.*/\1/p' | tail -1)"
+
+# 第 15 条：跨仓一致性（inventory ↔ ACKNOWLEDGMENTS）
+#   需容器仓路径（PDT_CONTAINER_REPO）；本仓是公开镜像，读者没有容器仓 ⇒ 未提供时跳过，
+#   但**未跑不得视为通过**（发布前须跑）。
+if [ -n "${PDT_CONTAINER_REPO:-}" ]; then
+  cross_out="$(bash "$ROOT/scripts/check-cross-repo.sh" "$PDT_CONTAINER_REPO" 2>&1)"
+  cross_rc=$?
+  if [ "$cross_rc" -ne 0 ]; then
+    echo "=== MIRROR-CHECK FAIL: 跨仓校验未通过 (rc=$cross_rc) ==="
+    printf '%s\n' "$cross_out" | grep 'FAIL' || printf '%s\n' "$cross_out" | tail -3
+    echo "==================================================="
+    exit 1
+  fi
+  echo "MIRROR-CHECK OK: roles=${r:-?} cross=OK problems=0 rc=0"
+  exit 0
+fi
+
 echo "MIRROR-CHECK OK: roles=${r:-?} problems=0 rc=0"
+echo "提示: 未设 PDT_CONTAINER_REPO，第 15 条跨仓校验（inventory ↔ ACKNOWLEDGMENTS）未跑；发布前须跑，未跑不得视为通过"
 exit 0

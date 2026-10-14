@@ -14,7 +14,7 @@
 ├── CHANGELOG 不在本仓维护，变更记录以容器仓为准
 ├── pm/  dm/  tm/  scout/   # 四个可安装角色，各含 SKILL.md 与附属参考文档
 ├── docs/              # 面向人的四段式角色说明（docs/<role>.md，与角色一一对应）
-└── scripts/check-mirror.sh  # 本仓专属校验：结构、em-dash、死链、name 一致、docs 对应、SKILL.md 行数、纪律编号连续与悬空引用、旧命名残留、同文件重复行、SKILL.md 复述通信步骤
+└── scripts/                 # 本仓校验：check-mirror.sh（14 条仓内机检）＋ check-cross-repo.sh（第 15 条跨仓一致性，须给容器仓路径）
 ```
 
 **根目录不放 `SKILL.md`**；`SKILL.md` 只能出现在 `<role>/SKILL.md` 一层。
@@ -42,7 +42,7 @@
 bash scripts/check-mirror.sh
 ```
 
-必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项（14 条）：
+必须输出 `MIRROR-CHECK OK ... problems=0 rc=0` 且退出码 0。检查项（15 条）：
 
 | # | 检查项 |
 |---|---|
@@ -60,7 +60,20 @@ bash scripts/check-mirror.sh
 | 12 | 旧命名残留：全仓 `*.md` 不得出现改版前的旧前缀与旧「seq 后置」顺序（具体模式串见 `scripts/check-mirror.sh` 的 `LEGACY_PATTERNS`，此处不复写以免自命中；命名唯一来源＝group-conventions「文件命名」） |
 | 13 | 同文件内逐字重复行（≥60 字符；排除表格、代码块；`pm/team-bootstrap.md` 的「手动模式提示词」节声明刻意同构，该节豁免） |
 | 14 | `SKILL.md` 不得复述通信投递步骤（出现 `pane send-text` 即 FAIL，唯一全文在 group-conventions「通信」节） |
+| 15 | 跨仓一致性：镜像 `ACKNOWLEDGMENTS.md` 与容器仓 `skills/pdt-group/pm/inventory.md` 的技能清单必须合拍（ACK ⊆ inventory，同名技能的上游路径一致）。**需容器仓路径**（`PDT_CONTAINER_REPO`），未提供则跳过；未跑不得视为通过 |
 
 第 9-11 条与第 12-14 条都是后补的。第 9-11 条补的是**跨文件漏检**（旧版只查 group-conventions.md 本文件，`pm/communication-style.md` 里那句引用一个已被删掉的旧编号就是这么漏过去的）。第 12-14 条补的是**语义面漏检**：2026-10-14 实测「文件命名改版只落到唯一来源与角色目录，`docs/` 与 `README.md` 仍是旧格式」，而第 1-11 条全过 ⇒ 补上这三条，并各配反向臂（注入坏输入 ⇒ 必须 FAIL）验证有牙。
+
+### 跨仓校验（第 15 条，单独入口）
+
+镜像侧 `ACKNOWLEDGMENTS.md` 与容器仓 `skills/pdt-group/pm/inventory.md` 是**分处两仓的技能清单**，容器仓桶 README 明说「两边改动要一起走」，但两边仓内校验都看不到对方 ⇒ 只改一边不会被任何机检抓到。所以单列一个跨仓入口：
+
+```bash
+bash scripts/check-cross-repo.sh <容器仓根路径>
+# 或让主校验顺带跑（第 15 条）
+PDT_CONTAINER_REPO=<容器仓根路径> bash scripts/check-mirror.sh
+```
+
+判据两条：① ACK 引用的技能必须在台账里登记；② 同名技能在两处链到的上游路径必须一致。反向差（台账有、ACK 未列）只打 INFO 不判失败（ACK 是引用清单，不必列全台账）。路径无效时脚本 `exit 2` 响亮失败，**不得当通过**。
 
 > 容器仓布局的 `check-skills.sh`（抽取容器仓宪法 §8 执行）在本仓必然结构 FAIL，已删除；不要在本仓重建它。
