@@ -1,0 +1,29 @@
+# 镜像仓 CI（只在**内网 GitLab** 侧生效；GitHub 无 CI，访问不到内网）
+#
+# 存在理由（2026-10-14，方案 A）：容器仓的 CI 只在容器仓 push 时跑，抓不到
+# 「镜像侧单独改动」（尤其 ACKNOWLEDGMENTS.md）⇒ 本 job 补上另一个方向，实现双向触发。
+#
+# 复用本仓自己的脚本：check-mirror.sh 在设了 PDT_CONTAINER_REPO 时会顺带跑第 15 条
+# 跨仓一致性，所以这里一条命令同时跑完仓内机检与跨仓检查。
+#
+# 前置条件（与容器仓 CI 同）：runner 能读到容器仓（Internal 可见，或已允许 job token 访问）。
+stages:
+  - check
+
+check:mirror:
+  stage: check
+  tags: [shell]
+  variables:
+    PDT_CONTAINER_REPO_URL: "http://10.223.36.12:808/p00292/Skills.git"
+  script:
+    - |
+      set -eu
+      URL="$PDT_CONTAINER_REPO_URL"
+      if [ -n "${CI_JOB_TOKEN:-}" ]; then
+        URL="$(printf '%s' "$URL" | sed "s|://|://gitlab-ci-token:${CI_JOB_TOKEN}@|")"
+      fi
+      D="$(mktemp -d)"
+      trap 'rm -rf "$D"' EXIT
+      git clone --depth 1 --quiet "$URL" "$D"
+      # D 即容器仓根，跨仓检查要读 <容器仓根>/skills/pdt-group/pm/inventory.md
+      PDT_CONTAINER_REPO="$D" bash scripts/check-mirror.sh

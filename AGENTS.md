@@ -76,4 +76,12 @@ PDT_CONTAINER_REPO=<容器仓根路径> bash scripts/check-mirror.sh
 
 判据两条：① ACK 引用的技能必须在台账里登记；② 同名技能在两处链到的上游路径必须一致。反向差（台账有、ACK 未列）只打 INFO 不判失败（ACK 是引用清单，不必列全台账）。路径无效时脚本 `exit 2` 响亮失败，**不得当通过**。
 
+### CI（内网 GitLab 侧，双向触发）
+
+本仓的 `.gitlab-ci.yml` 在**内网 GitLab**（`p00292/pdt-group.git`）跑 `scripts/check-mirror.sh`，并用 `PDT_CONTAINER_REPO` 让它顺带跑第 15 条跨仓校验；容器仓的 CI 则在容器仓 push 时反方向跑一次 ⇒ **两侧任一改动都能被抓到**（镜像仓单独改 `ACKNOWLEDGMENTS.md` 也不再漏）。
+
+- **GitHub 侧没有 CI**（访问不到内网）⇒ 推 GitHub 前必须已在内网跑过
+- **前置条件**：runner 能读到对方仓（Internal 可见，或已在项目设置里允许 job token 访问）
+- 本仓 `.gitlab-ci.yml` 是**镜像自有文件**，不在「4 个角色目录 ＋ `docs/`」的同步覆盖范围内
+
 > 容器仓布局的 `check-skills.sh`（抽取容器仓宪法 §8 执行）在本仓必然结构 FAIL，已删除；不要在本仓重建它。

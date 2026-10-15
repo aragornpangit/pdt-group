@@ -53,9 +53,9 @@ for name, d in roles.items():
         fails.append(f'{d}/SKILL.md 的 name={got}，目录名={name}')
 
 # 4) 全仓禁用 em-dash（U+2014），按码点判定
-#    宪法范围＝*.md ＋ 代码注释 ⇒ 本仓扫 *.md 与 *.sh
+#    宪法范围＝*.md ＋ 代码注释 ⇒ 本仓扫 *.md / *.sh / *.yml（.gitlab-ci.yml 也是代码注释）
 for p in sorted(root.rglob('*')):
-    if '.git' in p.parts or p.suffix not in ('.md', '.sh'):
+    if '.git' in p.parts or p.suffix not in ('.md', '.sh', '.yml', '.yaml'):
         continue
     for i, line in enumerate(p.read_text(encoding='utf-8').splitlines(), 1):
         if '\u2014' in line:

@@ -100,6 +100,7 @@ done
 ├── README.md                 # 本文件
 ├── ACKNOWLEDGMENTS.md        # 对 mattpocock/skills 的致谢与引用清单
 ├── AGENTS.md                 # 仓库约定（给 agent 读）
+├── .gitlab-ci.yml           # 内网 GitLab 侧 CI（跑本仓校验 ＋ 跨仓一致性；GitHub 无 CI）
 ├── LICENSE                   # MIT
 ├── pm/
 │   ├── SKILL.md              # 产品经理兼集团负责人（用户入口）
