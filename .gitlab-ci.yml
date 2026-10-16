@@ -7,23 +7,31 @@
 # 跨仓一致性，所以这里一条命令同时跑完仓内机检与跨仓检查。
 #
 # 前置条件（与容器仓 CI 同）：runner 能读到容器仓（Internal 可见，或已允许 job token 访问）。
+# runner：本机 L490 shell runner（id 1，tags=shell,l490），2026-10-16 挂到本项目，
+# 此前无 runner 导致 job 卡 pending 超时（pipeline #121 stuck_or_timeout_failure）。
 stages:
   - check
 
 check:mirror:
   stage: check
   tags: [shell]
+  interruptible: true
+  timeout: 10m
   variables:
     PDT_CONTAINER_REPO_URL: "http://10.223.36.12:808/p00292/Skills.git"
+    GIT_TERMINAL_PROMPT: "0"
   script:
     - |
       set -eu
+      # runner 进程可能带着本机 mihomo 代理环境，访问内网 GitLab 必须绕开它
+      # （gitlab-push 技能实测：代理拦 10.223.36.12，curl/git 一律 --noproxy / 清 proxy）
+      unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY || true
       URL="$PDT_CONTAINER_REPO_URL"
       if [ -n "${CI_JOB_TOKEN:-}" ]; then
         URL="$(printf '%s' "$URL" | sed "s|://|://gitlab-ci-token:${CI_JOB_TOKEN}@|")"
       fi
       D="$(mktemp -d)"
       trap 'rm -rf "$D"' EXIT
-      git clone --depth 1 --quiet "$URL" "$D"
+      git -c http.proxy= -c https.proxy= clone --depth 1 --quiet "$URL" "$D"
       # D 即容器仓根，跨仓检查要读 <容器仓根>/skills/pdt-group/pm/inventory.md
       PDT_CONTAINER_REPO="$D" bash scripts/check-mirror.sh
